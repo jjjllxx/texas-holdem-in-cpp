@@ -14,22 +14,22 @@ void th::CardDeck::init()
     const int32_t cardNum = 52;
     this->cards.reserve(cardNum);
 
-    for (int32_t i = 1; i < 14; ++i)
+    for (int32_t i = 2; i < 15; ++i)
     {
         this->cards.emplace_back(th::CardSuit::Club, i);
     }
 
-    for (int32_t i = 1; i < 14; ++i)
+    for (int32_t i = 2; i < 15; ++i)
     {
         this->cards.emplace_back(th::CardSuit::Diamond, i);
     }
 
-    for (int32_t i = 1; i < 14; ++i)
+    for (int32_t i = 2; i < 15; ++i)
     {
         this->cards.emplace_back(th::CardSuit::Heart, i);
     }
 
-    for (int32_t i = 1; i < 14; ++i)
+    for (int32_t i = 2; i < 15; ++i)
     {
         this->cards.emplace_back(th::CardSuit::Spade, i);
     }
