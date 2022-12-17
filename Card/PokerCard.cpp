@@ -40,16 +40,15 @@ std::string th::PokerCardUtility::getCardPointStr(const int32_t point)
 {
     switch (point)
     {
-    case 1:
-        return "A";
     case 11:
         return "J";
     case 12:
         return "Q";
     case 13:
         return "K";
+    case 14:
+        return "A";
     default:
         return std::to_string(point);
-        break;
     }
 }
