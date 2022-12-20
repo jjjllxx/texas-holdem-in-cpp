@@ -1,0 +1,73 @@
+Checks: '-*,
+         bugprone-*,
+         clang-analyzer-*,
+         cppcoreguidelines-*,
+         modernize-*,
+         performance-*,
+         readability-*,
+         -bugprone-easily-swappable-parameters,
+         -cppcoreguidelines-avoid-magic-numbers,
+         -cppcoreguidelines-special-member-functions,
+         -cppcoreguidelines-macro-usage,
+         -cppcoreguidelines-non-private-member-variables-in-classes,
+         -cppcoreguidelines-pro-bounds-array-to-pointer-decay,-warnings-as-errors,
+         -cppcoreguidelines-owning-memory,
+         -modernize-use-trailing-return-type,
+         -modernize-avoid-bind,
+         -modernize-use-default-member-init,
+         -modernize-pass-by-value,
+         -modernize-use-auto,
+         -modernize-use-nodiscard,
+         -modernize-concat-nested-namespaces,
+         -readability-avoid-const-params-in-decls,
+         -readability-simplify-boolean-expr,
+         -readability-magic-numbers,
+         -readability-convert-member-functions-to-static,
+         -readability-else-after-return,
+         -readability-identifier-length,
+         -readability-use-anyofallof
+'
+
+# Ignores:
+# bugprone-easily-swappable-parameters - wants us to not have arguments with same types together but we want
+
+# cppcoreguidelines-avoid-magic-numbers      - wants to use constants but it even catches the magic number constants are assigned to
+# cppcoreguidelines-special-member-functions - wants us to follow rule of 5, but is not relevant for most of our use cases
+# cppcoreguidelines-macro-usage              - wants us to use constexpr instead of macros but sometimes we need macros due to their usage in 3rd party libraries.
+# cppcoreguidelines-non-private-member-variables-in-classes - wants us to use class variables as only 'private' but we want to use 'protected'.
+# cppcoreguidelines-pro-bounds-array-to-pointer-decay,-warnings-as-errors - don't really understand but we can't use assert() with it enabled
+# cppcoreguidelines-owning-memory - wants us to use smart pointers instead of creating via new but Qt GUI needs new to create the items
+
+# modernize-use-trailing-return-type - wants "auto f1() -> int" instead of the usual "int f1()"
+# modernize-use-default-member-init  - wants us to initialise member variables when we want to use the initialiser list.
+# modernize-pass-by-value            - wants us to pass constructors by value and move (optimisation) but that raises a pass by value error
+# modernize-use-auto                 - wants us to use auto but we should use it sparingly
+# modernize-use-nodiscard            - wants us to use [[nodiscard]] on returns but we can be inconsistent when to add it
+# modernize-concat-nested-namespaces - wants us to concatenate nested namespaces but we don't want because it's ugly
+
+# readability-avoid-const-params-in-decls - wants "f(float a)" when "f(const float a)" is still OK if we want to say that "a" should not be changed
+# readability-simplify-boolean-expr       - wants "if(b)" when "if(b == true)" is more readable (b is a bool)
+# readability-magic-numbers               - same as cppcoreguidelines-avoid-magic-numbers
+# readability-convert-member-functions-to-static - wants us to declare functions static if they do not modify member variables but that could depend on the class / function. better to turn it off to let us decide.
+# readability-else-after-return - wants us to not return in else() but sometimes we want to have flexbility
+# readability-identifier-length - wants minimum name length of 3 but sometimes we want 1 (x / y)
+# readability-use-anyofallof    - wants us to use std::any_of/all_of instead of range based for loops but that is very verbose and ugly
+
+WarningsAsErrors: '*'
+
+CheckOptions:
+  - { key: readability-identifier-naming.AbstractClassCase,  value: CamelCase }
+  - { key: readability-identifier-naming.ClassCase,          value: CamelCase }
+  - { key: readability-identifier-naming.EnumCase,           value: CamelCase }
+  # ignore as we use lower case
+  # - { key: readability-identifier-naming.NamespaceCase,      value: CamelCase }
+  - { key: readability-identifier-naming.StructCase,         value: CamelCase  }
+
+  # ignore as STKCI functions use CamelCase
+  #- { key: readability-identifier-naming.FunctionCase,  value: camelBack }
+  - { key: readability-identifier-naming.VariableCase,  value: camelBack }
+
+  # ignore as we use lower case logging macros
+  # - { key: readability-identifier-naming.MacroDefinitionCase,    value: UPPER_CASE }
+  - { key: readability-identifier-naming.GlobalConstantCase,     value: UPPER_CASE }
+  - { key: readability-identifier-naming.ConstexprVariableCase,  value: UPPER_CASE }

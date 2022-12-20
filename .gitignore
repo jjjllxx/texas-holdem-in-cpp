@@ -1,0 +1,16 @@
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+
+# clangd
+.cache
+
+# Qt
+*_autogen
+*.autosave
+
+# vscode
+.vscode
