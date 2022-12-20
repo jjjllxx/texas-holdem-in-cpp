@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Card/CardDeck.h"
 
 int main(int argc, const char *argv[])

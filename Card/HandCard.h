@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "PokerCard.h"
 
 namespace th
@@ -12,6 +11,4 @@ namespace th
         th::PokerCard firstHandCard;
         th::PokerCard secondHandCard;
     };
-
-
-}
+    } // namespace th

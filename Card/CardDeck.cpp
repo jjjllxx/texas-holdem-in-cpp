@@ -1,11 +1,10 @@
-#pragma once
-
-#include <random>
 #include <algorithm>
+#include <random>
 
 #include "CardDeck.h"
 
-th::CardDeck::CardDeck() : currTopCard(0)
+th::CardDeck::CardDeck() :
+    currTopCard(0)
 {
 }
 
@@ -37,10 +36,10 @@ void th::CardDeck::init()
 
 void th::CardDeck::shuffle()
 {
-     auto randomEngine = std::default_random_engine{};
-     std::shuffle(this->cards.begin(), this->cards.end(), randomEngine);
+    auto randomEngine = std::default_random_engine {};
+    std::shuffle(this->cards.begin(), this->cards.end(), randomEngine);
 
-     this->currTopCard = 0;
+    this->currTopCard = 0;
 }
 
 th::PokerCard th::CardDeck::getCurrTop()
