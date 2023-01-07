@@ -8,9 +8,10 @@ cmake_install.cmake
 # clangd
 .cache
 
-# Qt
-*_autogen
-*.autosave
-
 # vscode
 .vscode
+
+# idea
+.idea
+
+texas_holdem_in_cpp
