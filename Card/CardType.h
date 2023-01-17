@@ -1,48 +1,34 @@
 #pragma once
 
-#include "PokerCard.h"
-
 #include <unordered_map>
 #include <vector>
 
 namespace th
 {
-    enum class CardComboType
-    {
-        INVALID,
+struct PokerCard;
 
-        HighCard,
-        OnePair,
-        TwoPairs,
-        ThreeOfAKind,
-        Straight,
-        Flush,
-        FullOfHouse,
-        FourOfAKind,
-        StraightFlush
-    };
+enum class CardComboType
+{
+    INVALID,
 
-    struct FiveCards
-    {
-        FiveCards();
+    HighCard,
+    OnePair,
+    TwoPairs,
+    ThreeOfAKind,
+    Straight,
+    Flush,
+    FullOfHouse,
+    FourOfAKind,
+    StraightFlush
+};
 
-        th::CardComboType type;
-        std::vector<th::PokerCard> sortedCards;
-    };
+namespace CardType
+{
+    th::CardComboType calcCardComboType(const std::vector<th::PokerCard>& fiveCards);
 
-    namespace CardTypeUtility
-    {
-        th::FiveCards findHighestCardCombo(const std::vector<th::PokerCard>& fromCards);
-        void          selectFiveCards(const std::vector<th::PokerCard>& fromCards,
-                                      std::vector<th::PokerCard>&       selectedCards,
-                                      std::size_t&                      pos);
-
-        bool compareCardCombo();
-
-        th::CardComboType judgeCardCombo(const std::vector<th::PokerCard>& fiveCards);
-        bool isFlush(const std::vector<th::PokerCard>& fiveCards);
-        bool isStraight(const std::vector<th::PokerCard>& fiveCards);
-        bool isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointCount);
-        bool isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointCount);
-    }
-    } // namespace th
+    bool isFlush(const std::vector<th::PokerCard>& fiveCards);
+    bool isStraight(const std::vector<th::PokerCard>& fiveCards);
+    bool isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointCount);
+    bool isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointCount);
+} // namespace CardType
+} // namespace th
