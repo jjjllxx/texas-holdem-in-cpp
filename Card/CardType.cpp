@@ -1,50 +1,16 @@
 #include "CardType.h"
 
-th::FiveCards ::FiveCards() :
-    type(th::CardComboType::INVALID)
-{
-}
+#include "PokerCard.h"
 
-th::FiveCards th::CardTypeUtility::findHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
-{
-    if (fromCards.size() < 5)
-    {
-        return {};
-    }
-
-    if (fromCards.size() == 5)
-    {
-        th::FiveCards fiveCards;
-        fiveCards.type        = th::CardTypeUtility::judgeCardCombo(fromCards);
-        fiveCards.sortedCards = std::move(fromCards);
-    }
-
-    return {};
-}
-
-void th::CardTypeUtility::selectFiveCards(const std::vector<th::PokerCard>& fromCards,
-                                          std::vector<th::PokerCard>&       selectedCards,
-                                          std::size_t&                      pos)
-{
-    if (selectedCards.size() == 5)
-    {
-        return;
-    }
-
-    for (const th::PokerCard& card : fromCards)
-    {
-    }
-}
-
-th::CardComboType th::CardTypeUtility::judgeCardCombo(const std::vector<th::PokerCard>& fiveCards)
+th::CardComboType th::CardType::calcCardComboType(const std::vector<th::PokerCard>& fiveCards)
 {
     if (fiveCards.size() != 5)
     {
         return th::CardComboType::INVALID;
     }
 
-    const bool isFlush    = th::CardTypeUtility::isFlush(fiveCards);
-    const bool isStraight = th::CardTypeUtility::isStraight(fiveCards);
+    const bool isFlush    = th::CardType::isFlush(fiveCards);
+    const bool isStraight = th::CardType::isStraight(fiveCards);
 
     if (isFlush == true && isStraight == true)
     {
@@ -74,11 +40,11 @@ th::CardComboType th::CardTypeUtility::judgeCardCombo(const std::vector<th::Poke
     case 4:
         return th::CardComboType::OnePair;
     case 3:
-        return th::CardTypeUtility::isThreeOfKind(pointCount) == true
+        return th::CardType::isThreeOfKind(pointCount) == true
                    ? th::CardComboType::ThreeOfAKind
                    : th::CardComboType::TwoPairs;
     case 2:
-        return th::CardTypeUtility::isFourOfAKind(pointCount) == true
+        return th::CardType::isFourOfAKind(pointCount) == true
                    ? th::CardComboType::FourOfAKind
                    : th::CardComboType::FullOfHouse;
     default:
@@ -88,7 +54,7 @@ th::CardComboType th::CardTypeUtility::judgeCardCombo(const std::vector<th::Poke
     return th::CardComboType::INVALID;
 }
 
-bool th::CardTypeUtility::isFlush(const std::vector<th::PokerCard>& fiveCards)
+bool th::CardType::isFlush(const std::vector<th::PokerCard>& fiveCards)
 {
     for (std::size_t i = 1; i < 5; ++i)
     {
@@ -101,7 +67,7 @@ bool th::CardTypeUtility::isFlush(const std::vector<th::PokerCard>& fiveCards)
     return true;
 }
 
-bool th::CardTypeUtility::isStraight(const std::vector<th::PokerCard>& fiveCards)
+bool th::CardType::isStraight(const std::vector<th::PokerCard>& fiveCards)
 {
     std::vector<int32_t> cardPts;
     cardPts.reserve(fiveCards.size());
@@ -130,7 +96,7 @@ bool th::CardTypeUtility::isStraight(const std::vector<th::PokerCard>& fiveCards
     return true;
 }
 
-bool th::CardTypeUtility::isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointCount)
+bool th::CardType::isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointCount)
 {
     return std::any_of(pointCount.begin(), pointCount.end(), [](const auto& p)
                        {
@@ -138,7 +104,7 @@ bool th::CardTypeUtility::isFourOfAKind(const std::unordered_map<int32_t, int32_
                        });
 }
 
-bool th::CardTypeUtility::isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointCount)
+bool th::CardType::isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointCount)
 {
     return std::any_of(pointCount.begin(), pointCount.end(), [](const auto& p)
                        {

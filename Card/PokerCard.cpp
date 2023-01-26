@@ -1,13 +1,15 @@
 #include "PokerCard.h"
 
-th::PokerCard::PokerCard() : suit(th::CardSuit::INVALID),
-                             point(0)
+th::PokerCard::PokerCard() :
+    suit(th::CardSuit::INVALID),
+    point(0)
 {
 }
 
 th::PokerCard::PokerCard(const th::CardSuit suit,
-                         const int32_t point) : suit(suit),
-                                                point(point)
+                         const int32_t      point) :
+    suit(suit),
+    point(point)
 {
 }
 

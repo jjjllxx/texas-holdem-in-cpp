@@ -36,7 +36,8 @@ void th::CardDeck::init()
 
 void th::CardDeck::shuffle()
 {
-    auto randomEngine = std::default_random_engine {};
+    unsigned seed         = std::chrono::system_clock::now().time_since_epoch().count();
+    auto     randomEngine = std::default_random_engine { seed };
     std::shuffle(this->cards.begin(), this->cards.end(), randomEngine);
 
     this->currTopCard = 0;
@@ -50,5 +51,6 @@ th::PokerCard th::CardDeck::getCurrTop()
 th::PokerCard th::CardDeck::getCurrTopNext()
 {
     this->currTopCard++;
+
     return th::CardDeck::getCurrTop();
 }
