@@ -11,4 +11,7 @@ add_executable(texas_holdem_in_cpp
         Card/CardSelector.cpp
         Card/CardType.cpp
         Card/PokerCard.cpp
+        Player/AutoPlayer.cpp
+        Player/BasePlayer.cpp
+        Player/HumanPlayer.cpp
         main.cpp)
