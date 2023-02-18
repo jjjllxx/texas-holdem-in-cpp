@@ -2,6 +2,8 @@
 
 int main(int argc, const char *argv[])
 {
+    (void) argc;
+    (void) argv;
     th::CardDeck deck;
     deck.init();
     deck.shuffle();
