@@ -19,19 +19,16 @@ int32_t th::BasePlayer::checkChip()
     return this->chip;
 }
 
-void th::BasePlayer::addChip(const int32_t chipNum)
+int32_t th::BasePlayer::call(const int32_t currBet)
 {
-    this->chip += chipNum;
-}
+    if (currBet >= th::BasePlayer::checkChip())
+    {
+        return th::BasePlayer::allIn();
+    }
 
-void th::BasePlayer::minusChip(const int32_t chipNum)
-{
-    this->chip -= chipNum;
-}
-
-void th::BasePlayer::call(const int32_t currBet)
-{
     th::BasePlayer::minusChip(currBet);
+
+    return currBet;
 }
 
 void th::BasePlayer::fold()
@@ -57,4 +54,14 @@ bool th::BasePlayer::isAllIn()
 bool th::BasePlayer::hasGivenUp()
 {
     return this->hasGivenUpCurrGame;
+}
+
+void th::BasePlayer::addChip(const int32_t chipNum)
+{
+    this->chip += chipNum;
+}
+
+void th::BasePlayer::minusChip(const int32_t chipNum)
+{
+    this->chip -= chipNum;
 }
