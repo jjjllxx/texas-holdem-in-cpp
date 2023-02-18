@@ -16,17 +16,18 @@ public:
     void init(const int32_t initNum);
 
     int32_t checkChip();
-    void    addChip(const int32_t chipNum);
-    void    minusChip(const int32_t chipNum);
 
     virtual int32_t raise(const int32_t chipNum) = 0;
+    int32_t         call(const int32_t currBet);
+    int32_t         allIn();
 
-    void    call(const int32_t currBet);
-    void    fold();
-    int32_t allIn();
+    void fold();
 
     bool isAllIn();
     bool hasGivenUp();
+
+    void addChip(const int32_t chipNum);
+    void minusChip(const int32_t chipNum);
 
 private:
     int32_t     id;
