@@ -2,13 +2,8 @@
 Makefile
 build
 
-# clangd
-.cache
-
 # vscode
 .vscode
 
 # idea
 .idea
-
-texas_holdem_in_cpp
