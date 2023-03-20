@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This hook is called after the commit message is saved.
+#
+# It ensures that the first line of the commit message contains the branch issue ID in the correct format.
+
+# Gets the full current branch name in the current working tree.
+# misc/123-issue-name
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+# Gets everything before the first "-".
+# misc/123-issue-name > misc/123
+LABEL_AND_ISSUE_ID=${BRANCH_NAME%%-*}
+
+# Gets everything after the last "/".
+# misc/123 > 123
+ISSUE_ID=${LABEL_AND_ISSUE_ID##*/}
+
+# Regex to validate in commit msg
+commit_regex="[#$ISSUE_ID]"
+commit_msg=$(cat $1)
+
+# Compares the first line of the commit message and matches it with the regex.
+if [[ "$commit_msg" == "$commit_regex"* ]]; then
+    exit 0
+else
+    echo "
+--- ERROR! ---
+Commit aborted as its title does not include its issue ID. 
+It should have [#$ISSUE_ID] at the front. 
+--------------"
+    exit 1
+fi

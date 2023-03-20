@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# This hook is called whenever "git commit" is executed and only after the "pre-commit" hook has passed.
+#
+# It displays the initial text in the commit editor.
+
+# Gets the full current branch name in the current working tree.
+# misc/123-issue-name
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+# Gets everything before the first "-".
+# misc/123-issue-name > misc/123
+LABEL_AND_ISSUE_ID=${BRANCH_NAME%%-*}
+
+# Gets everything after the last "/".
+# misc/123 > 123
+ISSUE_ID=${LABEL_AND_ISSUE_ID##*/}
+
+# If we can extract the issue ID..
+if [ -n "$ISSUE_ID" ]; then
+    # Gets all staged files.
+    STAGED_FILES=$(git diff --cached --name-only)
+    # Generate a string to print out the staged files in the format
+    # - <FILE>
+    # - <FILE>
+    STAGED_FILES_STR=""
+    if [ ! -z "$STAGED_FILES" ]; then
+        for FILE in $STAGED_FILES; do
+            STAGED_FILES_STR+="# - $FILE
+"
+        done
+    fi
+
+    # Generate the text to display in the commit editor.
+    echo "[#$ISSUE_ID] 
+# Branch: 
+# - $BRANCH_NAME
+#
+# Staged files:
+$STAGED_FILES_STR
+# --- GUIDE ---
+# First line: [#$ISSUE_ID] <summary of task>
+# 
+# Description to (if applicable):
+# - Describe and explain what was changed / added.
+# - Describe any side-effects.">"$1"
+    exit 0
+else
+    echo "Issue ID could not be extracted from $BRANCH_NAME. Check the branch format. It must start with '123-xxx'. Got $ISSUE_ID."
+    exit 1
+fi
