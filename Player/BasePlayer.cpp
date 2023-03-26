@@ -14,7 +14,7 @@ void th::BasePlayer::init(const int32_t initNum)
     th::BasePlayer::addChip(initNum);
 }
 
-int32_t th::BasePlayer::checkChip()
+int32_t th::BasePlayer::checkChip() const
 {
     return this->chip;
 }

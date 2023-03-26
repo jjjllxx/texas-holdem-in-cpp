@@ -15,7 +15,7 @@ public:
 
     void init(const int32_t initNum);
 
-    int32_t checkChip();
+    int32_t checkChip() const;
 
     virtual int32_t raise(const int32_t chipNum) = 0;
     int32_t         call(const int32_t currBet);
@@ -30,6 +30,7 @@ public:
     void minusChip(const int32_t chipNum);
 
     int32_t getId() const;
+    virtual void showStatus() const = 0;
 
 protected:
     int32_t     id;

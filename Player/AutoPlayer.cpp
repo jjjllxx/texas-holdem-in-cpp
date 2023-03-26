@@ -12,3 +12,10 @@ int32_t th::AutoPlayer::raise(const int32_t currBet)
 
     return raiseBet;
 }
+
+void th::AutoPlayer::showStatus() const
+{
+    std::cout << "Auto player " << th::AutoPlayer::getId()
+              << " now has " << th::AutoPlayer::checkChip()
+              << " chips." << std::endl;
+}

@@ -23,3 +23,10 @@ int32_t th::HumanPlayer::raise(const int32_t currBet)
 
     return raiseBet;
 }
+
+void th::HumanPlayer::showStatus() const
+{
+    std::cout << "Human player " << th::HumanPlayer::getId()
+              << " now has " << th::HumanPlayer::checkChip()
+              << " chips." << std::endl;
+}
