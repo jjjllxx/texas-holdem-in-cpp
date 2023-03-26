@@ -1,16 +1,15 @@
 #include "Card/CardDeck.h"
 
+#include "Game/GameProcess.h"
+
 int main(int argc, const char *argv[])
 {
     (void) argc;
     (void) argv;
-    th::CardDeck deck;
-    deck.init();
-    deck.shuffle();
-    for (int32_t i = 0; i < 52; ++i)
-    {
-        deck.getCurrTop().print();
-    }
+
+    th::GameProcess game;
+    game.initPokerTable(8, 1000);
+    game.clearPokerTable();
 
     return 0;
 }
