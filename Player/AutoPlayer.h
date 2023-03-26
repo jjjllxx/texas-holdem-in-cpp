@@ -4,9 +4,10 @@
 
 namespace th
 {
-class AutoPlayer : public BasePlayer
+class AutoPlayer final : public BasePlayer
 {
 public:
-    int32_t raise(const int32_t currBet);
+    AutoPlayer(const int32_t id);
+    int32_t raise(const int32_t currBet) override;
 };
 } // namespace th

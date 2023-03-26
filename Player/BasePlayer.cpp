@@ -65,3 +65,8 @@ void th::BasePlayer::minusChip(const int32_t chipNum)
 {
     this->chip -= chipNum;
 }
+
+int32_t th::BasePlayer::getId() const
+{
+    return this->id;
+}
