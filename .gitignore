@@ -1,17 +1,9 @@
 # CMake
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
 Makefile
-cmake_install.cmake
-
-# clangd
-.cache
+build
 
 # vscode
 .vscode
 
 # idea
 .idea
-
-texas_holdem_in_cpp

@@ -29,7 +29,9 @@ public:
     void addChip(const int32_t chipNum);
     void minusChip(const int32_t chipNum);
 
-private:
+    int32_t getId() const;
+
+protected:
     int32_t     id;
     std::string name;
 

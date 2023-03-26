@@ -6,10 +6,11 @@
 
 namespace th
 {
-class HumanPlayer : public BasePlayer
+class HumanPlayer final : public BasePlayer
 {
 public:
-    int32_t raise(const int32_t currBet);
+    HumanPlayer(const int32_t id);
+    int32_t raise(const int32_t currBet) override;
 
 private:
 };
