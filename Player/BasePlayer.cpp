@@ -1,4 +1,5 @@
 #include "BasePlayer.h"
+#include "../Card/PokerCard.h"
 
 th::BasePlayer::BasePlayer(const int32_t id) :
     id(id),
@@ -22,6 +23,11 @@ void th::BasePlayer::receiveFirstCard(const th::PokerCard& firstCard)
 void th::BasePlayer::receiveSecondCard(const th::PokerCard& secondCard)
 {
     this->twoHandCards.push_back(secondCard);
+
+    if (this->twoHandCards[0].point < this->twoHandCards[1].point)
+    {
+        std::swap(this->twoHandCards[0], this->twoHandCards[1]);
+    }
 }
 
 int32_t th::BasePlayer::call(const int32_t currBet)
@@ -73,6 +79,17 @@ int32_t th::BasePlayer::checkChip() const
 
 std::vector<th::PokerCard> th::BasePlayer::showHandCards() const
 {
+    // if (this->twoHandCards.empty() == true)
+    // {
+    //     std::cout << "Player" << th::BasePlayer::getId() << " does not have hand cards" << std::endl;
+    // }
+    // else
+    // {
+    //     std::cout << "Player" << th::BasePlayer::getId() << "\'s hand cards: "
+    //               << this->twoHandCards.front().getSymbol() << ' '
+    //               << this->twoHandCards.back().getSymbol() << std::endl;
+    // }
+
     return this->twoHandCards;
 }
 
