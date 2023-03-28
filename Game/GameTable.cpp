@@ -4,9 +4,9 @@
 #include "../Player/BasePlayer.h"
 #include "../Player/HumanPlayer.h"
 
+#include "../Utilities/Constants.h"
+
 th::GameTable::GameTable() :
-    MINIMUM_PLAYER_NUM(2),
-    MAXIMUM_PLAYER_NUM(12),
     gameNum(0),
     currSmallBlindPos(0),
     currSmallBlindChip(0)
@@ -17,7 +17,7 @@ bool th::GameTable::initPokerTable(const int32_t playerNum,
                                    const int32_t initChip,
                                    const int32_t smallBlindChip)
 {
-    if (playerNum < this->MINIMUM_PLAYER_NUM || playerNum >= this->MAXIMUM_PLAYER_NUM)
+    if (playerNum < th::MINIMUM_PLAYER_NUM || playerNum >= th::MAXIMUM_PLAYER_NUM)
     {
         return false;
     }

@@ -24,9 +24,6 @@ public:
     int32_t getGameNum() const;
 
 private:
-    const int32_t MINIMUM_PLAYER_NUM;
-    const int32_t MAXIMUM_PLAYER_NUM;
-
     int32_t  gameNum;
     th::Game currGame;
 
