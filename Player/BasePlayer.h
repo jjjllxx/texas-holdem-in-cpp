@@ -15,8 +15,8 @@ public:
 
     void init(const int32_t chipNum);
 
-    void receiveCards(const th::PokerCard& firstCard,
-                      const th::PokerCard& secondCard);
+    void receiveFirstCard(const th::PokerCard& firstCard);
+    void receiveSecondCard(const th::PokerCard& secondCard);
 
     int32_t         call(const int32_t currBet);
     int32_t         allIn();

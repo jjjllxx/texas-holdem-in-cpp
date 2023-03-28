@@ -13,11 +13,15 @@ void th::BasePlayer::init(const int32_t chipNum)
     th::BasePlayer::addChip(chipNum);
 }
 
-void th::BasePlayer::receiveCards(const th::PokerCard& firstCard,
-                                  const th::PokerCard& secondCard)
+void th::BasePlayer::receiveFirstCard(const th::PokerCard& firstCard)
 {
     this->twoHandCards.clear();
-    this->twoHandCards = { firstCard, secondCard };
+    this->twoHandCards.reserve(2);
+    this->twoHandCards.push_back(firstCard);
+}
+void th::BasePlayer::receiveSecondCard(const th::PokerCard& secondCard)
+{
+    this->twoHandCards.push_back(secondCard);
 }
 
 int32_t th::BasePlayer::call(const int32_t currBet)
