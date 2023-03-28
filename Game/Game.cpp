@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "../Card/CardDeck.h"
 #include "../Player/BasePlayer.h"
 
 th::Game::Game() :
@@ -21,19 +22,30 @@ bool th::Game::initGame(const std::size_t smallBlindPos,
     return true;
 }
 
-void th::Game::startGame(std::vector<std::shared_ptr<th::BasePlayer>>& players)
+void th::Game::startGame(th::CardDeck&                                 cardDeck,
+                         std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    // Add small blind and big blind info
-    players[this->smallBlindPos]->minusChip(this->smallBlindChip);
-    players[(this->smallBlindPos + 1) % players.size()]->minusChip(this->smallBlindChip << 1);
+    players[this->smallBlindPos]->call(this->smallBlindChip);
+    this->bigBlindPos = (this->smallBlindPos + 1) % players.size();
+    players[this->bigBlindPos]->call(this->smallBlindChip << 1);
 
     this->currPool += this->smallBlindChip + (this->smallBlindChip << 1);
+
+    th::Game::dealCards(cardDeck, players);
 }
 
-void th::Game::endGame(std::vector<std::shared_ptr<th::BasePlayer>>& players)
+void th::Game::dealCards(th::CardDeck&                                 cardDeck,
+                         std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    // Remove small blind and big blind info
-    (void) players;
+    for (std::shared_ptr<th::BasePlayer>& player : players)
+    {
+        player->receiveFirstCard(cardDeck.getCurrTop());
+    }
+
+    for (std::shared_ptr<th::BasePlayer>& player : players)
+    {
+        player->receiveSecondCard(cardDeck.getCurrTop());
+    }
 }
 
 int32_t th::Game::getCurrPool() const

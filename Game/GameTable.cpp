@@ -26,13 +26,15 @@ bool th::GameTable::initPokerTable(const int32_t playerNum,
 
     this->players.reserve(playerNum);
     this->players.push_back(std::make_shared<th::HumanPlayer>(0));
-    this->players.back()->addChip(initChip);
+    this->players.back()->init(initChip);
 
     for (int32_t i = 1; i < playerNum; ++i)
     {
         this->players.push_back(std::make_shared<th::AutoPlayer>(i));
-        this->players.back()->addChip(initChip);
+        this->players.back()->init(initChip);
     }
+
+    this->cardDeck.init();
 
     return true;
 }
@@ -48,16 +50,18 @@ void th::GameTable::startANewGame()
 
     if (this->currGame.initGame(this->currSmallBlindPos, this->currSmallBlindChip) == true)
     {
-        this->currGame.startGame(this->players);
+        this->cardDeck.shuffle();
+        this->currGame.startGame(this->cardDeck, this->players);
     }
 }
 
 int32_t th::GameTable::getGameNum() const
 {
-    for (const auto& player : this->players)
-    {
-        player->showStatus();
-    }
+    // for (const auto& player : this->players)
+    // {
+    //     player->showStatus();
+    //     player->showHandCards();
+    // }
 
     return this->gameNum;
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Card/CardDeck.h"
 #include "Game.h"
 
 #include <memory>
@@ -24,8 +25,9 @@ public:
     int32_t getGameNum() const;
 
 private:
-    int32_t  gameNum;
-    th::Game currGame;
+    int32_t      gameNum;
+    th::Game     currGame;
+    th::CardDeck cardDeck;
 
     std::size_t currSmallBlindPos;
     int32_t     currSmallBlindChip;

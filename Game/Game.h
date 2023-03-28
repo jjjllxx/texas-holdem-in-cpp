@@ -5,6 +5,7 @@
 
 namespace th
 {
+struct CardDeck;
 class BasePlayer;
 
 class Game
@@ -15,15 +16,20 @@ public:
 
     bool initGame(const std::size_t smallBlindPos,
                   const int32_t     smallBlindChip);
-    void startGame(std::vector<std::shared_ptr<th::BasePlayer>>& players);
-    void endGame(std::vector<std::shared_ptr<th::BasePlayer>>& players);
+
+    void startGame(th::CardDeck&                                 cardDeck,
+                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
     int32_t getCurrPool() const;
 
 private:
     int32_t currPool;
 
+    std::size_t bigBlindPos;
     std::size_t smallBlindPos;
     int32_t     smallBlindChip;
+
+    void dealCards(th::CardDeck&                                 cardDeck,
+                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 };
 } // namespace th
