@@ -8,10 +8,9 @@ th::BasePlayer::BasePlayer(const int32_t id) :
 {
 }
 
-void th::BasePlayer::init(const int32_t initNum)
+void th::BasePlayer::init(const int32_t chipNum)
 {
-    this->name += std::to_string(this->id);
-    th::BasePlayer::addChip(initNum);
+    th::BasePlayer::addChip(chipNum);
 }
 
 int32_t th::BasePlayer::checkChip() const
@@ -46,12 +45,12 @@ int32_t th::BasePlayer::allIn()
     return chipLeft;
 }
 
-bool th::BasePlayer::isAllIn()
+bool th::BasePlayer::isAllIn() const
 {
     return this->hasAllIn;
 }
 
-bool th::BasePlayer::hasGivenUp()
+bool th::BasePlayer::hasGivenUp() const
 {
     return this->hasGivenUpCurrGame;
 }
