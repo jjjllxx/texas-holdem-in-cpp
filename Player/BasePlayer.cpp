@@ -3,8 +3,8 @@
 th::BasePlayer::BasePlayer(const int32_t id) :
     id(id),
     chip(0),
-    hasGivenUpCurrGame(false),
-    hasAllIn(false)
+    hasAllIn(false),
+    hasGivenUpCurrGame(false)
 {
 }
 
@@ -13,9 +13,11 @@ void th::BasePlayer::init(const int32_t chipNum)
     th::BasePlayer::addChip(chipNum);
 }
 
-int32_t th::BasePlayer::checkChip() const
+void th::BasePlayer::receiveCards(const th::PokerCard& firstCard,
+                                  const th::PokerCard& secondCard)
 {
-    return this->chip;
+    this->twoHandCards.clear();
+    this->twoHandCards = { firstCard, secondCard };
 }
 
 int32_t th::BasePlayer::call(const int32_t currBet)
@@ -55,6 +57,21 @@ bool th::BasePlayer::hasGivenUp() const
     return this->hasGivenUpCurrGame;
 }
 
+int32_t th::BasePlayer::getId() const
+{
+    return this->id;
+}
+
+int32_t th::BasePlayer::checkChip() const
+{
+    return this->chip;
+}
+
+std::vector<th::PokerCard> th::BasePlayer::showHandCards() const
+{
+    return this->twoHandCards;
+}
+
 void th::BasePlayer::addChip(const int32_t chipNum)
 {
     this->chip += chipNum;
@@ -63,9 +80,4 @@ void th::BasePlayer::addChip(const int32_t chipNum)
 void th::BasePlayer::minusChip(const int32_t chipNum)
 {
     this->chip -= chipNum;
-}
-
-int32_t th::BasePlayer::getId() const
-{
-    return this->id;
 }

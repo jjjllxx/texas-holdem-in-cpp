@@ -3,6 +3,7 @@
 #include "../Card/PokerCard.h"
 
 #include <stdint.h>
+#include <vector>
 
 namespace th
 {
@@ -14,7 +15,8 @@ public:
 
     void init(const int32_t chipNum);
 
-    int32_t checkChip() const;
+    void receiveCards(const th::PokerCard& firstCard,
+                      const th::PokerCard& secondCard);
 
     int32_t         call(const int32_t currBet);
     int32_t         allIn();
@@ -24,18 +26,19 @@ public:
     bool isAllIn() const;
     bool hasGivenUp() const;
 
-    int32_t      getId() const;
+    int32_t                    getId() const;
+    int32_t                    checkChip() const;
+    std::vector<th::PokerCard> showHandCards() const;
     virtual void showStatus() const = 0;
 
 protected:
     int32_t id;
     int32_t chip;
 
-    bool hasGivenUpCurrGame;
-    bool hasAllIn;
+    std::vector<th::PokerCard> twoHandCards;
 
-    th::PokerCard firstHandCard;
-    th::PokerCard secondHandCard;
+    bool hasAllIn;
+    bool hasGivenUpCurrGame;
 
     void addChip(const int32_t chipNum);
     void minusChip(const int32_t chipNum);
