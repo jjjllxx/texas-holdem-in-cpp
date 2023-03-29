@@ -18,17 +18,18 @@ public:
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
 
+    virtual int32_t takeAction(const int32_t currBet) = 0;
     int32_t         call(const int32_t currBet);
     int32_t         allIn();
-    void            fold();
-    virtual int32_t raise(const int32_t chipNum) = 0;
+    int32_t         fold();
+    virtual int32_t raise(const int32_t currBet) = 0;
 
-    bool isAllIn() const;
-    bool hasGivenUp() const;
+    bool shouldAct() const;
+    void resetAfterGame();
 
     int32_t                    getId() const;
     int32_t                    checkChip() const;
-    std::vector<th::PokerCard> showHandCards() const;
+    std::vector<th::PokerCard> checkHandCards() const;
     virtual void showStatus() const = 0;
 
 protected:

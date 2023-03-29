@@ -39,12 +39,18 @@ int32_t th::BasePlayer::call(const int32_t currBet)
 
     th::BasePlayer::minusChip(currBet);
 
+    std::cout << "Player " << th::BasePlayer::getId() << " calls. " << std::endl;
+
     return currBet;
 }
 
-void th::BasePlayer::fold()
+int32_t th::BasePlayer::fold()
 {
     this->hasGivenUpCurrGame = true;
+
+    std::cout << "Player " << th::BasePlayer::getId() << " folds. " << std::endl;
+
+    return 0;
 }
 
 int32_t th::BasePlayer::allIn()
@@ -54,17 +60,19 @@ int32_t th::BasePlayer::allIn()
     this->hasAllIn = true;
     th::BasePlayer::minusChip(chipLeft);
 
+    std::cout << "Player " << th::BasePlayer::getId() << " all in with " << chipLeft << std::endl;
+
     return chipLeft;
 }
 
-bool th::BasePlayer::isAllIn() const
+bool th::BasePlayer::shouldAct() const
 {
-    return this->hasAllIn;
+    return this->hasAllIn == false && this->hasGivenUpCurrGame == false;
 }
-
-bool th::BasePlayer::hasGivenUp() const
+void th::BasePlayer::resetAfterGame()
 {
-    return this->hasGivenUpCurrGame;
+    this->hasAllIn           = false;
+    this->hasGivenUpCurrGame = false;
 }
 
 int32_t th::BasePlayer::getId() const
@@ -77,7 +85,7 @@ int32_t th::BasePlayer::checkChip() const
     return this->chip;
 }
 
-std::vector<th::PokerCard> th::BasePlayer::showHandCards() const
+std::vector<th::PokerCard> th::BasePlayer::checkHandCards() const
 {
     // if (this->twoHandCards.empty() == true)
     // {
