@@ -57,11 +57,5 @@ void th::GameTable::startANewGame()
 
 int32_t th::GameTable::getGameNum() const
 {
-    // for (const auto& player : this->players)
-    // {
-    //     player->showStatus();
-    //     player->showHandCards();
-    // }
-
     return this->gameNum;
 }
