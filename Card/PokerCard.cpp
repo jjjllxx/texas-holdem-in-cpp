@@ -13,11 +13,16 @@ th::PokerCard::PokerCard(const th::CardSuit suit,
 {
 }
 
-void th::PokerCard::print()
+std::string th::PokerCard::getStr() const
 {
-    std::cout << th::PokerCardUtility::getCardSuitStr(this->suit) << ' '
-              << th::PokerCardUtility::getCardPointStr(this->point)
-              << std::endl;
+    return th::PokerCardUtility::getCardSuitStr(this->suit) + ' '
+           + th::PokerCardUtility::getCardPointStr(this->point);
+}
+
+std::string th::PokerCard::getSymbol() const
+{
+    return th::PokerCardUtility::getCardSuitSymbol(this->suit)
+           + th::PokerCardUtility::getCardPointStr(this->point);
 }
 
 std::string th::PokerCardUtility::getCardSuitStr(const th::CardSuit suit)
@@ -32,6 +37,24 @@ std::string th::PokerCardUtility::getCardSuitStr(const th::CardSuit suit)
         return "Heart";
     case th::CardSuit::Spade:
         return "Spade";
+    case th::CardSuit::INVALID:
+    default:
+        return "";
+    }
+}
+
+std::string th::PokerCardUtility::getCardSuitSymbol(const th::CardSuit suit)
+{
+    switch (suit)
+    {
+    case th::CardSuit::Club:
+        return "\u2663";
+    case th::CardSuit::Diamond:
+        return "\u2662";
+    case th::CardSuit::Heart:
+        return "\u2661";
+    case th::CardSuit::Spade:
+        return "\u2660";
     case th::CardSuit::INVALID:
     default:
         return "";

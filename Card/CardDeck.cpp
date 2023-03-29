@@ -10,28 +10,12 @@ th::CardDeck::CardDeck() :
 
 void th::CardDeck::init()
 {
-    const int32_t cardNum = 52;
-    this->cards.reserve(cardNum);
+    this->cards.reserve(52);
 
-    for (int32_t i = 2; i < 15; ++i)
-    {
-        this->cards.emplace_back(th::CardSuit::Club, i);
-    }
-
-    for (int32_t i = 2; i < 15; ++i)
-    {
-        this->cards.emplace_back(th::CardSuit::Diamond, i);
-    }
-
-    for (int32_t i = 2; i < 15; ++i)
-    {
-        this->cards.emplace_back(th::CardSuit::Heart, i);
-    }
-
-    for (int32_t i = 2; i < 15; ++i)
-    {
-        this->cards.emplace_back(th::CardSuit::Spade, i);
-    }
+    th::CardDeck::initOneSuit(th::CardSuit::Club);
+    th::CardDeck::initOneSuit(th::CardSuit::Diamond);
+    th::CardDeck::initOneSuit(th::CardSuit::Heart);
+    th::CardDeck::initOneSuit(th::CardSuit::Spade);
 }
 
 void th::CardDeck::shuffle()
@@ -53,4 +37,12 @@ th::PokerCard th::CardDeck::getCurrTopNext()
     this->currTopCard++;
 
     return th::CardDeck::getCurrTop();
+}
+
+void th::CardDeck::initOneSuit(const th::CardSuit suit)
+{
+    for (int32_t i = 2; i < 15; ++i)
+    {
+        this->cards.emplace_back(suit, i);
+    }
 }
