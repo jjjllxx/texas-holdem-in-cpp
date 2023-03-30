@@ -4,6 +4,11 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
     th::BasePlayer(id)
 {
 }
+void th::HumanPlayer::init(const int32_t chipNum)
+{
+    this->name = "You(Player 0)";
+    th::BasePlayer::addChip(chipNum);
+}
 
 int32_t th::HumanPlayer::takeAction(const int32_t currBet)
 {
@@ -38,10 +43,15 @@ int32_t th::HumanPlayer::takeAction(const int32_t currBet)
 
 int32_t th::HumanPlayer::raise(const int32_t currBet)
 {
-    int32_t raiseBet = 0;
-    while (raiseBet < currBet)
+    const int32_t neededChips = currBet - th::HumanPlayer::checkChipInFront();
+    int32_t       raiseBet    = 0;
+
+    while (raiseBet < neededChips)
     {
-        std::cout << "Please enter a number higher than current bet (" << currBet << ") : ";
+        std::cout << "Current bet is " << currBet
+                  << ". You have " << th::HumanPlayer::checkChipInFront()
+                  << " in front. You need at least "
+                  << neededChips << " to raise. Please enter: ";
         std::cin >> raiseBet;
     }
 
@@ -50,24 +60,8 @@ int32_t th::HumanPlayer::raise(const int32_t currBet)
         return th::HumanPlayer::allIn();
     }
 
-    th::HumanPlayer::minusChip(raiseBet);
+    th::HumanPlayer::putChipInFront(raiseBet);
     th::HumanPlayer::printAction(raiseBet, "raise money");
 
     return raiseBet;
-}
-
-void th::HumanPlayer::showStatus() const
-{
-    std::cout << "Human player(you) " << th::HumanPlayer::getId()
-              << " now has " << th::HumanPlayer::checkChip()
-              << " chips." << std::endl;
-}
-
-void th::HumanPlayer::peekHandCards() const
-{
-    this->twoHandCards.empty() == true
-        ? std::cout << "You do not have hand cards" << std::endl
-        : std::cout << "You have hand cards: "
-                    << this->twoHandCards.front().getSymbol() << ' '
-                    << this->twoHandCards.back().getSymbol() << std::endl;
 }
