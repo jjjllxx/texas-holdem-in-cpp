@@ -7,7 +7,6 @@ namespace th
 {
 struct CardDeck;
 struct PokerCard;
-
 class BasePlayer;
 
 class Game
@@ -19,21 +18,16 @@ public:
     void startGame(th::CardDeck&                                 cardDeck,
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    int32_t getCurrPool() const;
-
 private:
-    std::size_t bigBlindPos;
     std::size_t smallBlindPos;
+    int32_t     smallBlindChip;
 
+    int32_t currBet;
     int32_t currPool;
-    int32_t smallBlindChip;
-    int32_t currCallChip;
-
-    int32_t survivedPlayerNum;
 
     std::vector<th::PokerCard> publicCards;
 
-    void prepare(std::vector<std::shared_ptr<th::BasePlayer>>& players);
+    void handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void dealCards(th::CardDeck&                                 cardDeck,
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void preflopRound(std::vector<std::shared_ptr<th::BasePlayer>>& players);
@@ -43,10 +37,20 @@ private:
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void riverRound(th::CardDeck&                                 cardDeck,
                     std::vector<std::shared_ptr<th::BasePlayer>>& players);
+
+    void putBigBlind(const int32_t                    bigBlindChip,
+                     std::shared_ptr<th::BasePlayer>& bigBlindPlayer);
+    void putSmallBlind(const int32_t                    smallBlindChip,
+                       std::shared_ptr<th::BasePlayer>& smallBlindPlayer);
+    void collectChips(std::vector<std::shared_ptr<th::BasePlayer>>& players);
+    void revealOnePublicCard(th::CardDeck& cardDeck);
     void oneRound(const std::size_t                             startAt,
                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    void revealOnePublicCard(th::CardDeck& cardDeck);
-    void showCurrPublicCards();
+    void addToPool(const int32_t chips);
+    void updateCurrBet(const int32_t newBet);
+
+    void checkCurrnetPool() const;
+    void showCurrPublicCards() const;
 };
 } // namespace th
