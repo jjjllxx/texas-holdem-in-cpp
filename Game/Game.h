@@ -42,11 +42,12 @@ private:
                      std::shared_ptr<th::BasePlayer>& bigBlindPlayer);
     void putSmallBlind(const int32_t                    smallBlindChip,
                        std::shared_ptr<th::BasePlayer>& smallBlindPlayer);
+    void collectChips(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void revealOnePublicCard(th::CardDeck& cardDeck);
     void oneRound(const std::size_t                             startAt,
                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    void addToPull(const int32_t chips);
+    void addToPool(const int32_t chips);
     void updateCurrBet(const int32_t newBet);
 
     void checkCurrnetPool() const;
