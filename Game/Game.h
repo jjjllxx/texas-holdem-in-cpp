@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Chip/Chip.h"
+
 #include <memory>
 #include <vector>
 
@@ -13,17 +15,17 @@ class Game
 {
 public:
     bool initGame(const std::size_t smallBlindPos,
-                  const int32_t     smallBlindChip);
+                  const th::Chip&   smallBlindChip);
 
     void startGame(th::CardDeck&                                 cardDeck,
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
 private:
     std::size_t smallBlindPos;
-    int32_t     smallBlindChip;
+    th::Chip    smallBlindChip;
 
-    int32_t currBet;
-    int32_t currPool;
+    th::Chip currBet;
+    th::Chip currPool;
 
     std::vector<th::PokerCard> publicCards;
 
@@ -38,17 +40,17 @@ private:
     void riverRound(th::CardDeck&                                 cardDeck,
                     std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    void putBigBlind(const int32_t                    bigBlindChip,
+    void putBigBlind(const th::Chip&                  bigBlindChip,
                      std::shared_ptr<th::BasePlayer>& bigBlindPlayer);
-    void putSmallBlind(const int32_t                    smallBlindChip,
+    void putSmallBlind(const th::Chip&                  smallBlindChip,
                        std::shared_ptr<th::BasePlayer>& smallBlindPlayer);
-    void collectChips(std::vector<std::shared_ptr<th::BasePlayer>>& players);
+    void collectChip(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void revealOnePublicCard(th::CardDeck& cardDeck);
     void oneRound(const std::size_t                             startAt,
                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    void addToPool(const int32_t chips);
-    void updateCurrBet(const int32_t newBet);
+    void addToPool(const th::Chip& chip);
+    void updateCurrBet(const th::Chip& newBet);
 
     void checkCurrnetPool() const;
     void showCurrPublicCards() const;
