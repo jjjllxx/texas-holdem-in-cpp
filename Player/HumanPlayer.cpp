@@ -45,14 +45,13 @@ int32_t th::HumanPlayer::raise(const int32_t currBet)
         std::cin >> raiseBet;
     }
 
-    if (raiseBet > th::BasePlayer::checkChip())
+    if (raiseBet > th::HumanPlayer::checkChip())
     {
-        return th::BasePlayer::allIn();
+        return th::HumanPlayer::allIn();
     }
 
-    th::BasePlayer::minusChip(raiseBet);
-
-    std::cout << "Player" << th::HumanPlayer::getId() << "raise money to " << raiseBet << std::endl;
+    th::HumanPlayer::minusChip(raiseBet);
+    th::HumanPlayer::printAction(raiseBet, "raise money");
 
     return raiseBet;
 }

@@ -15,14 +15,13 @@ public:
 
     void init(const int32_t chipNum);
 
+    void putBigBlindChip(const int32_t bigBlindChip);
+    void putSmallBlindChip(const int32_t smallBlindChip);
+
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
 
     virtual int32_t takeAction(const int32_t currBet) = 0;
-    int32_t         call(const int32_t currBet);
-    int32_t         allIn();
-    int32_t         fold();
-    virtual int32_t raise(const int32_t currBet) = 0;
 
     bool shouldAct() const;
     void resetAfterGame();
@@ -41,7 +40,14 @@ protected:
     bool hasAllIn;
     bool hasGivenUpCurrGame;
 
+    int32_t         call(const int32_t currBet);
+    int32_t         allIn();
+    int32_t         fold();
+    virtual int32_t raise(const int32_t currBet) = 0;
+
     void addChip(const int32_t chipNum);
     void minusChip(const int32_t chipNum);
+    void printAction(const int32_t      chipNum,
+                     const std::string& actionName);
 };
 } // namespace th
