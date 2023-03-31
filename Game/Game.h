@@ -15,17 +15,17 @@ class Game
 {
 public:
     bool initGame(const std::size_t smallBlindPos,
-                  const th::Chip&   smallBlindChip);
+                  const th::chip&   smallBlindChip);
 
     void startGame(th::CardDeck&                                 cardDeck,
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
 private:
     std::size_t smallBlindPos;
-    th::Chip    smallBlindChip;
+    th::chip    smallBlindChip;
 
-    th::Chip currBet;
-    th::Chip currPool;
+    th::chip currBet;
+    th::chip currPool;
 
     std::vector<th::PokerCard> publicCards;
 
@@ -40,17 +40,17 @@ private:
     void riverRound(th::CardDeck&                                 cardDeck,
                     std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    void putBigBlind(const th::Chip&                  bigBlindChip,
+    void putBigBlind(const th::chip&                  bigBlindChip,
                      std::shared_ptr<th::BasePlayer>& bigBlindPlayer);
-    void putSmallBlind(const th::Chip&                  smallBlindChip,
+    void putSmallBlind(const th::chip&                  smallBlindChip,
                        std::shared_ptr<th::BasePlayer>& smallBlindPlayer);
     void collectChip(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void revealOnePublicCard(th::CardDeck& cardDeck);
     void oneRound(const std::size_t                             startAt,
                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
-    void addToPool(const th::Chip& chip);
-    void updateCurrBet(const th::Chip& newBet);
+    void addToPool(const th::chip& chip);
+    void updateCurrBet(const th::chip& newBet);
 
     void checkCurrnetPool() const;
     void showCurrPublicCards() const;

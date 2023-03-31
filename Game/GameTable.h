@@ -17,8 +17,8 @@ public:
     ~GameTable() = default;
 
     bool initPokerTable(const int32_t   playerNum,
-                        const th::Chip& initChip,
-                        const th::Chip& smallBlindChip);
+                        const th::chip& initChip,
+                        const th::chip& smallBlindChip);
     void clearPokerTable();
 
     void    startANewGame();
@@ -30,7 +30,7 @@ private:
     th::CardDeck cardDeck;
 
     std::size_t currSmallBlindPos;
-    th::Chip    currSmallBlindChip;
+    th::chip    currSmallBlindChip;
 
     std::vector<std::shared_ptr<th::BasePlayer>> players;
 };

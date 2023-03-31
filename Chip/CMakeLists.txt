@@ -1,3 +1,3 @@
-add_library(Chip STATIC 
-    Chip.cpp)
-target_include_directories(Chip PUBLIC "./")
+add_library(chip STATIC 
+    chip.cpp)
+target_include_directories(chip PUBLIC "./")

@@ -7,13 +7,13 @@ th::AutoPlayer::AutoPlayer(const int32_t id) :
 {
 }
 
-void th::AutoPlayer::init(const th::Chip& chipNum)
+void th::AutoPlayer::init(const th::chip& chipNum)
 {
     this->name = "Player " + std::to_string(th::BasePlayer::getId());
     th::BasePlayer::addChip(chipNum);
 }
 
-th::Chip th::AutoPlayer::takeAction(const th::Chip& currBet)
+th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
 {
     const int32_t action = currBet * 5 < th::AutoPlayer::checkChip()
                                ? std::chrono::system_clock::now().time_since_epoch().count() % 3
@@ -35,10 +35,10 @@ th::Chip th::AutoPlayer::takeAction(const th::Chip& currBet)
     return 0;
 }
 
-th::Chip th::AutoPlayer::raise(const th::Chip& currBet)
+th::chip th::AutoPlayer::raise(const th::chip& currBet)
 {
-    const th::Chip raiseBet = currBet == 0
-                                  ? th::Chip { 25 } - th::AutoPlayer::checkChipInFront()
+    const th::chip raiseBet = currBet == 0
+                                  ? th::chip { 25 } - th::AutoPlayer::checkChipInFront()
                                   : currBet * 2.5 - th::AutoPlayer::checkChipInFront();
 
     if (raiseBet >= th::AutoPlayer::checkChip())

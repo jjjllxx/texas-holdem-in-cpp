@@ -15,23 +15,23 @@ public:
     BasePlayer(const int32_t id);
     ~BasePlayer() = default;
 
-    virtual void init(const th::Chip& chipNum) = 0;
+    virtual void init(const th::chip& chipNum) = 0;
 
-    void putBigBlindChip(const th::Chip& bigBlindChip);
-    void putSmallBlindChip(const th::Chip& smallBlindChip);
+    void putBigBlindChip(const th::chip& bigBlindChip);
+    void putSmallBlindChip(const th::chip& smallBlindChip);
 
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
 
-    virtual th::Chip takeAction(const th::Chip& currBet) = 0;
-    th::Chip         pushChipToPool();
+    virtual th::chip takeAction(const th::chip& currBet) = 0;
+    th::chip         pushChipToPool();
 
     bool shouldAct() const;
     void resetAfterGame();
 
     int32_t                    getId() const;
-    th::Chip                   checkChip() const;
-    th::Chip                   checkChipInFront() const;
+    th::chip                   checkChip() const;
+    th::chip                   checkChipInFront() const;
     std::vector<th::PokerCard> checkHandCards() const;
 
     void showStatus() const;
@@ -41,22 +41,22 @@ protected:
     int32_t id;
     std::string name;
 
-    th::Chip chip;
-    th::Chip chipInFront;
+    th::chip chip;
+    th::chip chipInFront;
 
     std::vector<th::PokerCard> twoHandCards;
 
     bool hasAllIn;
     bool hasGivenUpCurrGame;
 
-    th::Chip         call(const th::Chip& currBet);
-    th::Chip         allIn();
-    th::Chip         fold();
-    virtual th::Chip raise(const th::Chip& currBet) = 0;
+    th::chip         call(const th::chip& currBet);
+    th::chip         allIn();
+    th::chip         fold();
+    virtual th::chip raise(const th::chip& currBet) = 0;
 
-    void addChip(const th::Chip& chipNum);
-    void putChipInFront(const th::Chip& chipNum);
-    void printAction(const th::Chip&    chipNum,
+    void addChip(const th::chip& chipNum);
+    void putChipInFront(const th::chip& chipNum);
+    void printAction(const th::chip&    chipNum,
                      const std::string& actionName);
 };
 } // namespace th

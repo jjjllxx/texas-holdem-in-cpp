@@ -4,7 +4,7 @@
 #include "../Player/BasePlayer.h"
 
 bool th::Game::initGame(const std::size_t smallBlindPos,
-                        const th::Chip&   smallBlindChip)
+                        const th::chip&   smallBlindChip)
 {
     if (smallBlindChip <= 0)
     {
@@ -87,13 +87,13 @@ void th::Game::riverRound(th::CardDeck&                                 cardDeck
     th::Game::collectChip(players);
 }
 
-void th::Game::putBigBlind(const th::Chip&                  bigBlindChip,
+void th::Game::putBigBlind(const th::chip&                  bigBlindChip,
                            std::shared_ptr<th::BasePlayer>& bigBlindPlayer)
 {
     bigBlindPlayer->putBigBlindChip(bigBlindChip);
     th::Game::updateCurrBet(bigBlindChip);
 }
-void th::Game::putSmallBlind(const th::Chip&                  smallBlindChip,
+void th::Game::putSmallBlind(const th::chip&                  smallBlindChip,
                              std::shared_ptr<th::BasePlayer>& smallBlindPlayer)
 {
     smallBlindPlayer->putSmallBlindChip(smallBlindChip);
@@ -124,8 +124,8 @@ void th::Game::oneRound(const std::size_t                             startAt,
     {
         if (players[currAt]->shouldAct() == true)
         {
-            const th::Chip chipToCall = this->currBet - players[currAt]->checkChipInFront();
-            const th::Chip actualChip = players[currAt]->takeAction(this->currBet);
+            const th::chip chipToCall = this->currBet - players[currAt]->checkChipInFront();
+            const th::chip actualChip = players[currAt]->takeAction(this->currBet);
 
             if (actualChip > chipToCall)
             {
@@ -144,12 +144,12 @@ void th::Game::oneRound(const std::size_t                             startAt,
     }
 }
 
-void th::Game::addToPool(const th::Chip& chip)
+void th::Game::addToPool(const th::chip& chip)
 {
     this->currPool += chip;
 }
 
-void th::Game::updateCurrBet(const th::Chip& newBet)
+void th::Game::updateCurrBet(const th::chip& newBet)
 {
     this->currBet = newBet;
 }

@@ -4,13 +4,13 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
     th::BasePlayer(id)
 {
 }
-void th::HumanPlayer::init(const th::Chip& chipNum)
+void th::HumanPlayer::init(const th::chip& chipNum)
 {
     this->name = "You(Player 0)";
     th::BasePlayer::addChip(chipNum);
 }
 
-th::Chip th::HumanPlayer::takeAction(const th::Chip& currBet)
+th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
 {
     th::HumanPlayer::peekHandCards();
     th::HumanPlayer::showStatus();
@@ -41,9 +41,9 @@ th::Chip th::HumanPlayer::takeAction(const th::Chip& currBet)
     return th::HumanPlayer::takeAction(currBet);
 }
 
-th::Chip th::HumanPlayer::raise(const th::Chip& currBet)
+th::chip th::HumanPlayer::raise(const th::chip& currBet)
 {
-    const th::Chip neededChip = currBet - th::HumanPlayer::checkChipInFront();
+    const th::chip neededChip = currBet - th::HumanPlayer::checkChipInFront();
     int32_t        inputVal   = 0;
 
     while (inputVal < neededChip.val)
@@ -55,7 +55,7 @@ th::Chip th::HumanPlayer::raise(const th::Chip& currBet)
         std::cin >> inputVal;
     }
 
-    th::Chip raiseBet = inputVal;
+    th::chip raiseBet = inputVal;
 
     if (raiseBet > th::HumanPlayer::checkChip())
     {

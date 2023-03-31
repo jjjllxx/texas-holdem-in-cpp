@@ -1,68 +1,68 @@
 #include "Chip.h"
 
-th::Chip::Chip() :
+th::chip::chip() :
     val(0)
 {
 }
 
-th::Chip::Chip(const int32_t val) :
+th::chip::chip(const int32_t val) :
     val(val)
 {
 }
 
-th::Chip th::Chip::operator+(const th::Chip& chip) const
+th::chip th::chip::operator+(const th::chip& chip) const
 {
     return this->val + chip.val;
 }
 
-th::Chip th::Chip::operator-(const th::Chip& chip) const
+th::chip th::chip::operator-(const th::chip& chip) const
 {
     return this->val + chip.val;
 }
 
-th::Chip th::Chip::operator*(const int32_t val) const
+th::chip th::chip::operator*(const int32_t val) const
 {
     return this->val * val;
 }
 
-th::Chip th::Chip::operator*(const double val) const
+th::chip th::chip::operator*(const double val) const
 {
     return this->val * val;
 }
 
-th::Chip& th::Chip::operator+=(const th::Chip& chip)
+th::chip& th::chip::operator+=(const th::chip& chip)
 {
     this->val += chip.val;
     return *this;
 }
 
-th::Chip& th::Chip::operator-=(const th::Chip& chip)
+th::chip& th::chip::operator-=(const th::chip& chip)
 {
     this->val -= chip.val;
     return *this;
 }
 
-bool th::Chip::operator==(const th::Chip& chip) const
+bool th::chip::operator==(const th::chip& chip) const
 {
     return this->val == chip.val;
 }
 
-bool th::Chip::operator<(const th::Chip& chip) const
+bool th::chip::operator<(const th::chip& chip) const
 {
     return this->val < chip.val;
 }
 
-bool th::Chip::operator>(const th::Chip& chip) const
+bool th::chip::operator>(const th::chip& chip) const
 {
     return this->val > chip.val;
 }
 
-bool th::Chip::operator<=(const th::Chip& chip) const
+bool th::chip::operator<=(const th::chip& chip) const
 {
     return this->val <= chip.val;
 }
 
-bool th::Chip::operator>=(const th::Chip& chip) const
+bool th::chip::operator>=(const th::chip& chip) const
 {
     return this->val >= chip.val;
 }

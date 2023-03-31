@@ -4,27 +4,26 @@
 
 namespace th
 {
-struct Chip
+struct chip
 {
-    Chip();
-    Chip(const int32_t val);
+    chip();
+    chip(const int32_t val);
 
     int32_t val;
 
-    th::Chip operator-(const th::Chip& chip) const;
-    th::Chip operator-(const int32_t val) const;
-    th::Chip operator+(const th::Chip& chip) const;
-    th::Chip operator*(const int32_t val) const;
-    th::Chip operator*(const double val) const;
+    th::chip operator-(const th::chip& chip) const;
+    th::chip operator+(const th::chip& chip) const;
+    th::chip operator*(const int32_t val) const;
+    th::chip operator*(const double val) const;
 
-    th::Chip& operator+=(const th::Chip& chip);
-    th::Chip& operator-=(const th::Chip& chip);
+    th::chip& operator+=(const th::chip& chip);
+    th::chip& operator-=(const th::chip& chip);
 
-    bool operator==(const th::Chip& chip) const;
-    bool operator<(const th::Chip& chip) const;
-    bool operator>(const th::Chip& chip) const;
-    bool operator<=(const th::Chip& chip) const;
-    bool operator>=(const th::Chip& chip) const;
+    bool operator==(const th::chip& chip) const;
+    bool operator<(const th::chip& chip) const;
+    bool operator>(const th::chip& chip) const;
+    bool operator<=(const th::chip& chip) const;
+    bool operator>=(const th::chip& chip) const;
 };
 
 } // namespace th

@@ -6,15 +6,15 @@
 
 namespace th
 {
-struct Chip;
+struct chip;
 
 class HumanPlayer final : public BasePlayer
 {
 public:
     HumanPlayer(const int32_t id);
 
-    void     init(const th::Chip& chipNum) override;
-    th::Chip takeAction(const th::Chip& currBet) override;
-    th::Chip raise(const th::Chip& currBet) override;
+    void     init(const th::chip& chipNum) override;
+    th::chip takeAction(const th::chip& currBet) override;
+    th::chip raise(const th::chip& currBet) override;
 };
 } // namespace th

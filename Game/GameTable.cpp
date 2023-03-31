@@ -14,8 +14,8 @@ th::GameTable::GameTable() :
 }
 
 bool th::GameTable::initPokerTable(const int32_t   playerNum,
-                                   const th::Chip& initChip,
-                                   const th::Chip& smallBlindChip)
+                                   const th::chip& initChip,
+                                   const th::chip& smallBlindChip)
 {
     if (playerNum < th::MINIMUM_PLAYER_NUM || playerNum >= th::MAXIMUM_PLAYER_NUM)
     {
