@@ -2,19 +2,17 @@
 
 #include "BasePlayer.h"
 
-#include <iostream>
-
 namespace th
 {
+struct chip;
+
 class HumanPlayer final : public BasePlayer
 {
 public:
     HumanPlayer(const int32_t id);
 
-    void    init(const int32_t chipNum) override;
-    int32_t takeAction(const int32_t currBet) override;
-    int32_t raise(const int32_t currBet) override;
-
-private:
+    void     init(const th::chip& chipNum) override;
+    th::chip takeAction(const th::chip& currBet) override;
+    th::chip raise(const th::chip& currBet) override;
 };
 } // namespace th
