@@ -12,7 +12,6 @@ add_subdirectory(Player)
 
 add_executable(texas main.cpp)
 target_link_libraries(texas PUBLIC 
-        Card
-        Chip
+        Entity
         Game
         Player)
