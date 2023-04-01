@@ -1,6 +1,6 @@
 #include "CardType.h"
 
-#include "PokerCard.h"
+#include "../../Entity/Card/PokerCard.h"
 
 th::CardComboType th::CardType::calcCardComboType(const std::vector<th::PokerCard>& fiveCards)
 {
