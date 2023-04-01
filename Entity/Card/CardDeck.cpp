@@ -1,7 +1,6 @@
-#include <algorithm>
-#include <random>
-
 #include "CardDeck.h"
+
+#include "../../Algorithms/Random/Random.h"
 
 th::CardDeck::CardDeck() :
     currTopCard(0)
@@ -20,10 +19,7 @@ void th::CardDeck::init()
 
 void th::CardDeck::shuffle()
 {
-    unsigned seed         = std::chrono::system_clock::now().time_since_epoch().count();
-    auto     randomEngine = std::default_random_engine { seed };
-    std::shuffle(this->cards.begin(), this->cards.end(), randomEngine);
-
+    th::Random::shuffle(this->cards);
     this->currTopCard = 0;
 }
 

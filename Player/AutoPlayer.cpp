@@ -1,6 +1,6 @@
 #include "AutoPlayer.h"
 
-#include <random>
+#include "../Algorithms/Random/Random.h"
 
 th::AutoPlayer::AutoPlayer(const int32_t id) :
     th::BasePlayer(id)
@@ -16,8 +16,10 @@ void th::AutoPlayer::init(const th::chip& chipNum)
 th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
 {
     const int32_t action = currBet * 5 < th::AutoPlayer::checkChip()
-                               ? std::chrono::system_clock::now().time_since_epoch().count() % 3
-                               : std::chrono::system_clock::now().time_since_epoch().count() % 4;
+                               ? th::Random::generateWithin(0, 2)
+                               : th::Random::generateWithin(0, 3);
+
+    std::cout << action << std::endl;
     switch (action)
     {
     case (0):
