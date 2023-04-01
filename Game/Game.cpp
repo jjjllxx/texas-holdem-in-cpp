@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "../Card/CardDeck.h"
+#include "../Entity/Card/CardDeck.h"
 #include "../Player/BasePlayer.h"
 
 bool th::Game::initGame(const std::size_t smallBlindPos,

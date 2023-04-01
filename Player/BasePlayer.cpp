@@ -1,5 +1,5 @@
 #include "BasePlayer.h"
-#include "../Card/PokerCard.h"
+#include "../Entity/Card/PokerCard.h"
 
 th::BasePlayer::BasePlayer(const int32_t id) :
     id(id),

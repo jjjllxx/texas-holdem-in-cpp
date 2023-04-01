@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Chip/Chip.h"
+#include "../Entity/Chip/Chip.h"
 
 #include <memory>
 #include <vector>

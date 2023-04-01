@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Card/PokerCard.h"
-#include "../Chip/Chip.h"
+#include "../Entity/Chip/Chip.h"
+#include "../Entity/Card/PokerCard.h"
 
 #include <stdint.h>
 #include <vector>

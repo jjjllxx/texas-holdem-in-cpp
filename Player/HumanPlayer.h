@@ -2,8 +2,6 @@
 
 #include "BasePlayer.h"
 
-#include <iostream>
-
 namespace th
 {
 struct chip;
