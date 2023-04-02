@@ -1,13 +1,26 @@
 #pragma once
 
-#include "../Entity/Chip/Chip.h"
 #include "../Entity/Card/PokerCard.h"
+#include "../Entity/Chip/Chip.h"
 
 #include <stdint.h>
 #include <vector>
 
 namespace th
 {
+enum class PlayerAction
+{
+    INVALID,
+
+    AllIn,
+    Call,
+    Check,
+    Fold,
+    PutBigBlind,
+    PutSmallBlind,
+    Raise,
+    ReadyToStart
+};
 
 class BasePlayer
 {
@@ -26,19 +39,20 @@ public:
     virtual th::chip takeAction(const th::chip& currBet) = 0;
     th::chip         pushChipToPool();
 
-    bool shouldAct() const;
+    void receiveChip(const th::chip& chipNum);
     void resetAfterGame();
 
     int32_t                    getId() const;
     th::chip                   checkChip() const;
     th::chip                   checkChipInFront() const;
+    th::PlayerAction           checkLastAction() const;
     std::vector<th::PokerCard> checkHandCards() const;
 
     void showStatus() const;
     void peekHandCards() const;
 
 protected:
-    int32_t id;
+    int32_t     id;
     std::string name;
 
     th::chip chip;
@@ -49,14 +63,16 @@ protected:
     bool hasAllIn;
     bool hasGivenUpCurrGame;
 
+    th::PlayerAction lastAct;
+
     th::chip         call(const th::chip& currBet);
+    th::chip         check();
     th::chip         allIn();
     th::chip         fold();
     virtual th::chip raise(const th::chip& currBet) = 0;
 
-    void addChip(const th::chip& chipNum);
     void putChipInFront(const th::chip& chipNum);
-    void printAction(const th::chip&    chipNum,
-                     const std::string& actionName);
+    void setAction(const th::PlayerAction action);
+    void printAction();
 };
 } // namespace th

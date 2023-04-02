@@ -1,4 +1,6 @@
 #include "BasePlayer.h"
+
+#include "../Algorithms/Card/CardSelector.h"
 #include "../Entity/Card/PokerCard.h"
 
 th::BasePlayer::BasePlayer(const int32_t id) :
@@ -12,13 +14,15 @@ th::BasePlayer::BasePlayer(const int32_t id) :
 
 void th::BasePlayer::putBigBlindChip(const th::chip& bigBlindChip)
 {
-    th::BasePlayer::printAction(bigBlindChip, "put big blind");
+    th::BasePlayer::setAction(th::PlayerAction::PutBigBlind);
+    th::BasePlayer::printAction();
     th::BasePlayer::putChipInFront(bigBlindChip);
 }
 
 void th::BasePlayer::putSmallBlindChip(const th::chip& smallBlindChip)
 {
-    th::BasePlayer::printAction(smallBlindChip, "put small blind");
+    th::BasePlayer::setAction(th::PlayerAction::PutSmallBlind);
+    th::BasePlayer::printAction();
     th::BasePlayer::putChipInFront(smallBlindChip);
 }
 
@@ -46,14 +50,11 @@ th::chip th::BasePlayer::pushChipToPool()
     return chip;
 }
 
-bool th::BasePlayer::shouldAct() const
-{
-    return this->hasAllIn == false && this->hasGivenUpCurrGame == false;
-}
 void th::BasePlayer::resetAfterGame()
 {
     this->hasAllIn           = false;
     this->hasGivenUpCurrGame = false;
+    this->lastAct            = th::PlayerAction::ReadyToStart;
 }
 
 int32_t th::BasePlayer::getId() const
@@ -69,6 +70,11 @@ th::chip th::BasePlayer::checkChip() const
 th::chip th::BasePlayer::checkChipInFront() const
 {
     return this->chipInFront;
+}
+
+th::PlayerAction th::BasePlayer::checkLastAction() const
+{
+    return this->lastAct;
 }
 
 std::vector<th::PokerCard> th::BasePlayer::checkHandCards() const
@@ -95,21 +101,35 @@ th::chip th::BasePlayer::call(const th::chip& currBet)
 {
     const th::chip chipToCall = currBet - th::BasePlayer::checkChipInFront();
 
+    if (chipToCall == 0)
+    {
+        return th::BasePlayer::check();
+    }
+
     if (chipToCall >= th::BasePlayer::checkChip())
     {
         return th::BasePlayer::allIn();
     }
 
     th::BasePlayer::putChipInFront(chipToCall);
-    th::BasePlayer::printAction(chipToCall, "call");
+    th::BasePlayer::setAction(th::PlayerAction::Call);
+    th::BasePlayer::printAction();
 
     return chipToCall;
+}
+
+th::chip th::BasePlayer::check()
+{
+    th::BasePlayer::setAction(th::PlayerAction::Check);
+    th::BasePlayer::printAction();
+    return 0;
 }
 
 th::chip th::BasePlayer::fold()
 {
     this->hasGivenUpCurrGame = true;
-    th::BasePlayer::printAction(0, "fold");
+    th::BasePlayer::setAction(th::PlayerAction::Fold);
+    th::BasePlayer::printAction();
 
     return 0;
 }
@@ -120,12 +140,13 @@ th::chip th::BasePlayer::allIn()
 
     this->hasAllIn = true;
     th::BasePlayer::putChipInFront(chipLeft);
-    th::BasePlayer::printAction(chipLeft, "all in");
+    th::BasePlayer::setAction(th::PlayerAction::AllIn);
+    th::BasePlayer::printAction();
 
     return chipLeft;
 }
 
-void th::BasePlayer::addChip(const th::chip& chipNum)
+void th::BasePlayer::receiveChip(const th::chip& chipNum)
 {
     this->chip += chipNum;
 }
@@ -136,10 +157,46 @@ void th::BasePlayer::putChipInFront(const th::chip& chipNum)
     this->chipInFront += chipNum;
 }
 
-void th::BasePlayer::printAction(const th::chip&    chipNum,
-                                 const std::string& actionName)
+void th::BasePlayer::setAction(const th::PlayerAction action)
 {
-    chipNum == 0
-        ? std ::cout << this->name << ' ' << actionName << ". " << std::endl
-        : std ::cout << this->name << ' ' << actionName << " with " << chipNum.val << ". " << std::endl;
+    this->lastAct = action;
+}
+
+void th::BasePlayer::printAction()
+{
+    const th::PlayerAction action = th::BasePlayer::checkLastAction();
+
+    std::string actionName;
+    switch (action)
+    {
+    case th::PlayerAction::AllIn:
+        actionName = " all in.";
+        break;
+    case th::PlayerAction::Call:
+        actionName = " calls. ";
+        break;
+    case th::PlayerAction::Check:
+        actionName = " checks.";
+        break;
+    case th::PlayerAction::Fold:
+        actionName = " folds. ";
+        break;
+    case th::PlayerAction::PutBigBlind:
+        actionName = " puts big blind.";
+        break;
+    case th::PlayerAction::PutSmallBlind:
+        actionName = " puts small blind.";
+        break;
+    case th::PlayerAction::Raise:
+        actionName = " raises.";
+        break;
+
+    case th::PlayerAction::ReadyToStart:
+    case th::PlayerAction::INVALID:
+    default:
+        return;
+    }
+
+    std::cout << this->name << actionName << " Chips in front: "
+              << th::BasePlayer::checkChipInFront().val << std::endl;
 }

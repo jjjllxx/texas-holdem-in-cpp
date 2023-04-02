@@ -7,7 +7,7 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
 void th::HumanPlayer::init(const th::chip& chipNum)
 {
     this->name = "You(Player 0)";
-    th::BasePlayer::addChip(chipNum);
+    th::BasePlayer::receiveChip(chipNum);
 }
 
 th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
@@ -63,7 +63,8 @@ th::chip th::HumanPlayer::raise(const th::chip& currBet)
     }
 
     th::HumanPlayer::putChipInFront(raiseBet);
-    th::HumanPlayer::printAction(raiseBet, "raise money");
+    th::HumanPlayer::setAction(th::PlayerAction::Raise);
+    th::HumanPlayer::printAction();
 
     return raiseBet;
 }

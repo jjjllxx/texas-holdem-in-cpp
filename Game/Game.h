@@ -52,7 +52,7 @@ private:
     void addToPool(const th::chip& chip);
     void updateCurrBet(const th::chip& newBet);
 
-    void checkCurrnetPool() const;
     void showCurrPublicCards() const;
+    void logGameStatus(const std::string& status) const;
 };
 } // namespace th
