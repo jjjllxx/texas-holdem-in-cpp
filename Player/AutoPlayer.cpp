@@ -13,11 +13,11 @@ void th::AutoPlayer::init(const th::chip& chipNum)
     th::BasePlayer::receiveChip(chipNum);
 }
 
-th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
+void th::AutoPlayer::takeAction(const th::chip& currBet)
 {
     if (th::BasePlayer::needToAct() == false)
     {
-        return 0;
+        return;
     }
 
     const int32_t action = currBet * 5 < th::AutoPlayer::checkChip()
@@ -26,21 +26,23 @@ th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
     switch (action)
     {
     case (0):
-        return th::AutoPlayer::fold();
+        th::AutoPlayer::fold();
+        break;
     case (1):
-        return th::AutoPlayer::call(currBet);
+        th::AutoPlayer::call(currBet);
+        break;
     case (2):
-        return th::AutoPlayer::raise(currBet);
+        th::AutoPlayer::raise(currBet);
+        break;
     case (3):
-        return th::AutoPlayer::allIn();
+        th::AutoPlayer::allIn();
+        break;
     default:
         break;
     }
-
-    return 0;
 }
 
-th::chip th::AutoPlayer::raise(const th::chip& currBet)
+void th::AutoPlayer::raise(const th::chip& currBet)
 {
     const th::chip raiseBet = currBet == 0
                                   ? th::chip { 25 } - th::AutoPlayer::checkChipInFront()
@@ -54,6 +56,4 @@ th::chip th::AutoPlayer::raise(const th::chip& currBet)
     th::AutoPlayer::putChipInFront(raiseBet);
     th::AutoPlayer::setAction(th::PlayerAction::Raise);
     th::AutoPlayer::printAction();
-
-    return raiseBet;
 }

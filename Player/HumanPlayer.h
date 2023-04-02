@@ -11,8 +11,8 @@ class HumanPlayer final : public BasePlayer
 public:
     HumanPlayer(const int32_t id);
 
-    void     init(const th::chip& chipNum) override;
-    th::chip takeAction(const th::chip& currBet) override;
-    th::chip raise(const th::chip& currBet) override;
+    void init(const th::chip& chipNum) override;
+    void takeAction(const th::chip& currBet) override;
+    void raise(const th::chip& currBet) override;
 };
 } // namespace th

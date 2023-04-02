@@ -32,15 +32,14 @@ public:
 
     void putBigBlindChip(const th::chip& bigBlindChip);
     void putSmallBlindChip(const th::chip& smallBlindChip);
-
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
 
-    virtual th::chip takeAction(const th::chip& currBet) = 0;
-    th::chip         pushChipToPool();
+    virtual void takeAction(const th::chip& currBet) = 0;
 
-    void receiveChip(const th::chip& chipNum);
-    void resetAfterGame();
+    th::chip pushChipToPool();
+    void     receiveChip(const th::chip& chipNum);
+    void     resetAfterGame();
 
     int32_t                    getId() const;
     th::chip                   checkChip() const;
@@ -61,11 +60,11 @@ protected:
     th::PlayerAction           lastAct;
     std::vector<th::PokerCard> twoHandCards;
 
-    th::chip         call(const th::chip& currBet);
-    th::chip         check();
-    th::chip         allIn();
-    th::chip         fold();
-    virtual th::chip raise(const th::chip& currBet) = 0;
+    void         call(const th::chip& currBet);
+    void         check();
+    void         allIn();
+    void         fold();
+    virtual void raise(const th::chip& currBet) = 0;
 
     bool needToAct() const;
     void putChipInFront(const th::chip& chipNum);

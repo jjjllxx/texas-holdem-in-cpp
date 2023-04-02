@@ -10,11 +10,11 @@ void th::HumanPlayer::init(const th::chip& chipNum)
     th::BasePlayer::receiveChip(chipNum);
 }
 
-th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
+void th::HumanPlayer::takeAction(const th::chip& currBet)
 {
     if (th::BasePlayer::needToAct() == false)
     {
-        return 0;
+        return;
     }
 
     th::HumanPlayer::peekHandCards();
@@ -46,7 +46,7 @@ th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
     return th::HumanPlayer::takeAction(currBet);
 }
 
-th::chip th::HumanPlayer::raise(const th::chip& currBet)
+void th::HumanPlayer::raise(const th::chip& currBet)
 {
     const th::chip neededChip = currBet - th::HumanPlayer::checkChipInFront();
     int32_t        inputVal   = 0;
@@ -70,6 +70,4 @@ th::chip th::HumanPlayer::raise(const th::chip& currBet)
     th::HumanPlayer::putChipInFront(raiseBet);
     th::HumanPlayer::setAction(th::PlayerAction::Raise);
     th::HumanPlayer::printAction();
-
-    return raiseBet;
 }

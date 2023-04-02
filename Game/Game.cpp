@@ -129,9 +129,10 @@ void th::Game::oneRound(const std::size_t                             startAt,
     {
         players[currAt]->takeAction(this->currBet);
 
-        if (players[currAt]->checkChipInFront() > this->currBet)
+        if (const th::chip currChipInFront = players[currAt]->checkChipInFront();
+            currChipInFront > this->currBet)
         {
-            th::Game::updateCurrBet(players[currAt]->checkChipInFront());
+            th::Game::updateCurrBet(currChipInFront);
             shouldEndAt = currAt;
         }
 
