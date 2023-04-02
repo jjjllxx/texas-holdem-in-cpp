@@ -127,18 +127,14 @@ void th::Game::oneRound(const std::size_t                             startAt,
 
     while (true)
     {
-        if (players[currAt]->checkLastAction() != th::PlayerAction::AllIn
-            || players[currAt]->checkLastAction() != th::PlayerAction::Fold)
-        {
-            const th::chip chipToCall = this->currBet - players[currAt]->checkChipInFront();
-            const th::chip actualChip = players[currAt]->takeAction(this->currBet);
+        players[currAt]->takeAction(this->currBet);
 
-            if (actualChip > chipToCall)
-            {
-                th::Game::updateCurrBet(players[currAt]->checkChipInFront());
-                shouldEndAt = currAt;
-            }
+        if (players[currAt]->checkChipInFront() > this->currBet)
+        {
+            th::Game::updateCurrBet(players[currAt]->checkChipInFront());
+            shouldEndAt = currAt;
         }
+
         ++currAt;
         currAt %= playerNum;
 

@@ -15,6 +15,11 @@ void th::AutoPlayer::init(const th::chip& chipNum)
 
 th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
 {
+    if (th::BasePlayer::needToAct() == false)
+    {
+        return 0;
+    }
+
     const int32_t action = currBet * 5 < th::AutoPlayer::checkChip()
                                ? th::Random::generateWithin(0, 2)
                                : th::Random::generateWithin(0, 3);

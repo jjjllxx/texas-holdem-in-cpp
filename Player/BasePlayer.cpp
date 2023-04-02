@@ -7,8 +7,7 @@ th::BasePlayer::BasePlayer(const int32_t id) :
     id(id),
     chip(0),
     chipInFront(0),
-    hasAllIn(false),
-    hasGivenUpCurrGame(false)
+    lastAct(th::PlayerAction::INVALID)
 {
 }
 
@@ -52,9 +51,7 @@ th::chip th::BasePlayer::pushChipToPool()
 
 void th::BasePlayer::resetAfterGame()
 {
-    this->hasAllIn           = false;
-    this->hasGivenUpCurrGame = false;
-    this->lastAct            = th::PlayerAction::ReadyToStart;
+    this->lastAct = th::PlayerAction::ReadyToStart;
 }
 
 int32_t th::BasePlayer::getId() const
@@ -127,7 +124,6 @@ th::chip th::BasePlayer::check()
 
 th::chip th::BasePlayer::fold()
 {
-    this->hasGivenUpCurrGame = true;
     th::BasePlayer::setAction(th::PlayerAction::Fold);
     th::BasePlayer::printAction();
 
@@ -138,7 +134,6 @@ th::chip th::BasePlayer::allIn()
 {
     const th::chip chipLeft = th::BasePlayer::checkChip();
 
-    this->hasAllIn = true;
     th::BasePlayer::putChipInFront(chipLeft);
     th::BasePlayer::setAction(th::PlayerAction::AllIn);
     th::BasePlayer::printAction();
@@ -149,6 +144,25 @@ th::chip th::BasePlayer::allIn()
 void th::BasePlayer::receiveChip(const th::chip& chipNum)
 {
     this->chip += chipNum;
+}
+
+bool th::BasePlayer::needToAct() const
+{
+    const th::PlayerAction action = th::BasePlayer::checkLastAction();
+
+    if (action == th::PlayerAction::Fold)
+    {
+        std::cout << this->name << " has already folded. " << std::endl;
+        return false;
+    }
+
+    if (action == th::PlayerAction::AllIn)
+    {
+        std::cout << this->name << " has already all in. " << std::endl;
+        return false;
+    }
+
+    return true;
 }
 
 void th::BasePlayer::putChipInFront(const th::chip& chipNum)
@@ -162,7 +176,7 @@ void th::BasePlayer::setAction(const th::PlayerAction action)
     this->lastAct = action;
 }
 
-void th::BasePlayer::printAction()
+void th::BasePlayer::printAction() const
 {
     const th::PlayerAction action = th::BasePlayer::checkLastAction();
 

@@ -12,6 +12,11 @@ void th::HumanPlayer::init(const th::chip& chipNum)
 
 th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
 {
+    if (th::BasePlayer::needToAct() == false)
+    {
+        return 0;
+    }
+
     th::HumanPlayer::peekHandCards();
     th::HumanPlayer::showStatus();
     std::cout << "Current bet is " << currBet.val

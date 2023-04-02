@@ -58,12 +58,8 @@ protected:
     th::chip chip;
     th::chip chipInFront;
 
+    th::PlayerAction           lastAct;
     std::vector<th::PokerCard> twoHandCards;
-
-    bool hasAllIn;
-    bool hasGivenUpCurrGame;
-
-    th::PlayerAction lastAct;
 
     th::chip         call(const th::chip& currBet);
     th::chip         check();
@@ -71,8 +67,9 @@ protected:
     th::chip         fold();
     virtual th::chip raise(const th::chip& currBet) = 0;
 
+    bool needToAct() const;
     void putChipInFront(const th::chip& chipNum);
     void setAction(const th::PlayerAction action);
-    void printAction();
+    void printAction() const;
 };
 } // namespace th
