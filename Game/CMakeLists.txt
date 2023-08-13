@@ -1,4 +1,4 @@
-add_library(Game STATIC 
-    Game.cpp
-    GameTable.cpp)
-target_include_directories(Game PUBLIC "./")
+list(APPEND TH_SOURCES
+${CMAKE_CURRENT_LIST_DIR}/Game.cpp
+${CMAKE_CURRENT_LIST_DIR}/GameTable.cpp
+)

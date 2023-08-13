@@ -1,0 +1,5 @@
+CompileFlags:
+  CompilationDatabase: /Users/jinlexuan/Documents/texas-holdem-in-cpp/build
+
+Diagnostics:
+  UnusedIncludes: Strict

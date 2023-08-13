@@ -1,5 +1,5 @@
-add_library(Player STATIC 
-    AutoPlayer.cpp
-    BasePlayer.cpp
-    HumanPlayer.cpp)
-target_include_directories(Player PUBLIC "./")
+list(APPEND TH_SOURCES
+${CMAKE_CURRENT_LIST_DIR}/AutoPlayer.cpp
+${CMAKE_CURRENT_LIST_DIR}/BasePlayer.cpp
+${CMAKE_CURRENT_LIST_DIR}/HumanPlayer.cpp
+)

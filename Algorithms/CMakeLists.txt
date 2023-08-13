@@ -1,5 +1,2 @@
-add_subdirectory(Card)
-add_subdirectory(Random)
-
-add_library(Algo INTERFACE)
-target_link_libraries(Algo INTERFACE CardAlgo Random)
+include(${CMAKE_CURRENT_LIST_DIR}/Card/CMakeLists.txt)
+include(${CMAKE_CURRENT_LIST_DIR}/Random/CMakeLists.txt)

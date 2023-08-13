@@ -1,3 +1,3 @@
-add_library(Random STATIC 
-    Random.cpp)
-target_include_directories(Random PUBLIC "./")
+list(APPEND TH_SOURCES
+${CMAKE_CURRENT_LIST_DIR}/Random.cpp
+)

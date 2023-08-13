@@ -1,5 +1,5 @@
-add_library(CardAlgo STATIC 
-    CardComparison.cpp
-    CardSelector.cpp
-    CardType.cpp)
-target_include_directories(CardAlgo PUBLIC "./")
+list(APPEND TH_SOURCES
+${CMAKE_CURRENT_LIST_DIR}/CardComparison.cpp
+${CMAKE_CURRENT_LIST_DIR}/CardSelector.cpp
+${CMAKE_CURRENT_LIST_DIR}/CardType.cpp
+)
