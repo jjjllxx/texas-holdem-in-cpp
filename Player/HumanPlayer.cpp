@@ -1,5 +1,7 @@
 #include "HumanPlayer.h"
 
+#include <iostream>
+
 th::HumanPlayer::HumanPlayer(const int32_t id) :
     th::BasePlayer(id)
 {

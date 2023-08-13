@@ -1,6 +1,7 @@
 #include "CardComparison.h"
 
-#include "../../Entity/Card/PokerCard.h"
+#include "Entity/Card/PokerCard.h"
+
 #include "CardType.h"
 
 th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::PokerCard>& firstCards,

@@ -1,9 +1,8 @@
 #pragma once
 
-#include "../Entity/Card/PokerCard.h"
-#include "../Entity/Chip/Chip.h"
+#include "Entity/Card/PokerCard.h"
+#include "Entity/Chip/Chip.h"
 
-#include <stdint.h>
 #include <vector>
 
 namespace th

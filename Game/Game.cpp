@@ -1,7 +1,9 @@
 #include "Game.h"
 
-#include "../Entity/Card/CardDeck.h"
-#include "../Player/BasePlayer.h"
+#include "Entity/Card/CardDeck.h"
+#include "Player/BasePlayer.h"
+
+#include <iostream>
 
 bool th::Game::initGame(const std::size_t smallBlindPos,
                         const th::chip&   smallBlindChip)

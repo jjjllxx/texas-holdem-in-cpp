@@ -1,7 +1,8 @@
 #include "BasePlayer.h"
 
-#include "../Algorithms/Card/CardSelector.h"
-#include "../Entity/Card/PokerCard.h"
+#include "Entity/Card/PokerCard.h"
+
+#include <iostream>
 
 th::BasePlayer::BasePlayer(const int32_t id) :
     id(id),

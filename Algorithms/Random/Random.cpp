@@ -1,6 +1,6 @@
 #include "Random.h"
 
-#include "../../Entity/Card/PokerCard.h"
+#include "Entity/Card/PokerCard.h"
 
 #include <algorithm>
 #include <random>

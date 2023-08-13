@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Entity/Card/CardDeck.h"
+#include "Entity/Card/CardDeck.h"
 #include "Game.h"
 
 #include <memory>

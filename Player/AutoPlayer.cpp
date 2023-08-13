@@ -1,6 +1,6 @@
 #include "AutoPlayer.h"
 
-#include "../Algorithms/Random/Random.h"
+#include "Algorithms/Random/Random.h"
 
 th::AutoPlayer::AutoPlayer(const int32_t id) :
     th::BasePlayer(id)

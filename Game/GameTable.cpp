@@ -1,10 +1,10 @@
 #include "GameTable.h"
 
-#include "../Player/AutoPlayer.h"
-#include "../Player/BasePlayer.h"
-#include "../Player/HumanPlayer.h"
+#include "Player/AutoPlayer.h"
+#include "Player/BasePlayer.h"
+#include "Player/HumanPlayer.h"
 
-#include "../Utilities/Constants.h"
+#include "Utilities/Constants.h"
 
 th::GameTable::GameTable() :
     gameNum(0),
