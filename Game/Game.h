@@ -3,6 +3,7 @@
 #include "Entity/Chip/Chip.h"
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 namespace th
@@ -21,13 +22,14 @@ public:
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
 private:
+    std::size_t survivedPlayerNum;
     std::size_t smallBlindPos;
     th::chip    smallBlindChip;
+    th::chip    currBet;
+    th::chip    currPool;
 
-    th::chip currBet;
-    th::chip currPool;
-
-    std::vector<th::PokerCard> publicCards;
+    std::unordered_map<int32_t, th::chip> chipsMap;
+    std::vector<th::PokerCard>            publicCards;
 
     void handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void dealCards(th::CardDeck&                                 cardDeck,

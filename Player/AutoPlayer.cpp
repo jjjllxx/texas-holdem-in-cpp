@@ -26,17 +26,13 @@ void th::AutoPlayer::takeAction(const th::chip& currBet)
     switch (action)
     {
     case (0):
-        th::AutoPlayer::fold();
-        break;
+        return th::AutoPlayer::fold();
     case (1):
-        th::AutoPlayer::call(currBet);
-        break;
+        return th::AutoPlayer::call(currBet);
     case (2):
-        th::AutoPlayer::raise(currBet);
-        break;
+        return th::AutoPlayer::raise(currBet);
     case (3):
-        th::AutoPlayer::allIn();
-        break;
+        return th::AutoPlayer::allIn();
     default:
         break;
     }

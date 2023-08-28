@@ -33,7 +33,7 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     th::Game::putSmallBlind(this->smallBlindChip, players[this->smallBlindPos]);
-    const std::size_t bigBlindPos  = (this->smallBlindPos + 1) % players.size();
+    const std::size_t bigBlindPos = (this->smallBlindPos + 1) % players.size();
     th::Game::putBigBlind(this->smallBlindChip * 2, players[bigBlindPos]);
 }
 
@@ -99,18 +99,22 @@ void th::Game::putBigBlind(const th::chip&                  bigBlindChip,
 {
     bigBlindPlayer->putBigBlindChip(bigBlindChip);
     th::Game::updateCurrBet(bigBlindChip);
+    th::Game::addToPool(bigBlindChip);
 }
 void th::Game::putSmallBlind(const th::chip&                  smallBlindChip,
                              std::shared_ptr<th::BasePlayer>& smallBlindPlayer)
 {
     smallBlindPlayer->putSmallBlindChip(smallBlindChip);
+    th::Game::addToPool(smallBlindChip);
 }
 
 void th::Game::collectChip(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     for (std::shared_ptr<th::BasePlayer>& player : players)
     {
-        th::Game::addToPool(player->pushChipToPool());
+        const th::chip chipInFront = player->pushChipToPool();
+        th::Game::addToPool(chipInFront);
+        chipsMap.insert_or_assign(player->getId(), chipInFront);
     }
 }
 
@@ -129,6 +133,7 @@ void th::Game::oneRound(const std::size_t                             startAt,
 
     while (true)
     {
+        const th::PlayerAction prevAct = players[currAt]->checkLastAction();
         players[currAt]->takeAction(this->currBet);
 
         if (const th::chip currChipInFront = players[currAt]->checkChipInFront();
@@ -136,6 +141,12 @@ void th::Game::oneRound(const std::size_t                             startAt,
         {
             th::Game::updateCurrBet(currChipInFront);
             shouldEndAt = currAt;
+        }
+
+        if (const th::PlayerAction currAct = players[currAt]->checkLastAction();
+            currAct == th::PlayerAction::Fold && currAct != prevAct)
+        {
+            this->survivedPlayerNum--;
         }
 
         ++currAt;
