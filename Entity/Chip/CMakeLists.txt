@@ -1,2 +1,3 @@
-add_library(Chip STATIC Chip.cpp)
-target_include_directories(Chip PUBLIC "./")
+list(APPEND TH_SOURCES
+${CMAKE_CURRENT_LIST_DIR}/Chip.cpp
+)

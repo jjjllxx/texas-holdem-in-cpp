@@ -1,6 +1,6 @@
 #include "AutoPlayer.h"
 
-#include "../Algorithms/Random/Random.h"
+#include "Algorithms/Random/Random.h"
 
 th::AutoPlayer::AutoPlayer(const int32_t id) :
     th::BasePlayer(id)
@@ -10,16 +10,19 @@ th::AutoPlayer::AutoPlayer(const int32_t id) :
 void th::AutoPlayer::init(const th::chip& chipNum)
 {
     this->name = "Player " + std::to_string(th::BasePlayer::getId());
-    th::BasePlayer::addChip(chipNum);
+    th::BasePlayer::receiveChip(chipNum);
 }
 
-th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
+void th::AutoPlayer::takeAction(const th::chip& currBet)
 {
+    if (th::BasePlayer::needToAct() == false)
+    {
+        return;
+    }
+
     const int32_t action = currBet * 5 < th::AutoPlayer::checkChip()
                                ? th::Random::generateWithin(0, 2)
                                : th::Random::generateWithin(0, 3);
-
-    std::cout << action << std::endl;
     switch (action)
     {
     case (0):
@@ -33,11 +36,9 @@ th::chip th::AutoPlayer::takeAction(const th::chip& currBet)
     default:
         break;
     }
-
-    return 0;
 }
 
-th::chip th::AutoPlayer::raise(const th::chip& currBet)
+void th::AutoPlayer::raise(const th::chip& currBet)
 {
     const th::chip raiseBet = currBet == 0
                                   ? th::chip { 25 } - th::AutoPlayer::checkChipInFront()
@@ -49,7 +50,6 @@ th::chip th::AutoPlayer::raise(const th::chip& currBet)
     }
 
     th::AutoPlayer::putChipInFront(raiseBet);
-    th::AutoPlayer::printAction(raiseBet, "raise money");
-
-    return raiseBet;
+    th::AutoPlayer::setAction(th::PlayerAction::Raise);
+    th::AutoPlayer::printAction();
 }

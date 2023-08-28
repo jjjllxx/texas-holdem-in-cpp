@@ -17,7 +17,7 @@ th::chip th::chip::operator+(const th::chip& chip) const
 
 th::chip th::chip::operator-(const th::chip& chip) const
 {
-    return this->val + chip.val;
+    return this->val - chip.val;
 }
 
 th::chip th::chip::operator*(const int32_t val) const

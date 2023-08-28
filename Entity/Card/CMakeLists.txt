@@ -1,4 +1,4 @@
-add_library(Card STATIC 
-    CardDeck.cpp
-    PokerCard.cpp)
-target_include_directories(Card PUBLIC "./")
+list(APPEND TH_SOURCES
+${CMAKE_CURRENT_LIST_DIR}/CardDeck.cpp
+${CMAKE_CURRENT_LIST_DIR}/PokerCard.cpp
+)

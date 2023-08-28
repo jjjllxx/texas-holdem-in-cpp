@@ -1,6 +1,6 @@
 #include "CardDeck.h"
 
-#include "../../Algorithms/Random/Random.h"
+#include "Algorithms/Random/Random.h"
 
 th::CardDeck::CardDeck() :
     currTopCard(0)

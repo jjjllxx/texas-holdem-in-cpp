@@ -1,5 +1,7 @@
 #include "HumanPlayer.h"
 
+#include <iostream>
+
 th::HumanPlayer::HumanPlayer(const int32_t id) :
     th::BasePlayer(id)
 {
@@ -7,11 +9,16 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
 void th::HumanPlayer::init(const th::chip& chipNum)
 {
     this->name = "You(Player 0)";
-    th::BasePlayer::addChip(chipNum);
+    th::BasePlayer::receiveChip(chipNum);
 }
 
-th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
+void th::HumanPlayer::takeAction(const th::chip& currBet)
 {
+    if (th::BasePlayer::needToAct() == false)
+    {
+        return;
+    }
+
     th::HumanPlayer::peekHandCards();
     th::HumanPlayer::showStatus();
     std::cout << "Current bet is " << currBet.val
@@ -41,7 +48,7 @@ th::chip th::HumanPlayer::takeAction(const th::chip& currBet)
     return th::HumanPlayer::takeAction(currBet);
 }
 
-th::chip th::HumanPlayer::raise(const th::chip& currBet)
+void th::HumanPlayer::raise(const th::chip& currBet)
 {
     const th::chip neededChip = currBet - th::HumanPlayer::checkChipInFront();
     int32_t        inputVal   = 0;
@@ -63,7 +70,6 @@ th::chip th::HumanPlayer::raise(const th::chip& currBet)
     }
 
     th::HumanPlayer::putChipInFront(raiseBet);
-    th::HumanPlayer::printAction(raiseBet, "raise money");
-
-    return raiseBet;
+    th::HumanPlayer::setAction(th::PlayerAction::Raise);
+    th::HumanPlayer::printAction();
 }

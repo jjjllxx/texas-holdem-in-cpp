@@ -1,7 +1,9 @@
 #include "Game.h"
 
-#include "../Entity/Card/CardDeck.h"
-#include "../Player/BasePlayer.h"
+#include "Entity/Card/CardDeck.h"
+#include "Player/BasePlayer.h"
+
+#include <iostream>
 
 bool th::Game::initGame(const std::size_t smallBlindPos,
                         const th::chip&   smallBlindChip)
@@ -31,13 +33,14 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     th::Game::putSmallBlind(this->smallBlindChip, players[this->smallBlindPos]);
-    const std::size_t bigBlindPos  = (this->smallBlindPos + 1) % players.size();
+    const std::size_t bigBlindPos = (this->smallBlindPos + 1) % players.size();
     th::Game::putBigBlind(this->smallBlindChip * 2, players[bigBlindPos]);
 }
 
 void th::Game::dealCards(th::CardDeck&                                 cardDeck,
                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
+    th::Game::logGameStatus("Dealing cards");
     for (std::shared_ptr<th::BasePlayer>& player : players)
     {
         player->receiveFirstCard(cardDeck.getCurrTop());
@@ -51,6 +54,7 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
 
 void th::Game::preflopRound(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
+    th::Game::logGameStatus("Preflop Round");
     th::Game::oneRound(this->smallBlindPos + 2, players);
     th::Game::collectChip(players);
 }
@@ -58,6 +62,7 @@ void th::Game::preflopRound(std::vector<std::shared_ptr<th::BasePlayer>>& player
 void th::Game::flopRound(th::CardDeck&                                 cardDeck,
                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
+    th::Game::logGameStatus("Flop Round");
     th::Game::updateCurrBet(0);
     th::Game::revealOnePublicCard(cardDeck);
     th::Game::revealOnePublicCard(cardDeck);
@@ -70,6 +75,7 @@ void th::Game::flopRound(th::CardDeck&                                 cardDeck,
 void th::Game::turnRound(th::CardDeck&                                 cardDeck,
                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
+    th::Game::logGameStatus("Turn Round");
     th::Game::updateCurrBet(0);
     th::Game::revealOnePublicCard(cardDeck);
     th::Game::showCurrPublicCards();
@@ -80,6 +86,7 @@ void th::Game::turnRound(th::CardDeck&                                 cardDeck,
 void th::Game::riverRound(th::CardDeck&                                 cardDeck,
                           std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
+    th::Game::logGameStatus("River Round");
     th::Game::updateCurrBet(0);
     th::Game::revealOnePublicCard(cardDeck);
     th::Game::showCurrPublicCards();
@@ -92,18 +99,22 @@ void th::Game::putBigBlind(const th::chip&                  bigBlindChip,
 {
     bigBlindPlayer->putBigBlindChip(bigBlindChip);
     th::Game::updateCurrBet(bigBlindChip);
+    th::Game::addToPool(bigBlindChip);
 }
 void th::Game::putSmallBlind(const th::chip&                  smallBlindChip,
                              std::shared_ptr<th::BasePlayer>& smallBlindPlayer)
 {
     smallBlindPlayer->putSmallBlindChip(smallBlindChip);
+    th::Game::addToPool(smallBlindChip);
 }
 
 void th::Game::collectChip(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     for (std::shared_ptr<th::BasePlayer>& player : players)
     {
-        th::Game::addToPool(player->pushChipToPool());
+        const th::chip chipInFront = player->pushChipToPool();
+        th::Game::addToPool(chipInFront);
+        chipsMap.insert_or_assign(player->getId(), chipInFront);
     }
 }
 
@@ -122,18 +133,22 @@ void th::Game::oneRound(const std::size_t                             startAt,
 
     while (true)
     {
-        if (players[currAt]->shouldAct() == true)
-        {
-            const th::chip chipToCall = this->currBet - players[currAt]->checkChipInFront();
-            const th::chip actualChip = players[currAt]->takeAction(this->currBet);
+        const th::PlayerAction prevAct = players[currAt]->checkLastAction();
+        players[currAt]->takeAction(this->currBet);
 
-            if (actualChip > chipToCall)
-            {
-                th::Game::updateCurrBet(players[currAt]->checkChipInFront());
-                shouldEndAt = currAt;
-                std::cout << "Current bet is " << this->currBet.val << std::endl;
-            }
+        if (const th::chip currChipInFront = players[currAt]->checkChipInFront();
+            currChipInFront > this->currBet)
+        {
+            th::Game::updateCurrBet(currChipInFront);
+            shouldEndAt = currAt;
         }
+
+        if (const th::PlayerAction currAct = players[currAt]->checkLastAction();
+            currAct == th::PlayerAction::Fold && currAct != prevAct)
+        {
+            this->survivedPlayerNum--;
+        }
+
         ++currAt;
         currAt %= playerNum;
 
@@ -154,11 +169,6 @@ void th::Game::updateCurrBet(const th::chip& newBet)
     this->currBet = newBet;
 }
 
-void th::Game::checkCurrnetPool() const
-{
-    std::cout << "Current pool has " << this->currPool.val << " chip" << std::endl;
-}
-
 void th::Game::showCurrPublicCards() const
 {
     for (const th::PokerCard& card : this->publicCards)
@@ -167,4 +177,9 @@ void th::Game::showCurrPublicCards() const
     }
 
     std::cout << std::endl;
+}
+
+void th::Game::logGameStatus(const std::string& status) const
+{
+    std::cout << status << " starts. Now pool is " << this->currPool.val << std::endl;
 }

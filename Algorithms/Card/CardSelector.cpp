@@ -1,8 +1,8 @@
 #include "CardSelector.h"
 
-#include "../../Entity/Card/PokerCard.h"
+#include "Entity/Card/PokerCard.h"
+
 #include "CardComparison.h"
-#include "CardType.h"
 
 std::vector<th::PokerCard> th::CardSelector::selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
 {

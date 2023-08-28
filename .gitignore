@@ -1,9 +1,5 @@
 # CMake
-Makefile
 build
 
 # vscode
 .vscode
-
-# idea
-.idea
