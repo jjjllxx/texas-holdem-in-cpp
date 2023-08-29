@@ -1,6 +1,8 @@
 #include "CardType.h"
 
 #include "Entity/Card/PokerCard.h"
+#include <iostream>
+#include <ostream>
 
 th::CardComboType th::CardType::calcCardComboType(const std::vector<th::PokerCard>& fiveCards)
 {
@@ -80,7 +82,7 @@ bool th::CardType::isStraight(const std::vector<th::PokerCard>& fiveCards)
     std::sort(cardPts.begin(), cardPts.end());
 
     // A, 5, 4, 3, 2
-    if (cardPts[0] == 14 && cardPts[1] == 5 && cardPts[2] == 4 && cardPts[3] == 3 && cardPts[4] == 2)
+    if (cardPts[0] == 2 && cardPts[1] == 3 && cardPts[2] == 4 && cardPts[3] == 5 && cardPts[4] == 14)
     {
         return true;
     }
