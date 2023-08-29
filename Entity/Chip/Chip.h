@@ -4,7 +4,7 @@
 
 namespace th
 {
-struct chip
+struct chip // NOLINT
 {
     chip();
     chip(const int32_t val);

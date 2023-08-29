@@ -1,4 +1,5 @@
 #include "Chip.h"
+#include <sys/_types/_int32_t.h>
 
 th::chip::chip() :
     val(0)
@@ -27,7 +28,8 @@ th::chip th::chip::operator*(const int32_t val) const
 
 th::chip th::chip::operator*(const double val) const
 {
-    return this->val * val;
+    // This is for situation that player want bet 2.5 big blind or 0.333 pool.
+    return static_cast<int32_t>(this->val * val);
 }
 
 th::chip& th::chip::operator+=(const th::chip& chip)
