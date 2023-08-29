@@ -1,4 +1,4 @@
-list(APPEND TH_SOURCES
+list(APPEND TH_CORE_CPPS
 ${CMAKE_CURRENT_LIST_DIR}/CardComparison.cpp
 ${CMAKE_CURRENT_LIST_DIR}/CardSelector.cpp
 ${CMAKE_CURRENT_LIST_DIR}/CardType.cpp

@@ -1,5 +1,6 @@
 # CMake
 build
+bin
 
 # vscode
 .vscode
