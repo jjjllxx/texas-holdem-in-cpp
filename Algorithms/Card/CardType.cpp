@@ -4,7 +4,7 @@
 #include <iostream>
 #include <ostream>
 
-th::CardComboType th::CardType::calcCardComboType(const std::vector<th::PokerCard>& fiveCards)
+th::CardComboType th::CardType::deduceCardComboType(const std::vector<th::PokerCard>& fiveCards)
 {
     if (fiveCards.size() != 5)
     {

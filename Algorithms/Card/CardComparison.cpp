@@ -7,8 +7,8 @@
 th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::PokerCard>& firstCards,
                                                           const std::vector<th::PokerCard>& secondCards)
 {
-    const th::CardComboType firstType  = th::CardType::calcCardComboType(firstCards);
-    const th::CardComboType secondType = th::CardType::calcCardComboType(secondCards);
+    const th::CardComboType firstType  = th::CardType::deduceCardComboType(firstCards);
+    const th::CardComboType secondType = th::CardType::deduceCardComboType(secondCards);
 
     if (firstType == th::CardComboType::INVALID || secondType == th::CardComboType::INVALID)
     {

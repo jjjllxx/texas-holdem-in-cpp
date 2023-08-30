@@ -24,7 +24,7 @@ enum class CardComboType
 
 namespace CardType
 {
-    th::CardComboType calcCardComboType(const std::vector<th::PokerCard>& fiveCards);
+    th::CardComboType deduceCardComboType(const std::vector<th::PokerCard>& fiveCards);
 
     bool isFlush(const std::vector<th::PokerCard>& fiveCards);
     bool isStraight(const std::vector<th::PokerCard>& fiveCards);
