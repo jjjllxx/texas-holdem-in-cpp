@@ -3,10 +3,11 @@
 #include "Entity/Card/PokerCard.h"
 
 #include "CardComparison.h"
+#include "Utilities/Constants.h"
 
 std::vector<th::PokerCard> th::CardSelector::selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
 {
-    if (fromCards.size() <= 5)
+    if (fromCards.size() <= th::STANDARD_CARD_COMBO_SIZE)
     {
         return fromCards;
     }
@@ -25,14 +26,14 @@ void th::CardSelector::selectFiveCards(const std::size_t                 pos,
                                        std::vector<th::PokerCard>&       currSelected)
 {
     // backtrack algorithm
-    if (currSelected.size() == 5)
+    if (currSelected.size() == th::STANDARD_CARD_COMBO_SIZE)
     {
         currHighest = th::CardSelector::selectTheHigher(currHighest, currSelected);
 
         return;
     }
 
-    if (currSelected.size() + fromCards.size() - pos < 5)
+    if (currSelected.size() + fromCards.size() - pos < th::STANDARD_CARD_COMBO_SIZE)
     {
         // If select all the left cards and the currSelected will be still less than 5,
         // then it is not necessary to select further.

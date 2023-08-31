@@ -1,12 +1,11 @@
 #include "CardType.h"
 
 #include "Entity/Card/PokerCard.h"
-#include <iostream>
-#include <ostream>
+#include "Utilities/Constants.h"
 
 th::CardComboType th::CardType::deduceCardComboType(const std::vector<th::PokerCard>& fiveCards)
 {
-    if (fiveCards.size() != 5)
+    if (fiveCards.size() != th::STANDARD_CARD_COMBO_SIZE)
     {
         return th::CardComboType::INVALID;
     }
@@ -58,7 +57,7 @@ th::CardComboType th::CardType::deduceCardComboType(const std::vector<th::PokerC
 
 bool th::CardType::isFlush(const std::vector<th::PokerCard>& fiveCards)
 {
-    for (std::size_t i = 1; i < 5; ++i)
+    for (std::size_t i = 1; i < th::STANDARD_CARD_COMBO_SIZE; ++i)
     {
         if (fiveCards[i].suit != fiveCards[i - 1].suit)
         {
@@ -87,7 +86,7 @@ bool th::CardType::isStraight(const std::vector<th::PokerCard>& fiveCards)
         return true;
     }
 
-    for (std::size_t i = 1; i < 5; ++i)
+    for (std::size_t i = 1; i < th::STANDARD_CARD_COMBO_SIZE; ++i)
     {
         if (cardPts[i] - cardPts[i - 1] != 1)
         {
