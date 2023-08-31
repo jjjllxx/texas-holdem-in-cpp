@@ -1,7 +1,4 @@
 #include <gtest/gtest.h>
-#include <sys/_types/_int32_t.h>
-#include <unordered_map>
-#include <utility>
 
 #include "CardType.h"
 #include "Entity/Card/PokerCard.h"
