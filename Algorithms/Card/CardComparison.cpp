@@ -3,6 +3,7 @@
 #include "Entity/Card/PokerCard.h"
 
 #include "CardType.h"
+#include "Utilities/Constants.h"
 
 th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::PokerCard>& firstCards,
                                                           const std::vector<th::PokerCard>& secondCards)
@@ -28,7 +29,7 @@ th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::
     const std::vector<th::PokerCard> firstCmpOrder  = th::CardComparison::deduceCardCmpOrder(firstType, firstCards);
     const std::vector<th::PokerCard> secondCmpOrder = th::CardComparison::deduceCardCmpOrder(secondType, secondCards);
 
-    for (std::size_t i = 0; i < 5; ++i)
+    for (std::size_t i = 0; i < th::STANDARD_CARD_COMBO_SIZE; ++i)
     {
         if (firstCmpOrder[i].point > secondCmpOrder[i].point)
         {
@@ -81,7 +82,7 @@ std::vector<th::PokerCard> th::CardComparison::deduceCardCmpOrder(const th::Card
 std::vector<th::PokerCard> th::CardComparison::sortCardsByPoint(const std::vector<th::PokerCard>& fiveCards)
 {
     std::vector<th::PokerCard> cmpOrder;
-    cmpOrder.reserve(5);
+    cmpOrder.reserve(th::STANDARD_CARD_COMBO_SIZE);
 
     for (const th::PokerCard& card : fiveCards)
     {
@@ -134,7 +135,7 @@ std::vector<th::PokerCard> th::CardComparison::deduceTwoPairsOrder(const std::ve
 
     if (cmpOrder[2].point != cmpOrder[3].point) // 5, 5, 3, 2, 2
     {
-        std::swap(cmpOrder[2], cmpOrder[5]); // 5, 5, 2, 2, 3
+        std::swap(cmpOrder[2], cmpOrder[4]); // 5, 5, 2, 2, 3
     }
 
     // 5, 5, 3, 3, 2
