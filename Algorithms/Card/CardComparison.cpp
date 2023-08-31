@@ -25,8 +25,8 @@ th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::
         return th::ComparisonResult::Lose;
     }
 
-    const std::vector<th::PokerCard> firstCmpOrder  = th::CardComparison::generateCardCombo(firstType, firstCards);
-    const std::vector<th::PokerCard> secondCmpOrder = th::CardComparison::generateCardCombo(secondType, secondCards);
+    const std::vector<th::PokerCard> firstCmpOrder  = th::CardComparison::deduceCardCmpOrder(firstType, firstCards);
+    const std::vector<th::PokerCard> secondCmpOrder = th::CardComparison::deduceCardCmpOrder(secondType, secondCards);
 
     for (std::size_t i = 0; i < 5; ++i)
     {
@@ -44,37 +44,33 @@ th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::
     return th::ComparisonResult::Draw;
 }
 
-std::vector<th::PokerCard> th::CardComparison::generateCardCombo(const th::CardComboType           comboType,
-                                                                 const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceCardCmpOrder(const th::CardComboType           comboType,
+                                                                  const std::vector<th::PokerCard>& fiveCards)
 {
     switch (comboType)
     {
     case th::CardComboType::HighCard:
-        return th::CardComparison::calcHighCardOrder(fiveCards);
+    case th::CardComboType::Flush:
+        return th::CardComparison::sortCardsByPoint(fiveCards);
 
     case th::CardComboType::OnePair:
-        return th::CardComparison::calcOnePairOrder(fiveCards);
+        return th::CardComparison::deduceOnePairOrder(fiveCards);
 
     case th::CardComboType::TwoPairs:
-        return th::CardComparison::calcTwoPairsOrder(fiveCards);
+        return th::CardComparison::deduceTwoPairsOrder(fiveCards);
 
     case th::CardComboType::ThreeOfAKind:
-        return th::CardComparison::calcThreeOfAKindOrder(fiveCards);
+        return th::CardComparison::deduceThreeOfAKindOrder(fiveCards);
 
     case th::CardComboType::Straight:
-        return th::CardComparison::calcStraightOrder(fiveCards);
-
-    case th::CardComboType::Flush:
-        return th::CardComparison::calcFlushOrder(fiveCards);
+    case th::CardComboType::StraightFlush:
+        return th::CardComparison::deduceStraightOrder(fiveCards);
 
     case th::CardComboType::FullOfHouse:
-        return th::CardComparison::calcFullOfHouseOrder(fiveCards);
+        return th::CardComparison::deduceFullOfHouseOrder(fiveCards);
 
     case th::CardComboType::FourOfAKind:
-        return th::CardComparison::calcFourOfAKindOrder(fiveCards);
-
-    case th::CardComboType::StraightFlush:
-        return th::CardComparison::calcStraightFlushOrder(fiveCards);
+        return th::CardComparison::deduceFourOfAKindOrder(fiveCards);
 
     case th::CardComboType::INVALID:
     default:
@@ -82,7 +78,7 @@ std::vector<th::PokerCard> th::CardComparison::generateCardCombo(const th::CardC
     }
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcHighCardOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::sortCardsByPoint(const std::vector<th::PokerCard>& fiveCards)
 {
     std::vector<th::PokerCard> cmpOrder;
     cmpOrder.reserve(5);
@@ -100,9 +96,9 @@ std::vector<th::PokerCard> th::CardComparison::calcHighCardOrder(const std::vect
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcOnePairOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceOnePairOrder(const std::vector<th::PokerCard>& fiveCards)
 {
-    std::vector<th::PokerCard> cmpOrder = th::CardComparison::calcHighCardOrder(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::CardComparison::sortCardsByPoint(fiveCards);
 
     if (cmpOrder[3].point == cmpOrder[4].point) // 5, 4, 3, 2, 2
     {
@@ -126,9 +122,9 @@ std::vector<th::PokerCard> th::CardComparison::calcOnePairOrder(const std::vecto
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcTwoPairsOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceTwoPairsOrder(const std::vector<th::PokerCard>& fiveCards)
 {
-    std::vector<th::PokerCard> cmpOrder = th::CardComparison::calcHighCardOrder(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::CardComparison::sortCardsByPoint(fiveCards);
 
     if (cmpOrder[0].point != cmpOrder[1].point) // 5, 3, 3, 2, 2
     {
@@ -145,9 +141,9 @@ std::vector<th::PokerCard> th::CardComparison::calcTwoPairsOrder(const std::vect
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcThreeOfAKindOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceThreeOfAKindOrder(const std::vector<th::PokerCard>& fiveCards)
 {
-    std::vector<th::PokerCard> cmpOrder = th::CardComparison::calcHighCardOrder(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::CardComparison::sortCardsByPoint(fiveCards);
 
     if (cmpOrder[0].point != cmpOrder[1].point) // 5, 3, 3, 3, 2
     {
@@ -163,9 +159,9 @@ std::vector<th::PokerCard> th::CardComparison::calcThreeOfAKindOrder(const std::
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcStraightOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceStraightOrder(const std::vector<th::PokerCard>& fiveCards)
 {
-    std::vector<th::PokerCard> cmpOrder = th::CardComparison::calcHighCardOrder(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::CardComparison::sortCardsByPoint(fiveCards);
 
     // For A, 2, 3, 4, 5 staright, it will be sorted as A, 5, 4, 3, 2. Move A to the back.
     if (cmpOrder.front().point == 14 && cmpOrder[1].point != 13)
@@ -177,14 +173,9 @@ std::vector<th::PokerCard> th::CardComparison::calcStraightOrder(const std::vect
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcFlushOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceFullOfHouseOrder(const std::vector<th::PokerCard>& fiveCards)
 {
-    return th::CardComparison::calcHighCardOrder(fiveCards);
-}
-
-std::vector<th::PokerCard> th::CardComparison::calcFullOfHouseOrder(const std::vector<th::PokerCard>& fiveCards)
-{
-    std::vector<th::PokerCard> cmpOrder = th::CardComparison::calcHighCardOrder(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::CardComparison::sortCardsByPoint(fiveCards);
 
     if (cmpOrder[2].point != cmpOrder[1].point) // 2, 2, 3, 3, 3
     {
@@ -195,9 +186,9 @@ std::vector<th::PokerCard> th::CardComparison::calcFullOfHouseOrder(const std::v
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::CardComparison::calcFourOfAKindOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::CardComparison::deduceFourOfAKindOrder(const std::vector<th::PokerCard>& fiveCards)
 {
-    std::vector<th::PokerCard> cmpOrder = th::CardComparison::calcHighCardOrder(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::CardComparison::sortCardsByPoint(fiveCards);
 
     if (cmpOrder[0].point != cmpOrder[1].point) // 3, 2, 2, 2, 2
     {
@@ -205,9 +196,4 @@ std::vector<th::PokerCard> th::CardComparison::calcFourOfAKindOrder(const std::v
     }
 
     return cmpOrder;
-}
-
-std::vector<th::PokerCard> th::CardComparison::calcStraightFlushOrder(const std::vector<th::PokerCard>& fiveCards)
-{
-    return th::CardComparison::calcStraightOrder(fiveCards);
 }
