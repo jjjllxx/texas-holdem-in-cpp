@@ -26,4 +26,6 @@ target_include_directories(${TARGET} PRIVATE
 set_target_properties(${TARGET} PROPERTIES 
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
-add_subdirectory("Test")
+if (TH_TEST)
+    add_subdirectory("Test")
+endif()
