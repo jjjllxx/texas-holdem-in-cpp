@@ -130,8 +130,8 @@ void th::BasePlayer::peekHandCards() const
     this->twoHandCards.empty() == true
         ? std::cout << this->name << " do not have hand cards" << std::endl
         : std::cout << this->name << " have hand cards: "
-                    << this->twoHandCards.front().getSymbol() << ' '
-                    << this->twoHandCards.back().getSymbol() << std::endl;
+                    << th::PokerCardUtility::toSymbol(this->twoHandCards.front()) << ' '
+                    << th::PokerCardUtility::toSymbol(this->twoHandCards.back()) << std::endl;
 }
 
 void th::BasePlayer::call(const th::chip& currBet)

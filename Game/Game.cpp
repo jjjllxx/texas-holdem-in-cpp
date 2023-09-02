@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "Entity/Card/CardDeck.h"
+#include "Entity/Card/PokerCard.h"
 #include "Player/BasePlayer.h"
 
 #include <iostream>
@@ -173,7 +174,7 @@ void th::Game::showCurrPublicCards() const
 {
     for (const th::PokerCard& card : this->publicCards)
     {
-        std::cout << card.getSymbol() << ' ';
+        std::cout << th::PokerCardUtility::toSymbol(card) << ' ';
     }
 
     std::cout << std::endl;
