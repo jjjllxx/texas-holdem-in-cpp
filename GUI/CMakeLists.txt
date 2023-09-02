@@ -1,0 +1,3 @@
+list(APPEND TH_GUI_FILES
+${CMAKE_CURRENT_LIST_DIR}/GUIMainWindow.cpp
+)
