@@ -12,54 +12,27 @@ std::vector<th::PokerCard> th::CardSelector::selectHighestCardCombo(const std::v
         return fromCards;
     }
 
-    std::vector<th::PokerCard> currHighest = { fromCards[0], fromCards[1], fromCards[2], fromCards[3], fromCards[4] };
-    std::vector<th::PokerCard> currSelected;
+    std::vector<th::PokerCard> highest(fromCards.begin(), fromCards.begin() + th::STANDARD_CARD_COMBO_SIZE);
+    std::vector<bool>          bitmask(fromCards.size(), false);
+    std::fill(bitmask.begin(), bitmask.begin() + th::STANDARD_CARD_COMBO_SIZE, true);
 
-    th::CardSelector::selectFiveCards(0, fromCards, currHighest, currSelected);
-
-    return currHighest;
-}
-
-void th::CardSelector::selectFiveCards(const std::size_t                 pos,
-                                       const std::vector<th::PokerCard>& fromCards,
-                                       std::vector<th::PokerCard>&       currHighest,
-                                       std::vector<th::PokerCard>&       currSelected)
-{
-    // backtrack algorithm
-    if (currSelected.size() == th::STANDARD_CARD_COMBO_SIZE)
+    while (std::prev_permutation(bitmask.begin(), bitmask.end()) == true)
     {
-        currHighest = th::CardSelector::selectTheHigher(currHighest, currSelected);
+        std::vector<th::PokerCard> curCombo;
+        for (std::size_t i = 0; i < fromCards.size(); ++i)
+        {
+            if (bitmask[i] == true)
+            {
+                curCombo.push_back(fromCards[i]);
+            }
+        }
 
-        return;
+        if (th::CardComparison::compareCardCombo(curCombo, highest)
+            == th::CardComboCmpResult::Win)
+        {
+            highest = curCombo;
+        }
     }
 
-    if (currSelected.size() + fromCards.size() - pos < th::STANDARD_CARD_COMBO_SIZE)
-    {
-        // If select all the left cards and the currSelected will be still less than 5,
-        // then it is not necessary to select further.
-        return;
-    }
-
-    currSelected.push_back(fromCards[pos]);
-    th::CardSelector::selectFiveCards(pos + 1, fromCards, currHighest, currSelected);
-    currSelected.pop_back();
-    th::CardSelector::selectFiveCards(pos + 1, fromCards, currHighest, currSelected);
-}
-
-std::vector<th::PokerCard> th::CardSelector::selectTheHigher(const std::vector<th::PokerCard>& firstCards,
-                                                             const std::vector<th::PokerCard>& secondCards)
-{
-    const th::CardComboCmpResult result = th::CardComparison::compareCardCombo(firstCards, secondCards);
-
-    switch (result)
-    {
-    case th::CardComboCmpResult::Win:
-    case th::CardComboCmpResult::Draw:
-        return firstCards;
-    case th::CardComboCmpResult::Lose:
-        return secondCards;
-    case th::CardComboCmpResult::INVALID:
-    default:
-        return {};
-    }
+    return highest;
 }
