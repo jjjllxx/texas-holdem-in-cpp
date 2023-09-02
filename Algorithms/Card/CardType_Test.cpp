@@ -20,96 +20,6 @@ namespace CardType_Test
 } // namespace CardType_Test
 } // namespace th
 
-GTEST_TEST(Algorithms_Card_CardType, isFlush_true) // NOLINT
-{
-    EXPECT_TRUE(th::CardType::isFlush({
-        th::CardType_Test::HEART_A,
-        th::CardType_Test::HEART_2,
-        th::CardType_Test::HEART_3,
-        th::CardType_Test::HEART_4,
-        th::CardType_Test::HEART_6,
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isFlush_false) // NOLINT
-{
-    EXPECT_FALSE(th::CardType::isFlush({
-        th::CardType_Test::DIAMOND_A,
-        th::CardType_Test::HEART_2,
-        th::CardType_Test::HEART_3,
-        th::CardType_Test::HEART_4,
-        th::CardType_Test::HEART_5,
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isStraight_a2345) // NOLINT
-{
-    EXPECT_TRUE(th::CardType::isStraight({
-        th::CardType_Test::HEART_4,
-        th::CardType_Test::HEART_2,
-        th::CardType_Test::HEART_3,
-        th::CardType_Test::HEART_A,
-        th::CardType_Test::HEART_5,
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isStraight_normal) // NOLINT
-{
-    EXPECT_TRUE(th::CardType::isStraight({
-        th::CardType_Test::HEART_2,
-        th::CardType_Test::HEART_5,
-        th::CardType_Test::HEART_3,
-        th::CardType_Test::HEART_4,
-        th::CardType_Test::HEART_6,
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isStraight_false) // NOLINT
-{
-    EXPECT_FALSE(th::CardType::isStraight({
-        th::CardType_Test::HEART_A,
-        th::CardType_Test::HEART_2,
-        th::CardType_Test::HEART_3,
-        th::CardType_Test::HEART_4,
-        th::CardType_Test::HEART_6,
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isFourOfAKind_true) // NOLINT
-{
-    EXPECT_TRUE(th::CardType::isFourOfAKind({
-        std::make_pair(2, 4),
-        std::make_pair(3, 1),
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isFourOfAKind_false) // NOLINT
-{
-    EXPECT_FALSE(th::CardType::isFourOfAKind({
-        std::make_pair(2, 3),
-        std::make_pair(3, 1),
-        std::make_pair(4, 1),
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isThreeOfAKind_true) // NOLINT
-{
-    EXPECT_TRUE(th::CardType::isThreeOfKind({
-        std::make_pair(2, 3),
-        std::make_pair(3, 1),
-        std::make_pair(4, 1),
-    }));
-}
-
-GTEST_TEST(Algorithms_Card_CardType, isThreeOfAKind_false) // NOLINT
-{
-    EXPECT_FALSE(th::CardType::isThreeOfKind({
-        std::make_pair(2, 2),
-        std::make_pair(3, 2),
-        std::make_pair(4, 1),
-    }));
-}
-
 GTEST_TEST(Algorithms_Card_CardType, deduceCardComboType_invalid) // NOLINT
 {
     EXPECT_EQ(th::CardType::deduceCardComboType({
@@ -227,4 +137,94 @@ GTEST_TEST(Algorithms_Card_CardType, deduceCardComboType_straight_flush) // NOLI
                   th::CardType_Test::HEART_3,
               }),
               th::CardComboType::StraightFlush);
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isFlush_true) // NOLINT
+{
+    EXPECT_TRUE(th::CardType::isFlush({
+        th::CardType_Test::HEART_A,
+        th::CardType_Test::HEART_2,
+        th::CardType_Test::HEART_3,
+        th::CardType_Test::HEART_4,
+        th::CardType_Test::HEART_6,
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isFlush_false) // NOLINT
+{
+    EXPECT_FALSE(th::CardType::isFlush({
+        th::CardType_Test::DIAMOND_A,
+        th::CardType_Test::HEART_2,
+        th::CardType_Test::HEART_3,
+        th::CardType_Test::HEART_4,
+        th::CardType_Test::HEART_5,
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isStraight_a2345) // NOLINT
+{
+    EXPECT_TRUE(th::CardType::isStraight({
+        th::CardType_Test::HEART_4,
+        th::CardType_Test::HEART_2,
+        th::CardType_Test::HEART_3,
+        th::CardType_Test::HEART_A,
+        th::CardType_Test::HEART_5,
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isStraight_normal) // NOLINT
+{
+    EXPECT_TRUE(th::CardType::isStraight({
+        th::CardType_Test::HEART_2,
+        th::CardType_Test::HEART_5,
+        th::CardType_Test::HEART_3,
+        th::CardType_Test::HEART_4,
+        th::CardType_Test::HEART_6,
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isStraight_false) // NOLINT
+{
+    EXPECT_FALSE(th::CardType::isStraight({
+        th::CardType_Test::HEART_A,
+        th::CardType_Test::HEART_2,
+        th::CardType_Test::HEART_3,
+        th::CardType_Test::HEART_4,
+        th::CardType_Test::HEART_6,
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isFourOfAKind_true) // NOLINT
+{
+    EXPECT_TRUE(th::CardType::isFourOfAKind({
+        std::make_pair(2, 4),
+        std::make_pair(3, 1),
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isFourOfAKind_false) // NOLINT
+{
+    EXPECT_FALSE(th::CardType::isFourOfAKind({
+        std::make_pair(2, 3),
+        std::make_pair(3, 1),
+        std::make_pair(4, 1),
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isThreeOfAKind_true) // NOLINT
+{
+    EXPECT_TRUE(th::CardType::isThreeOfKind({
+        std::make_pair(2, 3),
+        std::make_pair(3, 1),
+        std::make_pair(4, 1),
+    }));
+}
+
+GTEST_TEST(Algorithms_Card_CardType, isThreeOfAKind_false) // NOLINT
+{
+    EXPECT_FALSE(th::CardType::isThreeOfKind({
+        std::make_pair(2, 2),
+        std::make_pair(3, 2),
+        std::make_pair(4, 1),
+    }));
 }
