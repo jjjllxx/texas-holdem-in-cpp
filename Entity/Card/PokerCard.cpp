@@ -13,6 +13,11 @@ th::PokerCard::PokerCard(const th::CardSuit suit,
 {
 }
 
+bool th::PokerCard::operator==(const th::PokerCard& card) const
+{
+    return card.point == this->point && card.suit == this->suit;
+}
+
 std::string th::PokerCard::getStr() const
 {
     return th::PokerCardUtility::getCardSuitStr(this->suit) + ' '

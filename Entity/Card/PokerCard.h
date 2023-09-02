@@ -23,6 +23,8 @@ struct PokerCard
     th::CardSuit suit;
     int32_t      point;
 
+    bool operator==(const th::PokerCard& card) const;
+
     std::string getStr() const;
     std::string getSymbol() const;
 };
