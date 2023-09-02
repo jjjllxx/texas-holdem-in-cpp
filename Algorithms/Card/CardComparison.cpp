@@ -5,25 +5,25 @@
 #include "CardType.h"
 #include "Utilities/Constants.h"
 
-th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::PokerCard>& firstCards,
-                                                          const std::vector<th::PokerCard>& secondCards)
+th::CardComboCmpResult th::CardComparison::compareCardCombo(const std::vector<th::PokerCard>& firstCards,
+                                                            const std::vector<th::PokerCard>& secondCards)
 {
     const th::CardComboType firstType  = th::CardType::deduceCardComboType(firstCards);
     const th::CardComboType secondType = th::CardType::deduceCardComboType(secondCards);
 
     if (firstType == th::CardComboType::INVALID || secondType == th::CardComboType::INVALID)
     {
-        return th::ComparisonResult::INVALID;
+        return th::CardComboCmpResult::INVALID;
     }
 
     if (firstType > secondType)
     {
-        return th::ComparisonResult::Win;
+        return th::CardComboCmpResult::Win;
     }
 
     if (firstType < secondType)
     {
-        return th::ComparisonResult::Lose;
+        return th::CardComboCmpResult::Lose;
     }
 
     const std::vector<th::PokerCard> firstCmpOrder  = th::CardComparison::deduceCardCmpOrder(firstType, firstCards);
@@ -33,16 +33,16 @@ th::ComparisonResult th::CardComparison::compareCardCombo(const std::vector<th::
     {
         if (firstCmpOrder[i].point > secondCmpOrder[i].point)
         {
-            return th::ComparisonResult::Win;
+            return th::CardComboCmpResult::Win;
         }
 
         if (firstCmpOrder[i].point < secondCmpOrder[i].point)
         {
-            return th::ComparisonResult::Lose;
+            return th::CardComboCmpResult::Lose;
         }
     }
 
-    return th::ComparisonResult::Draw;
+    return th::CardComboCmpResult::Draw;
 }
 
 std::vector<th::PokerCard> th::CardComparison::deduceCardCmpOrder(const th::CardComboType           comboType,
@@ -50,8 +50,8 @@ std::vector<th::PokerCard> th::CardComparison::deduceCardCmpOrder(const th::Card
 {
     switch (comboType)
     {
-    case th::CardComboType::HighCard:
     case th::CardComboType::Flush:
+    case th::CardComboType::HighCard:
         return th::CardComparison::sortCardsByPoint(fiveCards);
 
     case th::CardComboType::OnePair:

@@ -7,7 +7,7 @@ namespace th
 struct PokerCard;
 enum class CardComboType;
 
-enum class ComparisonResult
+enum class CardComboCmpResult
 {
     INVALID,
 
@@ -18,8 +18,8 @@ enum class ComparisonResult
 
 namespace CardComparison
 {
-    th::ComparisonResult compareCardCombo(const std::vector<th::PokerCard>& firstCards,
-                                          const std::vector<th::PokerCard>& secondCards);
+    th::CardComboCmpResult compareCardCombo(const std::vector<th::PokerCard>& firstCards,
+                                            const std::vector<th::PokerCard>& secondCards);
 
     std::vector<th::PokerCard> deduceCardCmpOrder(const th::CardComboType           comboType,
                                                   const std::vector<th::PokerCard>& fiveCards);

@@ -49,16 +49,16 @@ void th::CardSelector::selectFiveCards(const std::size_t                 pos,
 std::vector<th::PokerCard> th::CardSelector::selectTheHigher(const std::vector<th::PokerCard>& firstCards,
                                                              const std::vector<th::PokerCard>& secondCards)
 {
-    const th::ComparisonResult result = th::CardComparison::compareCardCombo(firstCards, secondCards);
+    const th::CardComboCmpResult result = th::CardComparison::compareCardCombo(firstCards, secondCards);
 
     switch (result)
     {
-    case th::ComparisonResult::Win:
-    case th::ComparisonResult::Draw:
+    case th::CardComboCmpResult::Win:
+    case th::CardComboCmpResult::Draw:
         return firstCards;
-    case th::ComparisonResult::Lose:
+    case th::CardComboCmpResult::Lose:
         return secondCards;
-    case th::ComparisonResult::INVALID:
+    case th::CardComboCmpResult::INVALID:
     default:
         return {};
     }
