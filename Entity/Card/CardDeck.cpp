@@ -1,6 +1,7 @@
 #include "CardDeck.h"
 
 #include "Algorithms/Random/Random.h"
+#include "Utilities/Constants.h"
 
 th::CardDeck::CardDeck() :
     currTopCard(0)
@@ -9,7 +10,7 @@ th::CardDeck::CardDeck() :
 
 void th::CardDeck::init()
 {
-    this->cards.reserve(52);
+    this->cards.reserve(th::STANDARD_CARD_DECK_SIZE);
 
     th::CardDeck::initOneSuit(th::CardSuit::Club);
     th::CardDeck::initOneSuit(th::CardSuit::Diamond);
