@@ -18,16 +18,16 @@ bool th::PokerCard::operator==(const th::PokerCard& card) const
     return card.point == this->point && card.suit == this->suit;
 }
 
-std::string th::PokerCard::getStr() const
+std::string th::PokerCardUtility::toString(const th::PokerCard& card)
 {
-    return th::PokerCardUtility::getCardSuitStr(this->suit) + ' '
-           + th::PokerCardUtility::getCardPointStr(this->point);
+    return th::PokerCardUtility::getCardSuitStr(card.suit) + ' '
+           + th::PokerCardUtility::getCardPointStr(card.point);
 }
 
-std::string th::PokerCard::getSymbol() const
+std::string th::PokerCardUtility::toSymbol(const th::PokerCard& card)
 {
-    return th::PokerCardUtility::getCardSuitSymbol(this->suit)
-           + th::PokerCardUtility::getCardPointStr(this->point);
+    return th::PokerCardUtility::getCardSuitSymbol(card.suit)
+           + th::PokerCardUtility::getCardPointStr(card.point);
 }
 
 std::string th::PokerCardUtility::getCardSuitStr(const th::CardSuit suit)
