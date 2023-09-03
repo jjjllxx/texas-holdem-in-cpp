@@ -88,10 +88,8 @@ void th::BasePlayer::showStatus() const
 
 void th::BasePlayer::printAction() const
 {
-    const th::PlayerAction action = th::BasePlayer::checkLastAction();
-
     std::string actionName;
-    switch (action)
+    switch (th::BasePlayer::checkLastAction())
     {
     case th::PlayerAction::AllIn:
         actionName = " all in.";

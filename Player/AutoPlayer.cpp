@@ -10,12 +10,12 @@ th::AutoPlayer::AutoPlayer(const int32_t id) :
 void th::AutoPlayer::init(const th::chip& chipNum)
 {
     this->name = "Player " + std::to_string(th::BasePlayer::getId());
-    th::BasePlayer::receiveChip(chipNum);
+    th::AutoPlayer::receiveChip(chipNum);
 }
 
 void th::AutoPlayer::takeAction(const th::chip& currBet)
 {
-    if (th::BasePlayer::needToAct() == false)
+    if (th::AutoPlayer::needToAct() == false)
     {
         return;
     }

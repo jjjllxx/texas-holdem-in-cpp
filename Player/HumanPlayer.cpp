@@ -9,12 +9,12 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
 void th::HumanPlayer::init(const th::chip& chipNum)
 {
     this->name = "You(Player 0)";
-    th::BasePlayer::receiveChip(chipNum);
+    th::HumanPlayer::receiveChip(chipNum);
 }
 
 void th::HumanPlayer::takeAction(const th::chip& currBet)
 {
-    if (th::BasePlayer::needToAct() == false)
+    if (th::HumanPlayer::needToAct() == false)
     {
         return;
     }
