@@ -2,7 +2,8 @@
 #include "ui_GUIMainWindow.h"
 
 th::GUIMainWindow::GUIMainWindow(QWidget* parent) :
-    QMainWindow(parent), ui(new Ui::GUIMainWindow)
+    QMainWindow(parent),
+    ui(new Ui::GUIMainWindow)
 {
     ui->setupUi(this);
 }
