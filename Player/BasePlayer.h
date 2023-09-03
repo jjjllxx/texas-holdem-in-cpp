@@ -25,7 +25,7 @@ class BasePlayer
 {
 public:
     BasePlayer(const int32_t id);
-    ~BasePlayer() = default;
+    virtual ~BasePlayer() = default;
 
     virtual void init(const th::chip& chipNum) = 0;
 
