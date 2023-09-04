@@ -5,6 +5,8 @@
 #include "CardType.h"
 #include "Utilities/Constants.h"
 
+#include <algorithm>
+
 th::CardComboCmpResult th::CardComparison::compareCardCombo(const std::vector<th::PokerCard>& firstCards,
                                                             const std::vector<th::PokerCard>& secondCards)
 {

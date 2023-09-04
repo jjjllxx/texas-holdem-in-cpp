@@ -3,6 +3,7 @@
 #include "Entity/Card/PokerCard.h"
 
 #include <algorithm>
+#include <chrono>
 #include <random>
 
 int32_t th::Random::generateWithin(const int32_t lowerBound,
