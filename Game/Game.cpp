@@ -129,31 +129,31 @@ void th::Game::oneRound(const std::size_t                             startAt,
 {
     const std::size_t playerNum = players.size();
 
-    std::size_t currAt      = startAt % playerNum;
-    std::size_t shouldEndAt = currAt;
+    std::size_t curAt       = startAt % playerNum;
+    std::size_t shouldEndAt = curAt;
 
     while (true)
     {
-        const th::PlayerAction prevAct = players[currAt]->checkLastAction();
-        players[currAt]->takeAction(this->currBet);
+        const th::PlayerAction prevAct = players[curAt]->checkLastAction();
+        players[curAt]->takeAction(this->curBet);
 
-        if (const th::chip currChipInFront = players[currAt]->checkChipInFront();
-            currChipInFront > this->currBet)
+        if (const th::chip curChipInFront = players[curAt]->checkChipInFront();
+            curChipInFront > this->curBet)
         {
-            th::Game::updateCurrBet(currChipInFront);
-            shouldEndAt = currAt;
+            th::Game::updateCurrBet(curChipInFront);
+            shouldEndAt = curAt;
         }
 
-        if (const th::PlayerAction currAct = players[currAt]->checkLastAction();
-            currAct == th::PlayerAction::Fold && currAct != prevAct)
+        if (const th::PlayerAction curAct = players[curAt]->checkLastAction();
+            curAct == th::PlayerAction::Fold && curAct != prevAct)
         {
             this->survivedPlayerNum--;
         }
 
-        ++currAt;
-        currAt %= playerNum;
+        ++curAt;
+        curAt %= playerNum;
 
-        if (currAt == shouldEndAt)
+        if (curAt == shouldEndAt)
         {
             break;
         }
@@ -162,12 +162,12 @@ void th::Game::oneRound(const std::size_t                             startAt,
 
 void th::Game::addToPool(const th::chip& chip)
 {
-    this->currPool += chip;
+    this->curPool += chip;
 }
 
 void th::Game::updateCurrBet(const th::chip& newBet)
 {
-    this->currBet = newBet;
+    this->curBet = newBet;
 }
 
 void th::Game::showCurrPublicCards() const
@@ -182,5 +182,5 @@ void th::Game::showCurrPublicCards() const
 
 void th::Game::logGameStatus(const std::string& status) const
 {
-    std::cout << status << " starts. Now pool is " << this->currPool.val << std::endl;
+    std::cout << status << " starts. Now pool is " << this->curPool.val << std::endl;
 }

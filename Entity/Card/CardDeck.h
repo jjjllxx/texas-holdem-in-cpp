@@ -17,7 +17,7 @@ struct CardDeck
     th::PokerCard getCurrTopNext();
 
 private:
-    std::size_t                currTopCard;
+    std::size_t                curTopCard;
     std::vector<th::PokerCard> cards;
 
     void initOneSuit(const th::CardSuit suit);

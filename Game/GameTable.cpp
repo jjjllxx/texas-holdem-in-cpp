@@ -8,8 +8,8 @@
 
 th::GameTable::GameTable() :
     gameNum(0),
-    currSmallBlindPos(0),
-    currSmallBlindChip(0)
+    curSmallBlindPos(0),
+    curSmallBlindChip(0)
 {
 }
 
@@ -22,7 +22,7 @@ bool th::GameTable::initPokerTable(const int32_t   playerNum,
         return false;
     }
 
-    this->currSmallBlindChip = smallBlindChip;
+    this->curSmallBlindChip = smallBlindChip;
 
     this->players.reserve(playerNum);
     this->players.push_back(std::make_shared<th::HumanPlayer>(0));
@@ -48,10 +48,10 @@ void th::GameTable::startANewGame()
 {
     this->gameNum++;
 
-    if (this->currGame.initGame(this->currSmallBlindPos, this->currSmallBlindChip) == true)
+    if (this->curGame.initGame(this->curSmallBlindPos, this->curSmallBlindChip) == true)
     {
         this->cardDeck.shuffle();
-        this->currGame.startGame(this->cardDeck, this->players);
+        this->curGame.startGame(this->cardDeck, this->players);
     }
 }
 

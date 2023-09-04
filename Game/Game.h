@@ -25,8 +25,8 @@ private:
     std::size_t survivedPlayerNum;
     std::size_t smallBlindPos;
     th::chip    smallBlindChip;
-    th::chip    currBet;
-    th::chip    currPool;
+    th::chip    curBet;
+    th::chip    curPool;
 
     std::unordered_map<int32_t, th::chip> chipsMap;
     std::vector<th::PokerCard>            publicCards;

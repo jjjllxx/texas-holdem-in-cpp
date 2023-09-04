@@ -4,7 +4,7 @@
 #include "Utilities/Constants.h"
 
 th::CardDeck::CardDeck() :
-    currTopCard(0)
+    curTopCard(0)
 {
 }
 
@@ -21,17 +21,17 @@ void th::CardDeck::init()
 void th::CardDeck::shuffle()
 {
     th::Random::shuffle(this->cards);
-    this->currTopCard = 0;
+    this->curTopCard = 0;
 }
 
 th::PokerCard th::CardDeck::getCurrTop()
 {
-    return this->cards[this->currTopCard++];
+    return this->cards[this->curTopCard++];
 }
 
 th::PokerCard th::CardDeck::getCurrTopNext()
 {
-    this->currTopCard++;
+    this->curTopCard++;
 
     return th::CardDeck::getCurrTop();
 }

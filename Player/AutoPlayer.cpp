@@ -13,14 +13,14 @@ void th::AutoPlayer::init(const th::chip& chipNum)
     th::AutoPlayer::receiveChip(chipNum);
 }
 
-void th::AutoPlayer::takeAction(const th::chip& currBet)
+void th::AutoPlayer::takeAction(const th::chip& curBet)
 {
     if (th::AutoPlayer::needToAct() == false)
     {
         return;
     }
 
-    const int32_t action = currBet * 5 < th::AutoPlayer::checkChip()
+    const int32_t action = curBet * 5 < th::AutoPlayer::checkChip()
                                ? th::Random::generateWithin(0, 2)
                                : th::Random::generateWithin(0, 3);
     switch (action)
@@ -28,9 +28,9 @@ void th::AutoPlayer::takeAction(const th::chip& currBet)
     case (0):
         return th::AutoPlayer::fold();
     case (1):
-        return th::AutoPlayer::call(currBet);
+        return th::AutoPlayer::call(curBet);
     case (2):
-        return th::AutoPlayer::raise(currBet);
+        return th::AutoPlayer::raise(curBet);
     case (3):
         return th::AutoPlayer::allIn();
     default:
@@ -38,11 +38,11 @@ void th::AutoPlayer::takeAction(const th::chip& currBet)
     }
 }
 
-void th::AutoPlayer::raise(const th::chip& currBet)
+void th::AutoPlayer::raise(const th::chip& curBet)
 {
-    const th::chip raiseBet = currBet == 0
+    const th::chip raiseBet = curBet == 0
                                   ? th::chip { 25 } - th::AutoPlayer::checkChipInFront()
-                                  : currBet * 2.5 - th::AutoPlayer::checkChipInFront();
+                                  : curBet * 2.5 - th::AutoPlayer::checkChipInFront();
 
     if (raiseBet >= th::AutoPlayer::checkChip())
     {
