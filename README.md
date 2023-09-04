@@ -43,8 +43,14 @@ Run a Subset of the Tests
 For filter condition, you can refer to [official document](http://google.github.io/googletest/advanced.html#running-a-subset-of-the-tests) or ask Chatgpt.
 
 ## Add Git Hooks
+1. Give executable permissions to the hook files: 
 ``` shell
-cd .git/hooks
-ln -s ../../Scripts/Git/commit-msg commit-msg
-ln -s ../../Scripts/Git/prepare-commit-msg prepare-commit-msg
+cd Scripts/Git
+chmod +x *
+```
+
+2. Create a link for the hooks: 
+``` shell
+cd ../../.git/hooks
+ln -s ../../Scripts/Git/* .
 ```
