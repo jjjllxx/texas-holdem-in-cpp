@@ -132,9 +132,9 @@ void th::BasePlayer::peekHandCards() const
                     << th::PokerCardUtility::toSymbol(this->twoHandCards.back()) << std::endl;
 }
 
-void th::BasePlayer::call(const th::chip& currBet)
+void th::BasePlayer::call(const th::chip& curBet)
 {
-    const th::chip chipToCall = currBet - th::BasePlayer::checkChipInFront();
+    const th::chip chipToCall = curBet - th::BasePlayer::checkChipInFront();
 
     if (chipToCall == 0)
     {

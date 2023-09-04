@@ -12,7 +12,7 @@ void th::HumanPlayer::init(const th::chip& chipNum)
     th::HumanPlayer::receiveChip(chipNum);
 }
 
-void th::HumanPlayer::takeAction(const th::chip& currBet)
+void th::HumanPlayer::takeAction(const th::chip& curBet)
 {
     if (th::HumanPlayer::needToAct() == false)
     {
@@ -21,7 +21,7 @@ void th::HumanPlayer::takeAction(const th::chip& currBet)
 
     th::HumanPlayer::peekHandCards();
     th::HumanPlayer::showStatus();
-    std::cout << "Current bet is " << currBet.val
+    std::cout << "Current bet is " << curBet.val
               << ". Please enter a number to decide action: \n"
               << "0. Fold \n"
               << "1. Call \n"
@@ -36,26 +36,26 @@ void th::HumanPlayer::takeAction(const th::chip& currBet)
     case (0):
         return th::HumanPlayer::fold();
     case (1):
-        return th::HumanPlayer::call(currBet);
+        return th::HumanPlayer::call(curBet);
     case (2):
-        return th::HumanPlayer::raise(currBet);
+        return th::HumanPlayer::raise(curBet);
     case (3):
         return th::HumanPlayer::allIn();
     default:
         break;
     }
 
-    return th::HumanPlayer::takeAction(currBet);
+    return th::HumanPlayer::takeAction(curBet);
 }
 
-void th::HumanPlayer::raise(const th::chip& currBet)
+void th::HumanPlayer::raise(const th::chip& curBet)
 {
-    const th::chip neededChip = currBet - th::HumanPlayer::checkChipInFront();
+    const th::chip neededChip = curBet - th::HumanPlayer::checkChipInFront();
     int32_t        inputVal   = 0;
 
     while (inputVal < neededChip.val)
     {
-        std::cout << "Current bet is " << currBet.val
+        std::cout << "Current bet is " << curBet.val
                   << ". You have " << th::HumanPlayer::checkChipInFront().val
                   << " in front. You need at least "
                   << neededChip.val << " to raise. Please enter: ";

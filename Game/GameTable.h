@@ -26,11 +26,11 @@ public:
 
 private:
     int32_t      gameNum;
-    th::Game     currGame;
+    th::Game     curGame;
     th::CardDeck cardDeck;
 
-    std::size_t currSmallBlindPos;
-    th::chip    currSmallBlindChip;
+    std::size_t curSmallBlindPos;
+    th::chip    curSmallBlindChip;
 
     std::vector<std::shared_ptr<th::BasePlayer>> players;
 };

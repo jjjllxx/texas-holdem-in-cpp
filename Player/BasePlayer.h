@@ -34,7 +34,7 @@ public:
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
 
-    virtual void takeAction(const th::chip& currBet) = 0;
+    virtual void takeAction(const th::chip& curBet) = 0;
 
     th::chip pushChipToPool();
     void     receiveChip(const th::chip& chipNum);
@@ -59,11 +59,11 @@ protected:
     th::PlayerAction           lastAct;
     std::vector<th::PokerCard> twoHandCards;
 
-    void         call(const th::chip& currBet);
+    void         call(const th::chip& curBet);
     void         check();
     void         allIn();
     void         fold();
-    virtual void raise(const th::chip& currBet) = 0;
+    virtual void raise(const th::chip& curBet) = 0;
 
     bool needToAct() const;
     void putChipInFront(const th::chip& chipNum);
