@@ -3,6 +3,8 @@
 #include "Entity/Card/PokerCard.h"
 #include "Utilities/Constants.h"
 
+#include <algorithm>
+
 th::CardComboType th::CardType::deduceCardComboType(const std::vector<th::PokerCard>& fiveCards)
 {
     if (fiveCards.size() != th::STANDARD_CARD_COMBO_SIZE)

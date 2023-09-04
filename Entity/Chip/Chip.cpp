@@ -1,5 +1,4 @@
 #include "Chip.h"
-#include <sys/_types/_int32_t.h>
 
 th::chip::chip() :
     val(0)

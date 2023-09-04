@@ -5,6 +5,8 @@
 #include "CardComparison.h"
 #include "Utilities/Constants.h"
 
+#include <algorithm>
+
 std::vector<th::PokerCard> th::CardSelector::selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
 {
     if (fromCards.size() <= th::STANDARD_CARD_COMBO_SIZE)
