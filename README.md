@@ -41,3 +41,10 @@ Run a Subset of the Tests
 ./texas_test --gtest_filter=`filter condition`
 ```
 For filter condition, you can refer to [official document](http://google.github.io/googletest/advanced.html#running-a-subset-of-the-tests) or ask Chatgpt.
+
+## Add Git Hooks
+``` shell
+cd .git/hooks
+ln -s ../../Scripts/Git/commit-msg commit-msg
+ln -s ../../Scripts/Git/prepare-commit-msg prepare-commit-msg
+```
