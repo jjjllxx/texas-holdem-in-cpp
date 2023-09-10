@@ -4,6 +4,7 @@
 #include "Entity/Card/PokerCard.h"
 #include "Entity/Chip/Chip.h"
 #include "Player/BasePlayer.h"
+#include "Utilities/Constants.h"
 
 #include <iostream>
 
@@ -26,14 +27,16 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
 {
     th::Game::handleBlinds(players);
     th::Game::dealCards(cardDeck, players);
-    th::Game::oneRound(0, "Preflop Round", cardDeck, players);
-    th::Game::oneRound(3, "Flop Round", cardDeck, players);
-    th::Game::oneRound(1, "Turn Round", cardDeck, players);
-    th::Game::oneRound(1, "River Round", cardDeck, players);
+    th::Game::oneRound(0, th::PREFLOP_ROUND, cardDeck, players);
+    th::Game::oneRound(3, th::FLOP_ROUND, cardDeck, players);
+    th::Game::oneRound(1, th::TURN_ROUND, cardDeck, players);
+    th::Game::oneRound(1, th::RIVER_ROUND, cardDeck, players);
 }
 
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
+    th::Game::logGameStatus("Handling blinds...");
+
     players[this->smallBlindPos]->putSmallBlindChip(this->smallBlindChip);
     const std::size_t bigBlindPos = (this->smallBlindPos + 1) % players.size();
     players[bigBlindPos]->putBigBlindChip(this->smallBlindChip * 2);
@@ -44,14 +47,15 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     th::Game::logGameStatus("Dealing Cards...");
-    for (std::shared_ptr<th::BasePlayer>& player : players)
-    {
-        player->receiveFirstCard(cardDeck.getCurrTop());
-    }
+    const std::size_t playerNum = players.size();
 
-    for (std::shared_ptr<th::BasePlayer>& player : players)
+    for (std::size_t k = 0; k < th::STANDARD_HAND_CARD_SIZE; ++k)
     {
-        player->receiveSecondCard(cardDeck.getCurrTop());
+        for (std::size_t i = 0; i < playerNum; ++i)
+        {
+            const std::size_t pos = (i + this->smallBlindPos) % playerNum;
+            players[pos]->receiveFirstCard(cardDeck.getCurrTop());
+        }
     }
 }
 
