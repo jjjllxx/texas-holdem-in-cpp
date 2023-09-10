@@ -57,7 +57,7 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
         for (std::size_t i = 0; i < playerNum; ++i)
         {
             const std::size_t pos = (i + this->smallBlindPos) % playerNum;
-            players[pos]->receiveFirstCard(cardDeck.getCurrTop());
+            players[pos]->receiveFirstCard(cardDeck.getCurTop());
         }
     }
 }
@@ -84,7 +84,7 @@ void th::Game::revealPublicCards(const std::size_t cardNumToReveal,
 {
     for (std::size_t i = 0; i < cardNumToReveal; ++i)
     {
-        this->publicCards.push_back(cardDeck.getCurrTopNext());
+        this->publicCards.push_back(cardDeck.getCurTopNext());
     }
 }
 

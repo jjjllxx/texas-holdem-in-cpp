@@ -1,5 +1,6 @@
 #include "GameTable.h"
 
+#include "Game.h"
 #include "Player/AutoPlayer.h"
 #include "Player/BasePlayer.h"
 #include "Player/HumanPlayer.h"
@@ -40,18 +41,23 @@ void th::GameTable::clearTable()
     this->players.clear();
 }
 
-void th::GameTable::startANewGame()
+bool th::GameTable::startANewGame()
 {
     this->gameNum++;
 
-    if (this->curGame.initGame(this->players.size(),
-                               this->curSmallBlindPos,
-                               this->curSmallBlindChip)
+    if (th::Game newGame;
+        newGame.initGame(this->players.size(),
+                         this->curSmallBlindPos,
+                         this->curSmallBlindChip)
         == true)
     {
-        this->curGame.startGame(this->cardDeck, this->players);
+        newGame.startGame(this->cardDeck, this->players);
         this->curSmallBlindPos++;
+
+        return true;
     }
+
+    return false;
 }
 
 std::size_t th::GameTable::getGameNum() const
