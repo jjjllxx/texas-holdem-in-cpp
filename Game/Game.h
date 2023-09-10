@@ -17,7 +17,6 @@ class Game
 public:
     bool initGame(const std::size_t smallBlindPos,
                   const th::chip&   smallBlindChip);
-
     void startGame(th::CardDeck&                                 cardDeck,
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
@@ -25,11 +24,9 @@ private:
     std::size_t survivedPlayerNum;
     std::size_t smallBlindPos;
     th::chip    smallBlindChip;
-    th::chip    curBet;
     th::chip    curPool;
 
-    std::unordered_map<int32_t, th::chip> chipsMap;
-    std::vector<th::PokerCard>            publicCards;
+    std::vector<th::PokerCard> publicCards;
 
     void handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void dealCards(th::CardDeck&                                 cardDeck,
@@ -41,18 +38,12 @@ private:
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void riverRound(th::CardDeck&                                 cardDeck,
                     std::vector<std::shared_ptr<th::BasePlayer>>& players);
-
-    void putBigBlind(const th::chip&                  bigBlindChip,
-                     std::shared_ptr<th::BasePlayer>& bigBlindPlayer);
-    void putSmallBlind(const th::chip&                  smallBlindChip,
-                       std::shared_ptr<th::BasePlayer>& smallBlindPlayer);
-    void collectChip(std::vector<std::shared_ptr<th::BasePlayer>>& players);
-    void revealOnePublicCard(th::CardDeck& cardDeck);
     void oneRound(const std::size_t                             startAt,
                   std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
+    void revealOnePublicCard(th::CardDeck& cardDeck);
+    void collectChips(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void addToPool(const th::chip& chip);
-    void updateCurrBet(const th::chip& newBet);
 
     void showCurrPublicCards() const;
     void logGameStatus(const std::string& status) const;
