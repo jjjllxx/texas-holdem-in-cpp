@@ -43,7 +43,7 @@ void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& player
 void th::Game::dealCards(th::CardDeck&                                 cardDeck,
                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    th::Game::logGameStatus("Dealing cards");
+    th::Game::logGameStatus("Dealing Cards...");
     for (std::shared_ptr<th::BasePlayer>& player : players)
     {
         player->receiveFirstCard(cardDeck.getCurrTop());
@@ -123,6 +123,13 @@ void th::Game::oneRound(const std::size_t                             startAt,
     while (true)
     {
         const th::PlayerAction prevAct = players[curAt]->checkLastAction();
+        if (prevAct == th::PlayerAction::Fold)
+        {
+            ++curAt;
+            curAt %= playerNum;
+            continue;
+        }
+
         players[curAt]->takeAction(curBet);
 
         if (const th::chip curChipInFront = players[curAt]->checkChipInFront();
@@ -136,6 +143,10 @@ void th::Game::oneRound(const std::size_t                             startAt,
             curAct == th::PlayerAction::Fold && curAct != prevAct)
         {
             this->survivedPlayerNum--;
+            if (this->survivedPlayerNum == 1)
+            {
+                break;
+            }
         }
 
         ++curAt;
@@ -155,6 +166,11 @@ void th::Game::addToPool(const th::chip& chip)
 
 void th::Game::showCurrPublicCards() const
 {
+    if (this->publicCards.empty() == true)
+    {
+        std::cout << "Currently No Public Cards!";
+    }
+
     for (const th::PokerCard& card : this->publicCards)
     {
         std::cout << th::PokerCardUtility::toSymbol(card) << ' ';
