@@ -16,7 +16,8 @@ class BasePlayer;
 class Game
 {
 public:
-    bool initGame(const std::size_t smallBlindPos,
+    bool initGame(const std::size_t playerNum,
+                  const std::size_t smallBlindPos,
                   const th::chip&   smallBlindChip);
     void startGame(th::CardDeck&                                 cardDeck,
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
