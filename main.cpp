@@ -6,19 +6,21 @@
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
+    // QApplication app(argc, argv);
 
-    th::GUIMainWindow mainWindow;
+    // th::GUIMainWindow mainWindow;
 
-    mainWindow.show();
-    QApplication::exec();
+    // mainWindow.show();
+    // QApplication::exec();
 
-    // th::GameTable gameTable;
-    // gameTable.initPokerTable(8, 1000, 5);
-    // gameTable.getGameNum();
-    // gameTable.startANewGame();
-    // gameTable.getGameNum();
-    // gameTable.clearPokerTable();
+    (void) argc;
+    (void) argv;
+    th::GameTable gameTable;
+    gameTable.initTable(8, 1000, 5);
+    gameTable.getGameNum();
+    gameTable.startANewGame();
+    gameTable.getGameNum();
+    gameTable.clearTable();
 
     return 0;
 }

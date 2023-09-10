@@ -8,7 +8,8 @@
 
 #include <iostream>
 
-bool th::Game::initGame(const std::size_t smallBlindPos,
+bool th::Game::initGame(const std::size_t playerNum,
+                        const std::size_t smallBlindPos,
                         const th::chip&   smallBlindChip)
 {
     if (smallBlindChip <= 0)
@@ -16,8 +17,9 @@ bool th::Game::initGame(const std::size_t smallBlindPos,
         return false;
     }
 
-    this->smallBlindPos  = smallBlindPos;
-    this->smallBlindChip = smallBlindChip;
+    this->smallBlindPos     = smallBlindPos;
+    this->smallBlindChip    = smallBlindChip;
+    this->survivedPlayerNum = playerNum;
 
     return true;
 }
@@ -47,6 +49,7 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     th::Game::logGameStatus("Dealing Cards...");
+    cardDeck.shuffle();
     const std::size_t playerNum = players.size();
 
     for (std::size_t k = 0; k < th::STANDARD_HAND_CARD_SIZE; ++k)
@@ -117,12 +120,6 @@ void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& p
     while (true)
     {
         const th::PlayerAction prevAct = players[curAt]->checkLastAction();
-        if (prevAct == th::PlayerAction::Fold)
-        {
-            ++curAt;
-            curAt %= playerNum;
-            continue;
-        }
 
         players[curAt]->takeAction(curBet);
 
