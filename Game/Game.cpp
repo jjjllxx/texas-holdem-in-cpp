@@ -26,10 +26,10 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
 {
     th::Game::handleBlinds(players);
     th::Game::dealCards(cardDeck, players);
-    th::Game::preflopRound(players);
-    th::Game::flopRound(cardDeck, players);
-    th::Game::turnRound(cardDeck, players);
-    th::Game::riverRound(cardDeck, players);
+    th::Game::oneRound(0, "Preflop Round", cardDeck, players);
+    th::Game::oneRound(3, "Flop Round", cardDeck, players);
+    th::Game::oneRound(1, "Turn Round", cardDeck, players);
+    th::Game::oneRound(1, "River Round", cardDeck, players);
 }
 
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
@@ -37,7 +37,7 @@ void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& player
     players[this->smallBlindPos]->putSmallBlindChip(this->smallBlindChip);
     const std::size_t bigBlindPos = (this->smallBlindPos + 1) % players.size();
     players[bigBlindPos]->putBigBlindChip(this->smallBlindChip * 2);
-    th::Game::addToPool(this->smallBlindChip * 3);
+    this->curPool += this->smallBlindChip * 3;
 }
 
 void th::Game::dealCards(th::CardDeck&                                 cardDeck,
@@ -55,70 +55,60 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
     }
 }
 
-void th::Game::preflopRound(std::vector<std::shared_ptr<th::BasePlayer>>& players)
+void th::Game::oneRound(const std::size_t                             cardNumToReveal,
+                        const std::string&                            roundName,
+                        th::CardDeck&                                 cardDeck,
+                        std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    th::Game::logGameStatus("Preflop Round");
-    th::Game::oneRound(this->smallBlindPos + 2, players);
-    th::Game::collectChips(players);
-}
-
-void th::Game::flopRound(th::CardDeck&                                 cardDeck,
-                         std::vector<std::shared_ptr<th::BasePlayer>>& players)
-{
-    th::Game::logGameStatus("Flop Round");
-    th::Game::revealOnePublicCard(cardDeck);
-    th::Game::revealOnePublicCard(cardDeck);
-    th::Game::revealOnePublicCard(cardDeck);
+    th::Game::logGameStatus(roundName);
+    th::Game::revealPublicCards(cardNumToReveal, cardDeck);
     th::Game::showCurrPublicCards();
-    th::Game::oneRound(this->smallBlindPos, players);
+    th::Game::playersTakeAction(players);
     th::Game::collectChips(players);
 }
 
-void th::Game::turnRound(th::CardDeck&                                 cardDeck,
-                         std::vector<std::shared_ptr<th::BasePlayer>>& players)
+void th::Game::logGameStatus(const std::string& status) const
 {
-    th::Game::logGameStatus("Turn Round");
-    th::Game::revealOnePublicCard(cardDeck);
-    th::Game::showCurrPublicCards();
-    th::Game::oneRound(this->smallBlindPos, players);
-    th::Game::collectChips(players);
+    std::cout << status << " starts. Now pool is " << this->curPool.val << std::endl;
 }
 
-void th::Game::riverRound(th::CardDeck&                                 cardDeck,
-                          std::vector<std::shared_ptr<th::BasePlayer>>& players)
+void th::Game::revealPublicCards(const std::size_t cardNumToReveal,
+                                 th::CardDeck&     cardDeck)
 {
-    th::Game::logGameStatus("River Round");
-    th::Game::revealOnePublicCard(cardDeck);
-    th::Game::showCurrPublicCards();
-    th::Game::oneRound(this->smallBlindPos, players);
-    th::Game::collectChips(players);
-}
-
-void th::Game::collectChips(std::vector<std::shared_ptr<th::BasePlayer>>& players)
-{
-    for (std::shared_ptr<th::BasePlayer>& player : players)
+    for (std::size_t i = 0; i < cardNumToReveal; ++i)
     {
-        th::Game::addToPool(player->pushChipToPool());
+        this->publicCards.push_back(cardDeck.getCurrTopNext());
     }
 }
 
-void th::Game::revealOnePublicCard(th::CardDeck& cardDeck)
+void th::Game::showCurrPublicCards() const
 {
-    this->publicCards.push_back(cardDeck.getCurrTopNext());
+    if (this->publicCards.empty() == true)
+    {
+        std::cout << "Currently No Public Cards!";
+    }
+
+    for (const th::PokerCard& card : this->publicCards)
+    {
+        std::cout << th::PokerCardUtility::toSymbol(card) << ' ';
+    }
+
+    std::cout << std::endl;
 }
 
-void th::Game::oneRound(const std::size_t                             startAt,
-                        std::vector<std::shared_ptr<th::BasePlayer>>& players)
+void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     const std::size_t playerNum = players.size();
+    const bool        isPreflop = this->publicCards.empty() == true;
 
-    std::size_t curAt       = startAt % playerNum;
+    std::size_t curAt  = isPreflop == true
+                             ? (this->smallBlindPos + 2) % playerNum
+                             : this->smallBlindPos;
+    th::chip    curBet = isPreflop == true
+                             ? this->smallBlindChip * 2
+                             : 0;
+
     std::size_t shouldEndAt = curAt;
-
-    // For preflop round, initial bet equals to big blind chip, otherwise 0.
-    th::chip curBet = this->publicCards.empty() == true
-                          ? this->smallBlindChip * 2
-                          : 0;
 
     while (true)
     {
@@ -159,27 +149,10 @@ void th::Game::oneRound(const std::size_t                             startAt,
     }
 }
 
-void th::Game::addToPool(const th::chip& chip)
+void th::Game::collectChips(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    this->curPool += chip;
-}
-
-void th::Game::showCurrPublicCards() const
-{
-    if (this->publicCards.empty() == true)
+    for (std::shared_ptr<th::BasePlayer>& player : players)
     {
-        std::cout << "Currently No Public Cards!";
+        this->curPool += player->pushChipToPool();
     }
-
-    for (const th::PokerCard& card : this->publicCards)
-    {
-        std::cout << th::PokerCardUtility::toSymbol(card) << ' ';
-    }
-
-    std::cout << std::endl;
-}
-
-void th::Game::logGameStatus(const std::string& status) const
-{
-    std::cout << status << " starts. Now pool is " << this->curPool.val << std::endl;
 }
