@@ -13,8 +13,8 @@ struct CardDeck
     void init();
     void shuffle();
 
-    th::PokerCard getCurrTop();
-    th::PokerCard getCurrTopNext();
+    th::PokerCard getCurTop();
+    th::PokerCard getCurTopNext();
 
 private:
     std::size_t                curTopCard;

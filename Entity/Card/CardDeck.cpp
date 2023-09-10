@@ -24,16 +24,16 @@ void th::CardDeck::shuffle()
     this->curTopCard = 0;
 }
 
-th::PokerCard th::CardDeck::getCurrTop()
+th::PokerCard th::CardDeck::getCurTop()
 {
     return this->cards[this->curTopCard++];
 }
 
-th::PokerCard th::CardDeck::getCurrTopNext()
+th::PokerCard th::CardDeck::getCurTopNext()
 {
     this->curTopCard++;
 
-    return th::CardDeck::getCurrTop();
+    return th::CardDeck::getCurTop();
 }
 
 void th::CardDeck::initOneSuit(const th::CardSuit suit)
