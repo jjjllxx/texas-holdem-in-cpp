@@ -35,7 +35,7 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
     th::Game::oneRound(1, th::TURN_ROUND, cardDeck, players);
     th::Game::oneRound(1, th::RIVER_ROUND, cardDeck, players);
 
-    th::GameSettlement::decideWinner(this->publicCards, players);
+    th::GameSettlement::decideWinners(this->publicCards, players);
 }
 
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
