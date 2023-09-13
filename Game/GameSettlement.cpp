@@ -6,20 +6,26 @@
 #include "Player/BasePlayer.h"
 
 #include <algorithm>
-#include <cstddef>
 #include <iostream>
-#include <ostream>
 
-std::shared_ptr<th::BasePlayer> th::GameSettlement::decideWinner(const std::vector<th::PokerCard>&                   publicCards,
-                                                                 const std::vector<std::shared_ptr<th::BasePlayer>>& players)
+std::vector<std::shared_ptr<th::BasePlayer>> th::GameSettlement::decideWinners(const std::vector<th::PokerCard>&                   publicCards,
+                                                                               const std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     const std::vector<std::shared_ptr<th::BasePlayer>> survivors = th::GameSettlement::extractSurvivors(players);
 
-    auto cardCombos = th::GameSettlement::calcHighestCardCombo(publicCards, survivors);
-    th::GameSettlement::sortByCardCombo(cardCombos);
-    th::GameSettlement::logRank(cardCombos);
+    std::vector<th::PlayerWithCards> survivorsWithCards = th::GameSettlement::calcHighestCardCombo(publicCards, survivors);
+    th::GameSettlement::sortByCardCombo(survivorsWithCards);
 
-    return cardCombos.front().player;
+    const std::size_t winnerCnt = th::GameSettlement::countWinners(survivorsWithCards);
+    th::GameSettlement::logRank(winnerCnt, survivorsWithCards);
+    std::vector<std::shared_ptr<th::BasePlayer>> winners;
+
+    for (std::size_t i = 0; i < winnerCnt; ++i)
+    {
+        winners.push_back(survivorsWithCards[i].player);
+    }
+
+    return winners;
 }
 
 std::vector<std::shared_ptr<th::BasePlayer>> th::GameSettlement::extractSurvivors(const std::vector<std::shared_ptr<th::BasePlayer>>& players)
@@ -55,10 +61,10 @@ std::vector<th::PlayerWithCards> th::GameSettlement::calcHighestCardCombo(const 
     return playersWithCards;
 }
 
-void th::GameSettlement::sortByCardCombo(std::vector<th::PlayerWithCards>& cardCombos)
+void th::GameSettlement::sortByCardCombo(std::vector<th::PlayerWithCards>& survivorsWithCards)
 {
-    std::sort(cardCombos.begin(),
-              cardCombos.end(),
+    std::sort(survivorsWithCards.begin(),
+              survivorsWithCards.end(),
               [](const th::PlayerWithCards& a, const th::PlayerWithCards& b)
               {
                   return th::CardComparison::compareCardCombo(a.cards,
@@ -67,19 +73,41 @@ void th::GameSettlement::sortByCardCombo(std::vector<th::PlayerWithCards>& cardC
               });
 }
 
-void th::GameSettlement::logRank(const std::vector<th::PlayerWithCards>& cardCombos)
+void th::GameSettlement::logRank(const std::size_t                       winnerCnt,
+                                 const std::vector<th::PlayerWithCards>& sortedSurvivors)
 {
     std::cout << "The rank of this game: " << std::endl;
-
     std::size_t rank = 1;
-    for (const th::PlayerWithCards& pwc : cardCombos)
+
+    for (const th::PlayerWithCards& player : sortedSurvivors)
     {
-        std::cout << rank << ". Player " << pwc.player->getId() << " with hand cards "
-                  << th::PokerCardUtility::toSymbol(pwc.player->checkHandCards())
+        const std::string winnerMarker = rank <= winnerCnt ? "(winner)" : "";
+        std::cout << rank << ". Player " << player.player->getId() << " with hand cards "
+                  << th::PokerCardUtility::toSymbol(player.player->checkHandCards())
                   << "can generate highest combination: "
-                  << th::PokerCardUtility::toSymbol(th::CardComparison::deduceCardCmpOrder(pwc.cards)) << std::endl;
+                  << th::PokerCardUtility::toSymbol(th::CardComparison::deduceCardCmpOrder(player.cards))
+                  << winnerMarker << std::endl;
         ++rank;
     }
+}
+
+std::size_t th::GameSettlement::countWinners(const std::vector<th::PlayerWithCards>& sortedSurvivors)
+{
+    std::size_t winnerCnt = 1;
+
+    for (std::size_t i = 1; i < sortedSurvivors.size(); ++i)
+    {
+        if (th::CardComparison::compareCardCombo(sortedSurvivors[i - 1].cards,
+                                                 sortedSurvivors[i].cards)
+            != th::CardComboCmpResult::Draw)
+        {
+            break;
+        }
+
+        ++winnerCnt;
+    }
+
+    return winnerCnt;
 }
 
 std::vector<th::PokerCard> th::GameSettlement::combineCards(const std::vector<th::PokerCard>& handCards,
