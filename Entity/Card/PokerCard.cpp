@@ -1,4 +1,5 @@
 #include "PokerCard.h"
+#include <string>
 
 th::PokerCard::PokerCard() :
     suit(th::CardSuit::INVALID),
@@ -18,34 +19,22 @@ bool th::PokerCard::operator==(const th::PokerCard& card) const
     return card.point == this->point && card.suit == this->suit;
 }
 
-std::string th::PokerCardUtility::toString(const th::PokerCard& card)
+std::string th::PokerCardUtility::toSymbol(const std::vector<th::PokerCard>& cards)
 {
-    return th::PokerCardUtility::getCardSuitStr(card.suit) + ' '
-           + th::PokerCardUtility::getCardPointStr(card.point);
+    std::string cardsSymbol;
+    for (const th::PokerCard& card : cards)
+    {
+        cardsSymbol += th::PokerCardUtility::toSymbol(card);
+        cardsSymbol += " ";
+    }
+
+    return cardsSymbol;
 }
 
 std::string th::PokerCardUtility::toSymbol(const th::PokerCard& card)
 {
     return th::PokerCardUtility::getCardSuitSymbol(card.suit)
            + th::PokerCardUtility::getCardPointStr(card.point);
-}
-
-std::string th::PokerCardUtility::getCardSuitStr(const th::CardSuit suit)
-{
-    switch (suit)
-    {
-    case th::CardSuit::Club:
-        return "Club";
-    case th::CardSuit::Diamond:
-        return "Diamond";
-    case th::CardSuit::Heart:
-        return "Heart";
-    case th::CardSuit::Spade:
-        return "Spade";
-    case th::CardSuit::INVALID:
-    default:
-        return "";
-    }
 }
 
 std::string th::PokerCardUtility::getCardSuitSymbol(const th::CardSuit suit)

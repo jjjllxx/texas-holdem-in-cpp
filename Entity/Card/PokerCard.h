@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace th
 {
@@ -28,10 +29,10 @@ struct PokerCard
 
 namespace PokerCardUtility
 {
-    std::string toString(const th::PokerCard& card);
+    std::string toSymbol(const std::vector<th::PokerCard>& cards);
     std::string toSymbol(const th::PokerCard& card);
-    std::string getCardSuitStr(const th::CardSuit suit);
     std::string getCardSuitSymbol(const th::CardSuit suit);
     std::string getCardPointStr(const int32_t point);
+
 } // namespace PokerCardUtility
 }
