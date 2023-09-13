@@ -21,6 +21,7 @@ namespace CardComparison
     th::CardComboCmpResult compareCardCombo(const std::vector<th::PokerCard>& firstCards,
                                             const std::vector<th::PokerCard>& secondCards);
 
+    std::vector<th::PokerCard> deduceCardCmpOrder(const std::vector<th::PokerCard>& fiveCards);
     std::vector<th::PokerCard> deduceCardCmpOrder(const th::CardComboType           comboType,
                                                   const std::vector<th::PokerCard>& fiveCards);
 
