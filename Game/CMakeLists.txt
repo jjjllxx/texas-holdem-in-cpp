@@ -1,4 +1,5 @@
 list(APPEND TH_CORE_CPPS
 ${CMAKE_CURRENT_LIST_DIR}/Game.cpp
+${CMAKE_CURRENT_LIST_DIR}/GameSettlement.cpp
 ${CMAKE_CURRENT_LIST_DIR}/GameTable.cpp
 )

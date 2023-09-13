@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GameSettlement.h"
 
 #include "Entity/Card/CardDeck.h"
 #include "Entity/Card/PokerCard.h"
@@ -33,6 +34,8 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
     th::Game::oneRound(3, th::FLOP_ROUND, cardDeck, players);
     th::Game::oneRound(1, th::TURN_ROUND, cardDeck, players);
     th::Game::oneRound(1, th::RIVER_ROUND, cardDeck, players);
+
+    th::GameSettlement::decideWinner(this->publicCards, players);
 }
 
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
@@ -52,13 +55,16 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
     cardDeck.shuffle();
     const std::size_t playerNum = players.size();
 
-    for (std::size_t k = 0; k < th::STANDARD_HAND_CARD_SIZE; ++k)
+    for (std::size_t i = 0; i < playerNum; ++i)
     {
-        for (std::size_t i = 0; i < playerNum; ++i)
-        {
-            const std::size_t pos = (i + this->smallBlindPos) % playerNum;
-            players[pos]->receiveFirstCard(cardDeck.getCurTop());
-        }
+        const std::size_t pos = (i + this->smallBlindPos) % playerNum;
+        players[pos]->receiveFirstCard(cardDeck.getCurTop());
+    }
+
+    for (std::size_t i = 0; i < playerNum; ++i)
+    {
+        const std::size_t pos = (i + this->smallBlindPos) % playerNum;
+        players[pos]->receiveSecondCard(cardDeck.getCurTop());
     }
 }
 
