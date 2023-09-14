@@ -45,6 +45,11 @@ bool th::GameTable::startANewGame()
 {
     this->gameNum++;
 
+    for (std::shared_ptr<th::BasePlayer>& player : this->players)
+    {
+        player->prepareForNextGame();
+    }
+
     if (th::Game newGame;
         newGame.initGame(this->players.size(),
                          this->curSmallBlindPos,
