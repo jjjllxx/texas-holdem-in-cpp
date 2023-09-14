@@ -23,7 +23,7 @@ cmake -j32
 ./texas
 ```
 
-## 5. Enable Test
+## 5. Run Test
 Compile
 ``` shell
 cd build
@@ -41,6 +41,19 @@ Run a Subset of the Tests
 ./texas_test --gtest_filter=`filter condition`
 ```
 For filter condition, you can refer to [official document](http://google.github.io/googletest/advanced.html#running-a-subset-of-the-tests) or ask Chatgpt.
+
+## 6. Run GUI
+Compile
+``` shell
+cd build
+cmake -DTH_GUI=on ..
+make -j32
+```
+
+Run Test (inside `bin` folder)
+``` shell
+./texas_gui
+```
 
 ## Add Git Hooks
 1. Give executable permissions to the hook files: 
