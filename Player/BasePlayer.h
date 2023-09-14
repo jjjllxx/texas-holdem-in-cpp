@@ -3,6 +3,7 @@
 #include "Entity/Card/PokerCard.h"
 #include "Entity/Chip/Chip.h"
 
+#include <string>
 #include <vector>
 
 namespace th
@@ -28,17 +29,16 @@ public:
     virtual ~BasePlayer() = default;
 
     virtual void init(const th::chip& chipNum) = 0;
+    virtual void takeAction(const th::chip& curBet) = 0;
 
     void putBigBlindChip(const th::chip& bigBlindChip);
     void putSmallBlindChip(const th::chip& smallBlindChip);
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
-
-    virtual void takeAction(const th::chip& curBet) = 0;
+    void receiveChip(const th::chip& chipNum);
+    void prepareForNextGame();
 
     th::chip pushChipToPool();
-    void     receiveChip(const th::chip& chipNum);
-    void     resetAfterGame();
 
     int32_t                    getId() const;
     th::chip                   checkChip() const;
@@ -46,28 +46,22 @@ public:
     th::PlayerAction           checkLastAction() const;
     std::vector<th::PokerCard> checkHandCards() const;
 
-    void showStatus() const;
-    void peekHandCards() const;
-
 protected:
     int32_t     id;
     std::string name;
 
     th::chip chip;
     th::chip chipInFront;
+    th::chip chipForCurGame;
 
     th::PlayerAction           lastAct;
     std::vector<th::PokerCard> twoHandCards;
 
     void         call(const th::chip& curBet);
-    void         check();
     void         allIn();
-    void         fold();
     virtual void raise(const th::chip& curBet) = 0;
 
-    bool needToAct() const;
     void putChipInFront(const th::chip& chipNum);
     void setAction(const th::PlayerAction action);
-    void printAction() const;
 };
 } // namespace th

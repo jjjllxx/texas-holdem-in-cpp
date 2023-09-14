@@ -14,5 +14,9 @@ public:
     void init(const th::chip& chipNum) override;
     void takeAction(const th::chip& curBet) override;
     void raise(const th::chip& curBet) override;
+
+private:
+    void showStatus() const;
+    void peekHandCards() const;
 };
 } // namespace th

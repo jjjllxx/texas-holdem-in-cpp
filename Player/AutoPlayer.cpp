@@ -2,6 +2,8 @@
 
 #include "Algorithms/Random/Random.h"
 
+#include "PlayerUtilities.h"
+
 th::AutoPlayer::AutoPlayer(const int32_t id) :
     th::BasePlayer(id)
 {
@@ -15,7 +17,7 @@ void th::AutoPlayer::init(const th::chip& chipNum)
 
 void th::AutoPlayer::takeAction(const th::chip& curBet)
 {
-    if (th::AutoPlayer::needToAct() == false)
+    if (th::PlayerUtilities::needToAct(this->name, th::AutoPlayer::checkLastAction()) == false)
     {
         return;
     }
@@ -26,16 +28,24 @@ void th::AutoPlayer::takeAction(const th::chip& curBet)
     switch (action)
     {
     case (0):
-        return th::AutoPlayer::fold();
+        th::BasePlayer::setAction(th::PlayerAction::Fold);
+        break;
     case (1):
-        return th::AutoPlayer::call(curBet);
+        th::AutoPlayer::call(curBet);
+        break;
     case (2):
-        return th::AutoPlayer::raise(curBet);
+        th::AutoPlayer::raise(curBet);
+        break;
     case (3):
-        return th::AutoPlayer::allIn();
+        th::AutoPlayer::allIn();
+        break;
     default:
         break;
     }
+
+    th::PlayerUtilities::logPlayerStatus(th::AutoPlayer::checkLastAction(),
+                                         th::AutoPlayer::checkChipInFront(),
+                                         this->name);
 }
 
 void th::AutoPlayer::raise(const th::chip& curBet)
@@ -51,5 +61,4 @@ void th::AutoPlayer::raise(const th::chip& curBet)
 
     th::AutoPlayer::putChipInFront(raiseBet);
     th::AutoPlayer::setAction(th::PlayerAction::Raise);
-    th::AutoPlayer::printAction();
 }
