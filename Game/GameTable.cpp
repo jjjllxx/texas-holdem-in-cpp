@@ -31,7 +31,8 @@ bool th::GameTable::initTable(const std::size_t playerNum,
     }
 
     this->cardDeck.init();
-    this->gameNum = 0;
+    this->gameNum          = 0;
+    this->curSmallBlindPos = 0;
 
     return true;
 }
@@ -43,8 +44,6 @@ void th::GameTable::clearTable()
 
 bool th::GameTable::startANewGame()
 {
-    this->gameNum++;
-
     for (std::shared_ptr<th::BasePlayer>& player : this->players)
     {
         player->prepareForNextGame();
@@ -56,6 +55,7 @@ bool th::GameTable::startANewGame()
                          this->curSmallBlindChip)
         == true)
     {
+        this->gameNum++;
         newGame.startGame(this->cardDeck, this->players);
         this->curSmallBlindPos++;
 
