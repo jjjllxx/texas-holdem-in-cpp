@@ -2,8 +2,11 @@
 
 ## 1. Download Repo
 ``` shell
+cd /proj
 git clone https://github.com/JinLexuan/texas-holdem-in-cpp.git
 ```
+
+For Linux user, can follow [Docker Guide](/Docker/Docker.md) to build environment.
 
 ## 2. Create New Build Folder (Only at First Time)
 ``` shell
