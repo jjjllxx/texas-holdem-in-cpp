@@ -21,6 +21,7 @@ sudo systemctl enable docker
 docker --version
 ```
 
+Before doing the following steps, it is recommanded to go trhough all the files in `Docker` folder, focusing on file paths, in case of unintended errors.
 ## Setup environment
 
 *This is a 1 time step*
@@ -45,13 +46,12 @@ dockb thd
 
 ---
 
-## Build code (development containers only)
-*The following commands are run in the docker container*
-
-**Enter docker container**
+## Enter docker container
 
 ```bash
 dock thd
 ```
 
-Then the following steps can follow [README](README.md)
+The default path in docker should be `/proj/texas-holdem-in-cpp/build`.  
+
+Then the following steps can refer to [README](../README.md). The commands should be run in the docker container.
