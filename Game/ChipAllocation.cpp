@@ -1,4 +1,5 @@
 #include "ChipAllocation.h"
+
 #include "Entity/Chip/Chip.h"
 #include "Player/BasePlayer.h"
 
@@ -14,6 +15,7 @@ void th::ChipAllocation::allocateChip(std::vector<std::shared_ptr<th::BasePlayer
     th::ChipAllocation::logPools(pools);
     th::ChipAllocation::allocateChipToWinners(pools, winners);
     th::ChipAllocation::takeBackExtraChip(winners.back()->checkChipForCurGame(), players);
+    th::ChipAllocation::logChipInfo(players);
 }
 
 void th::ChipAllocation::sortWinnersByChipForCurGame(std::vector<std::shared_ptr<th::BasePlayer>>& winners)
@@ -63,7 +65,7 @@ void th::ChipAllocation::allocateChipToWinners(const std::vector<th::chip>&     
         {
             const th::chip chipToReceive { static_cast<int32_t>(pools[i].val / winnersCnt - i) };
             sortedWinners[j]->receiveChip(chipToReceive);
-            std::cout << "Player " << sortedWinners[j]->getId() << " has received " << chipToReceive.val << " chips" << std::endl;
+            std::cout << sortedWinners[j]->getName() << " has received " << chipToReceive.val << " chips" << std::endl;
         }
     }
 }
@@ -77,7 +79,7 @@ void th::ChipAllocation::takeBackExtraChip(const th::chip&                      
     {
         const th::chip chipToTakeBack { std::max(player->checkChipForCurGame() - highestLevel, th::chip { 0 }) };
         player->receiveChip(chipToTakeBack);
-        std::cout << "Player " << player->getId() << " has put "
+        std::cout << player->getName() << " has put "
                   << player->checkChipForCurGame().val << " for this game,"
                   << " so take back " << chipToTakeBack.val << " chips" << std::endl;
     }
@@ -90,5 +92,16 @@ void th::ChipAllocation::logPools(const std::vector<th::chip>& pools)
     {
         std::cout << "\nPool " << poolRank << " has " << pool.val << " chip." << std::endl;
         poolRank++;
+    }
+}
+
+void th::ChipAllocation::logChipInfo(const std::vector<std::shared_ptr<th::BasePlayer>>& players)
+{
+    std::cout << "\nPlayer Chip Situation: " << std::endl;
+
+    for (const std::shared_ptr<th::BasePlayer>& player : players)
+    {
+        std::cout << player->getName() << " now has "
+                  << player->checkChip().val << " chip." << std::endl;
     }
 }
