@@ -43,6 +43,7 @@ public:
     int32_t                    getId() const;
     th::chip                   checkChip() const;
     th::chip                   checkChipInFront() const;
+    th::chip                   checkChipForCurGame() const;
     th::PlayerAction           checkLastAction() const;
     std::vector<th::PokerCard> checkHandCards() const;
 

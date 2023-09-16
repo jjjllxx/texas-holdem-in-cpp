@@ -76,7 +76,7 @@ void th::GameSettlement::sortByCardCombo(std::vector<th::PlayerWithCards>& survi
 void th::GameSettlement::logRank(const std::size_t                       winnerCnt,
                                  const std::vector<th::PlayerWithCards>& sortedSurvivors)
 {
-    std::cout << "The rank of this game: " << std::endl;
+    std::cout << "\nThe rank of this game: " << std::endl;
     std::size_t rank = 1;
 
     for (const th::PlayerWithCards& player : sortedSurvivors)

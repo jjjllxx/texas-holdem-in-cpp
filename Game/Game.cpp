@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Game/ChipAllocation.h"
 #include "GameSettlement.h"
 
 #include "Entity/Card/CardDeck.h"
@@ -35,7 +36,9 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
     th::Game::oneRound(1, th::TURN_ROUND, cardDeck, players);
     th::Game::oneRound(1, th::RIVER_ROUND, cardDeck, players);
 
-    th::GameSettlement::decideWinners(this->publicCards, players);
+    std::vector<std::shared_ptr<th::BasePlayer>> winners
+        = th::GameSettlement::decideWinners(this->publicCards, players);
+    th::ChipAllocation::allocateChip(winners, players);
 }
 
 void th::Game::handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players)
