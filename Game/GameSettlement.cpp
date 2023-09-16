@@ -1,7 +1,7 @@
 #include "GameSettlement.h"
 
 #include "Algorithms/Card/CardComparison.h"
-#include "Algorithms/Card/CardSelector.h"
+#include "Algorithms/Card/CardSelection.h"
 #include "Entity/Card/PokerCard.h"
 #include "Player/BasePlayer.h"
 
@@ -52,7 +52,7 @@ std::vector<th::PlayerWithCards> th::GameSettlement::calcHighestCardCombo(const 
     {
         th::PlayerWithCards pwc;
         pwc.player = survivor;
-        pwc.cards  = th::CardSelector::selectHighestCardCombo(
+        pwc.cards  = th::CardSelection::selectHighestCardCombo(
             th::GameSettlement::combineCards(survivor->checkHandCards(),
                                              publicCards));
         playersWithCards.push_back(pwc);

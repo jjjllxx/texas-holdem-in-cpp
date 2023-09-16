@@ -1,4 +1,4 @@
-#include "CardSelector.h"
+#include "CardSelection.h"
 
 #include "Entity/Card/PokerCard.h"
 
@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-std::vector<th::PokerCard> th::CardSelector::selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
+std::vector<th::PokerCard> th::CardSelection::selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
 {
     if (fromCards.size() <= th::STANDARD_CARD_COMBO_SIZE)
     {

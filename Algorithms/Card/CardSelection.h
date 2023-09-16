@@ -6,8 +6,8 @@ namespace th
 {
 struct PokerCard;
 
-namespace CardSelector
+namespace CardSelection
 {
     std::vector<th::PokerCard> selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards);
-} // namespace CardSelector
+} // namespace CardSelection
 } // namespace th
