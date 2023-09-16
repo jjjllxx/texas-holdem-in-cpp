@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-bool th::Game::initGame(const std::size_t playerNum,
+bool th::Game::initGame(const std::size_t playersCnt,
                         const std::size_t smallBlindPos,
                         const th::chip&   smallBlindChip)
 {
@@ -21,7 +21,7 @@ bool th::Game::initGame(const std::size_t playerNum,
 
     this->smallBlindPos     = smallBlindPos;
     this->smallBlindChip    = smallBlindChip;
-    this->survivedPlayerNum = playerNum;
+    this->survivedPlayerNum = playersCnt;
 
     return true;
 }
@@ -56,17 +56,17 @@ void th::Game::dealCards(th::CardDeck&                                 cardDeck,
 {
     th::Game::logGameStatus("Dealing Cards...");
     cardDeck.shuffle();
-    const std::size_t playerNum = players.size();
+    const std::size_t playersCnt = players.size();
 
-    for (std::size_t i = 0; i < playerNum; ++i)
+    for (std::size_t i = 0; i < playersCnt; ++i)
     {
-        const std::size_t pos = (i + this->smallBlindPos) % playerNum;
+        const std::size_t pos = (i + this->smallBlindPos) % playersCnt;
         players[pos]->receiveFirstCard(cardDeck.getCurTop());
     }
 
-    for (std::size_t i = 0; i < playerNum; ++i)
+    for (std::size_t i = 0; i < playersCnt; ++i)
     {
-        const std::size_t pos = (i + this->smallBlindPos) % playerNum;
+        const std::size_t pos = (i + this->smallBlindPos) % playersCnt;
         players[pos]->receiveSecondCard(cardDeck.getCurTop());
     }
 }
@@ -114,11 +114,11 @@ void th::Game::showCurrPublicCards() const
 
 void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    const std::size_t playerNum = players.size();
+    const std::size_t playersCnt = players.size();
     const bool        isPreflop = this->publicCards.empty() == true;
 
     std::size_t curAt  = isPreflop == true
-                             ? (this->smallBlindPos + 2) % playerNum
+                             ? (this->smallBlindPos + 2) % playersCnt
                              : this->smallBlindPos;
     th::chip    curBet = isPreflop == true
                              ? this->smallBlindChip * 2
@@ -150,7 +150,7 @@ void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& p
         }
 
         ++curAt;
-        curAt %= playerNum;
+        curAt %= playersCnt;
 
         if (curAt == shouldEndAt)
         {
