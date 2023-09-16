@@ -91,6 +91,11 @@ th::chip th::BasePlayer::checkChipInFront() const
     return this->chipInFront;
 }
 
+th::chip th::BasePlayer::checkChipForCurGame() const
+{
+    return this->chipForCurGame;
+}
+
 th::PlayerAction th::BasePlayer::checkLastAction() const
 {
     return this->lastAct;
