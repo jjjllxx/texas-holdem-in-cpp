@@ -18,7 +18,7 @@ bool th::GameTable::initTable(const std::size_t playerNum,
         return false;
     }
 
-    this->curSmallBlindChip = smallBlindChip;
+    this->smallBlindChip = smallBlindChip;
 
     this->players.reserve(playerNum);
     this->players.push_back(std::make_shared<th::HumanPlayer>(0));
@@ -32,7 +32,7 @@ bool th::GameTable::initTable(const std::size_t playerNum,
 
     this->cardDeck.init();
     this->gameNum          = 0;
-    this->curSmallBlindPos = 0;
+    this->smallBlindPos    = 0;
 
     return true;
 }
@@ -51,13 +51,13 @@ bool th::GameTable::startANewGame()
 
     if (th::Game newGame;
         newGame.initGame(this->players.size(),
-                         this->curSmallBlindPos,
-                         this->curSmallBlindChip)
+                         this->smallBlindPos,
+                         this->smallBlindChip)
         == true)
     {
         this->gameNum++;
         newGame.startGame(this->cardDeck, this->players);
-        this->curSmallBlindPos++;
+        this->smallBlindPos++;
 
         return true;
     }

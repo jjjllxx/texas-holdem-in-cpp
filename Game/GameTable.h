@@ -23,8 +23,8 @@ public:
 
 private:
     std::size_t  gameNum;
-    std::size_t  curSmallBlindPos;
-    th::chip     curSmallBlindChip;
+    std::size_t  smallBlindPos;
+    th::chip     smallBlindChip;
     th::CardDeck cardDeck;
 
     std::vector<std::shared_ptr<th::BasePlayer>> players;
