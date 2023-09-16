@@ -63,8 +63,7 @@ CheckOptions:
   # - { key: readability-identifier-naming.NamespaceCase,      value: CamelCase }
   - { key: readability-identifier-naming.StructCase,         value: CamelCase  }
 
-  # ignore as STKCI functions use CamelCase
-  #- { key: readability-identifier-naming.FunctionCase,  value: camelBack }
+  - { key: readability-identifier-naming.FunctionCase,  value: camelBack }
   - { key: readability-identifier-naming.VariableCase,  value: camelBack }
 
   # ignore as we use lower case logging macros
