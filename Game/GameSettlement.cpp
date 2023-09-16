@@ -82,7 +82,7 @@ void th::GameSettlement::logRank(const std::size_t                       winners
     for (const th::PlayerWithCards& player : sortedSurvivors)
     {
         const std::string winnerMarker = rank <= winnersCnt ? "(winner)" : "";
-        std::cout << rank << ". Player " << player.player->getId() << " with hand cards "
+        std::cout << rank << ". " << player.player->getName() << " with hand cards "
                   << th::PokerCardUtility::toSymbol(player.player->checkHandCards())
                   << "can generate highest combination: "
                   << th::PokerCardUtility::toSymbol(th::CardComparison::deduceCardCmpOrder(player.cards))

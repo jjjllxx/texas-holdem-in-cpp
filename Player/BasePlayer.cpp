@@ -81,6 +81,11 @@ int32_t th::BasePlayer::getId() const
     return this->id;
 }
 
+std::string th::BasePlayer::getName() const
+{
+    return this->name;
+}
+
 th::chip th::BasePlayer::checkChip() const
 {
     return this->chip;

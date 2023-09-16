@@ -41,6 +41,7 @@ public:
     th::chip pushChipToPool();
 
     int32_t                    getId() const;
+    std::string                getName() const;
     th::chip                   checkChip() const;
     th::chip                   checkChipInFront() const;
     th::chip                   checkChipForCurGame() const;

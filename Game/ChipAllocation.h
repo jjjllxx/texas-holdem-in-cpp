@@ -23,5 +23,6 @@ namespace ChipAllocation
     void takeBackExtraChip(const th::chip&                               highestLevel,
                            std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void logPools(const std::vector<th::chip>& pools);
+    void logChipInfo(const std::vector<std::shared_ptr<th::BasePlayer>>& players);
 } // namespace ChipAllocation
 } // namespace th
