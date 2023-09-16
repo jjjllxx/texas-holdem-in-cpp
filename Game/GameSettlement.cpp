@@ -16,11 +16,11 @@ std::vector<std::shared_ptr<th::BasePlayer>> th::GameSettlement::decideWinners(c
     std::vector<th::PlayerWithCards> survivorsWithCards = th::GameSettlement::calcHighestCardCombo(publicCards, survivors);
     th::GameSettlement::sortByCardCombo(survivorsWithCards);
 
-    const std::size_t winnerCnt = th::GameSettlement::countWinners(survivorsWithCards);
-    th::GameSettlement::logRank(winnerCnt, survivorsWithCards);
+    const std::size_t winnersCnt = th::GameSettlement::countWinners(survivorsWithCards);
+    th::GameSettlement::logRank(winnersCnt, survivorsWithCards);
     std::vector<std::shared_ptr<th::BasePlayer>> winners;
 
-    for (std::size_t i = 0; i < winnerCnt; ++i)
+    for (std::size_t i = 0; i < winnersCnt; ++i)
     {
         winners.push_back(survivorsWithCards[i].player);
     }
@@ -73,7 +73,7 @@ void th::GameSettlement::sortByCardCombo(std::vector<th::PlayerWithCards>& survi
               });
 }
 
-void th::GameSettlement::logRank(const std::size_t                       winnerCnt,
+void th::GameSettlement::logRank(const std::size_t                       winnersCnt,
                                  const std::vector<th::PlayerWithCards>& sortedSurvivors)
 {
     std::cout << "\nThe rank of this game: " << std::endl;
@@ -81,7 +81,7 @@ void th::GameSettlement::logRank(const std::size_t                       winnerC
 
     for (const th::PlayerWithCards& player : sortedSurvivors)
     {
-        const std::string winnerMarker = rank <= winnerCnt ? "(winner)" : "";
+        const std::string winnerMarker = rank <= winnersCnt ? "(winner)" : "";
         std::cout << rank << ". Player " << player.player->getId() << " with hand cards "
                   << th::PokerCardUtility::toSymbol(player.player->checkHandCards())
                   << "can generate highest combination: "
@@ -93,7 +93,7 @@ void th::GameSettlement::logRank(const std::size_t                       winnerC
 
 std::size_t th::GameSettlement::countWinners(const std::vector<th::PlayerWithCards>& sortedSurvivors)
 {
-    std::size_t winnerCnt = 1;
+    std::size_t winnersCnt = 1;
 
     for (std::size_t i = 1; i < sortedSurvivors.size(); ++i)
     {
@@ -104,10 +104,10 @@ std::size_t th::GameSettlement::countWinners(const std::vector<th::PlayerWithCar
             break;
         }
 
-        ++winnerCnt;
+        ++winnersCnt;
     }
 
-    return winnerCnt;
+    return winnersCnt;
 }
 
 std::vector<th::PokerCard> th::GameSettlement::combineCards(const std::vector<th::PokerCard>& handCards,

@@ -24,7 +24,7 @@ namespace GameSettlement
                                                                       const std::vector<std::shared_ptr<th::BasePlayer>>& survivors);
 
     void        sortByCardCombo(std::vector<th::PlayerWithCards>& survivorsWithCards);
-    void        logRank(const std::size_t                       winnerCnt,
+    void        logRank(const std::size_t                       winnersCnt,
                         const std::vector<th::PlayerWithCards>& sortedSurvivors);
     std::size_t countWinners(const std::vector<th::PlayerWithCards>& sortedSurvivors);
 

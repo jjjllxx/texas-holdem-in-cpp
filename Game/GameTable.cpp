@@ -8,11 +8,11 @@
 
 #include <iostream>
 
-bool th::GameTable::initTable(const std::size_t playerNum,
+bool th::GameTable::initTable(const std::size_t playersCnt,
                               const th::chip&   initChip,
                               const th::chip&   smallBlindChip)
 {
-    if (playerNum < th::MINIMUM_PLAYER_NUM || playerNum >= th::MAXIMUM_PLAYER_NUM)
+    if (playersCnt < th::MINIMUM_PLAYER_NUM || playersCnt >= th::MAXIMUM_PLAYER_NUM)
     {
         std::cout << "INVALID number of players!" << std::endl;
         return false;
@@ -20,11 +20,11 @@ bool th::GameTable::initTable(const std::size_t playerNum,
 
     this->smallBlindChip = smallBlindChip;
 
-    this->players.reserve(playerNum);
+    this->players.reserve(playersCnt);
     this->players.push_back(std::make_shared<th::HumanPlayer>(0));
     this->players.back()->init(initChip);
 
-    for (std::size_t i = 1; i < playerNum; ++i)
+    for (std::size_t i = 1; i < playersCnt; ++i)
     {
         this->players.push_back(std::make_shared<th::AutoPlayer>(i));
         this->players.back()->init(initChip);
