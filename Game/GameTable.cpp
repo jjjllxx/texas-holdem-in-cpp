@@ -1,5 +1,6 @@
 #include "GameTable.h"
 
+#include "Common/Logger/Logger.h"
 #include "Game.h"
 #include "Player/AutoPlayer.h"
 #include "Player/BasePlayer.h"
@@ -14,7 +15,7 @@ bool th::GameTable::initTable(const std::size_t playersCnt,
 {
     if (playersCnt < th::MINIMUM_PLAYER_NUM || playersCnt >= th::MAXIMUM_PLAYER_NUM)
     {
-        std::cout << "INVALID number of players!" << std::endl;
+        lgw("INVALID number of players!");
         return false;
     }
 
@@ -33,6 +34,8 @@ bool th::GameTable::initTable(const std::size_t playersCnt,
     this->cardDeck.init();
     this->gameNum          = 0;
     this->smallBlindPos    = 0;
+
+    lgi("Game table initialised successfully!");
 
     return true;
 }
