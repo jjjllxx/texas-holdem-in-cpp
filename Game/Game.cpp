@@ -22,6 +22,7 @@ bool th::Game::initGame(const std::size_t playersCnt,
     this->smallBlindPos     = smallBlindPos;
     this->smallBlindChip    = smallBlindChip;
     this->survivedPlayerNum = playersCnt;
+    this->communityCards.reserve(th::STANDARD_CARD_COMBO_SIZE);
 
     return true;
 }
@@ -37,7 +38,7 @@ void th::Game::startGame(th::CardDeck&                                 cardDeck,
     th::Game::oneRound(1, th::RIVER_ROUND, cardDeck, players);
 
     std::vector<std::shared_ptr<th::BasePlayer>> winners
-        = th::GameSettlement::decideWinners(this->publicCards, players);
+        = th::GameSettlement::decideWinners(this->communityCards, players);
     th::ChipAllocation::allocateChip(winners, players);
 }
 
@@ -93,18 +94,18 @@ void th::Game::revealPublicCards(const std::size_t cardNumToReveal,
 {
     for (std::size_t i = 0; i < cardNumToReveal; ++i)
     {
-        this->publicCards.push_back(cardDeck.getCurTopNext());
+        this->communityCards.push_back(cardDeck.getCurTopNext());
     }
 }
 
 void th::Game::showCurrPublicCards() const
 {
-    if (this->publicCards.empty() == true)
+    if (this->communityCards.empty() == true)
     {
         std::cout << "Currently No Public Cards!";
     }
 
-    for (const th::PokerCard& card : this->publicCards)
+    for (const th::PokerCard& card : this->communityCards)
     {
         std::cout << th::PokerCardUtility::toSymbol(card) << ' ';
     }
@@ -115,7 +116,7 @@ void th::Game::showCurrPublicCards() const
 void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
     const std::size_t playersCnt = players.size();
-    const bool        isPreflop = this->publicCards.empty() == true;
+    const bool        isPreflop  = this->communityCards.empty() == true;
 
     std::size_t curAt  = isPreflop == true
                              ? (this->smallBlindPos + 2) % playersCnt

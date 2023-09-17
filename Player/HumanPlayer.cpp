@@ -91,9 +91,9 @@ void th::HumanPlayer::showStatus() const
 
 void th::HumanPlayer::peekHandCards() const
 {
-    this->twoHandCards.empty() == true
+    this->twoHoleCards.empty() == true
         ? std::cout << this->name << " do not have hand cards" << std::endl
         : std::cout << this->name << " have hand cards: "
-                    << th::PokerCardUtility::toSymbol(this->twoHandCards.front()) << ' '
-                    << th::PokerCardUtility::toSymbol(this->twoHandCards.back()) << std::endl;
+                    << th::PokerCardUtility::toSymbol(this->twoHoleCards.front()) << ' '
+                    << th::PokerCardUtility::toSymbol(this->twoHoleCards.back()) << std::endl;
 }
