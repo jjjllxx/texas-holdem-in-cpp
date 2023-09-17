@@ -35,7 +35,7 @@ void th::BasePlayer::putSmallBlindChip(const th::chip& smallBlindChip)
 void th::BasePlayer::receiveFirstCard(const th::PokerCard& firstCard)
 {
     this->twoHoleCards.clear();
-    this->twoHoleCards.reserve(th::STANDARD_HAND_CARD_SIZE);
+    this->twoHoleCards.reserve(th::STANDARD_HOLE_CARDS_SIZE);
     this->twoHoleCards.push_back(firstCard);
 }
 

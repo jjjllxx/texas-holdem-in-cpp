@@ -20,7 +20,7 @@ namespace HandSelection_Test
 
 GTEST_TEST(Algorithms_Card_HandSelection, selectHighestHand_size_less_than_6) // NOLINT
 {
-    const std::vector<th::PokerCard> highestCombo = th::HandSelection::selectHighestHand({
+    const std::vector<th::PokerCard> highestHand = th::HandSelection::selectHighestHand({
         th::HandSelection_Test::CLUB_2,
         th::HandSelection_Test::HEART_2,
         th::HandSelection_Test::HEART_3,
@@ -28,17 +28,17 @@ GTEST_TEST(Algorithms_Card_HandSelection, selectHighestHand_size_less_than_6) //
         th::HandSelection_Test::HEART_6,
     });
 
-    EXPECT_EQ(highestCombo.size(), 5);
-    EXPECT_EQ(highestCombo[0], th::HandSelection_Test::CLUB_2);
-    EXPECT_EQ(highestCombo[1], th::HandSelection_Test::HEART_2);
-    EXPECT_EQ(highestCombo[2], th::HandSelection_Test::HEART_3);
-    EXPECT_EQ(highestCombo[3], th::HandSelection_Test::HEART_4);
-    EXPECT_EQ(highestCombo[4], th::HandSelection_Test::HEART_6);
+    EXPECT_EQ(highestHand.size(), 5);
+    EXPECT_EQ(highestHand[0], th::HandSelection_Test::CLUB_2);
+    EXPECT_EQ(highestHand[1], th::HandSelection_Test::HEART_2);
+    EXPECT_EQ(highestHand[2], th::HandSelection_Test::HEART_3);
+    EXPECT_EQ(highestHand[3], th::HandSelection_Test::HEART_4);
+    EXPECT_EQ(highestHand[4], th::HandSelection_Test::HEART_6);
 }
 
 GTEST_TEST(Algorithms_Card_HandSelection, selectHighestHand_size_7) // NOLINT
 {
-    const std::vector<th::PokerCard> highestCombo
+    const std::vector<th::PokerCard> highestHand
         = th::HandSelection::selectHighestHand({
             th::HandSelection_Test::HEART_4,
             th::HandSelection_Test::HEART_2,
@@ -49,10 +49,10 @@ GTEST_TEST(Algorithms_Card_HandSelection, selectHighestHand_size_7) // NOLINT
             th::HandSelection_Test::HEART_5,
         });
 
-    EXPECT_EQ(highestCombo.size(), 5);
-    EXPECT_EQ(highestCombo[0], th::HandSelection_Test::HEART_4);
-    EXPECT_EQ(highestCombo[1], th::HandSelection_Test::HEART_2);
-    EXPECT_EQ(highestCombo[2], th::HandSelection_Test::HEART_3);
-    EXPECT_EQ(highestCombo[3], th::HandSelection_Test::HEART_6);
-    EXPECT_EQ(highestCombo[4], th::HandSelection_Test::HEART_5);
+    EXPECT_EQ(highestHand.size(), 5);
+    EXPECT_EQ(highestHand[0], th::HandSelection_Test::HEART_4);
+    EXPECT_EQ(highestHand[1], th::HandSelection_Test::HEART_2);
+    EXPECT_EQ(highestHand[2], th::HandSelection_Test::HEART_3);
+    EXPECT_EQ(highestHand[3], th::HandSelection_Test::HEART_6);
+    EXPECT_EQ(highestHand[4], th::HandSelection_Test::HEART_5);
 }
