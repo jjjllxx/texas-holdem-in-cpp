@@ -28,7 +28,7 @@ private:
     th::chip    smallBlindChip;
     th::chip    curPool;
 
-    std::vector<th::PokerCard> publicCards;
+    std::vector<th::PokerCard> communityCards;
 
     void handleBlinds(std::vector<std::shared_ptr<th::BasePlayer>>& players);
     void dealCards(th::CardDeck&                                 cardDeck,

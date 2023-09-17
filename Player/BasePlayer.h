@@ -57,7 +57,7 @@ protected:
     th::chip chipForCurGame;
 
     th::PlayerAction           lastAct;
-    std::vector<th::PokerCard> twoHandCards;
+    std::vector<th::PokerCard> twoHoleCards;
 
     void         call(const th::chip& curBet);
     void         allIn();

@@ -34,18 +34,18 @@ void th::BasePlayer::putSmallBlindChip(const th::chip& smallBlindChip)
 
 void th::BasePlayer::receiveFirstCard(const th::PokerCard& firstCard)
 {
-    this->twoHandCards.clear();
-    this->twoHandCards.reserve(th::STANDARD_HAND_CARD_SIZE);
-    this->twoHandCards.push_back(firstCard);
+    this->twoHoleCards.clear();
+    this->twoHoleCards.reserve(th::STANDARD_HAND_CARD_SIZE);
+    this->twoHoleCards.push_back(firstCard);
 }
 
 void th::BasePlayer::receiveSecondCard(const th::PokerCard& secondCard)
 {
-    this->twoHandCards.push_back(secondCard);
+    this->twoHoleCards.push_back(secondCard);
 
-    if (this->twoHandCards[0].point < this->twoHandCards[1].point)
+    if (this->twoHoleCards[0].point < this->twoHoleCards[1].point)
     {
-        std::swap(this->twoHandCards[0], this->twoHandCards[1]);
+        std::swap(this->twoHoleCards[0], this->twoHoleCards[1]);
     }
 }
 
@@ -108,7 +108,7 @@ th::PlayerAction th::BasePlayer::checkLastAction() const
 
 std::vector<th::PokerCard> th::BasePlayer::checkHandCards() const
 {
-    return this->twoHandCards;
+    return this->twoHoleCards;
 }
 
 void th::BasePlayer::call(const th::chip& curBet)
