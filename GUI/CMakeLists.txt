@@ -11,7 +11,7 @@ set(SOURCES
     main.cpp
 )
 
-set(LIBS
+list(APPEND LIBS
     Qt::Core
     Qt::Widgets
     Qt::Gui)
