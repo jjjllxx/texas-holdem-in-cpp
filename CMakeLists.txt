@@ -15,6 +15,7 @@ include(Common/CMakeLists.txt)
 include(Entity/CMakeLists.txt)
 include(Game/CMakeLists.txt)
 include(Player/CMakeLists.txt)
+include(Strategy/CMakeLists.txt)
 
 set(SOURCES
     ${TH_CORE_CPPS}
