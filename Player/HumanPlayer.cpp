@@ -1,5 +1,6 @@
 #include "HumanPlayer.h"
 
+#include "Common/Logger/Logger.h"
 #include "PlayerUtilities.h"
 
 #include <iostream>
@@ -48,6 +49,7 @@ void th::HumanPlayer::takeAction(const th::chip& curBet)
         th::HumanPlayer::allIn();
         break;
     default:
+        lgw("Invalid action! Please select a correct number!");
         return th::HumanPlayer::takeAction(curBet);
     }
 

@@ -3,9 +3,11 @@
 int main()
 {
     th::GameTable gameTable;
-    gameTable.initTable(8, 1000, 5);
-    gameTable.startANewGame();
-    gameTable.clearTable();
+    if (gameTable.initTable(8, 1000, 5) == true)
+    {
+        gameTable.startANewGame();
+        gameTable.clearTable();
+    }
 
     return 0;
 }
