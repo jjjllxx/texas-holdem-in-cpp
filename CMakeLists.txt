@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(TH)
 
+find_package(spdlog REQUIRED)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror -Wno-pragmas -Wno-comment")
@@ -9,6 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(TARGET texas)
 
 include(Algorithms/CMakeLists.txt)
+include(Common/CMakeLists.txt)
 include(Entity/CMakeLists.txt)
 include(Game/CMakeLists.txt)
 include(Player/CMakeLists.txt)
@@ -17,6 +20,9 @@ set(SOURCES
     ${TH_CORE_CPPS}
     main.cpp
 )
+
+set(LIBS
+    spdlog::spdlog)
 
 add_executable(${TARGET} ${SOURCES})
 target_include_directories(${TARGET} PRIVATE 

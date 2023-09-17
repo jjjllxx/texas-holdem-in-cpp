@@ -15,8 +15,10 @@ include(${PROJECT_SOURCE_DIR}/Player/CMakeLists.txt)
 add_executable(${TARGET}
      ${SOURCES})
 
+list(APPEND LIBS GTest::gtest)
+
 target_link_libraries(${TARGET} PRIVATE
-    GTest::gtest)
+    ${LIBS})
 
 target_include_directories(${TARGET} PRIVATE 
     ${PROJECT_SOURCE_DIR}
