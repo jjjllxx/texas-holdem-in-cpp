@@ -1,7 +1,7 @@
 #include "GameSettlement.h"
 
-#include "Algorithms/Card/CardComparison.h"
-#include "Algorithms/Card/CardSelection.h"
+#include "Algorithms/PokerHand/HandComparison.h"
+#include "Algorithms/PokerHand/HandSelection.h"
 #include "Entity/Card/PokerCard.h"
 #include "Player/BasePlayer.h"
 
@@ -13,8 +13,8 @@ std::vector<std::shared_ptr<th::BasePlayer>> th::GameSettlement::decideWinners(c
 {
     const std::vector<std::shared_ptr<th::BasePlayer>> survivors = th::GameSettlement::extractSurvivors(players);
 
-    std::vector<th::PlayerWithCards> survivorsWithCards = th::GameSettlement::calcHighestCardCombo(publicCards, survivors);
-    th::GameSettlement::sortByCardCombo(survivorsWithCards);
+    std::vector<th::PlayerWithCards> survivorsWithCards = th::GameSettlement::calcHighestHand(publicCards, survivors);
+    th::GameSettlement::sortByHand(survivorsWithCards);
 
     const std::size_t winnersCnt = th::GameSettlement::countWinners(survivorsWithCards);
     th::GameSettlement::logRank(winnersCnt, survivorsWithCards);
@@ -43,8 +43,8 @@ std::vector<std::shared_ptr<th::BasePlayer>> th::GameSettlement::extractSurvivor
     return survivors;
 }
 
-std::vector<th::PlayerWithCards> th::GameSettlement::calcHighestCardCombo(const std::vector<th::PokerCard>&                   publicCards,
-                                                                          const std::vector<std::shared_ptr<th::BasePlayer>>& survivors)
+std::vector<th::PlayerWithCards> th::GameSettlement::calcHighestHand(const std::vector<th::PokerCard>&                   publicCards,
+                                                                     const std::vector<std::shared_ptr<th::BasePlayer>>& survivors)
 {
     std::vector<th::PlayerWithCards> playersWithCards;
     playersWithCards.reserve(survivors.size());
@@ -52,7 +52,7 @@ std::vector<th::PlayerWithCards> th::GameSettlement::calcHighestCardCombo(const 
     {
         th::PlayerWithCards pwc;
         pwc.player = survivor;
-        pwc.cards  = th::CardSelection::selectHighestCardCombo(
+        pwc.cards  = th::HandSelection::selectHighestHand(
             th::GameSettlement::combineCards(survivor->checkHandCards(),
                                              publicCards));
         playersWithCards.push_back(pwc);
@@ -61,15 +61,15 @@ std::vector<th::PlayerWithCards> th::GameSettlement::calcHighestCardCombo(const 
     return playersWithCards;
 }
 
-void th::GameSettlement::sortByCardCombo(std::vector<th::PlayerWithCards>& survivorsWithCards)
+void th::GameSettlement::sortByHand(std::vector<th::PlayerWithCards>& survivorsWithCards)
 {
     std::sort(survivorsWithCards.begin(),
               survivorsWithCards.end(),
               [](const th::PlayerWithCards& a, const th::PlayerWithCards& b)
               {
-                  return th::CardComparison::compareCardCombo(a.cards,
-                                                              b.cards)
-                         == th::CardComboCmpResult::Win;
+                  return th::HandComparison::compareHand(a.cards,
+                                                         b.cards)
+                         == th::HandCmpResult::Win;
               });
 }
 
@@ -85,7 +85,7 @@ void th::GameSettlement::logRank(const std::size_t                       winners
         std::cout << rank << ". " << player.player->getName() << " with hand cards "
                   << th::PokerCardUtility::toSymbol(player.player->checkHandCards())
                   << "can generate highest combination: "
-                  << th::PokerCardUtility::toSymbol(th::CardComparison::deduceCardCmpOrder(player.cards))
+                  << th::PokerCardUtility::toSymbol(th::HandComparison::deduceCardCmpOrder(player.cards))
                   << winnerMarker << std::endl;
         ++rank;
     }
@@ -97,9 +97,9 @@ std::size_t th::GameSettlement::countWinners(const std::vector<th::PlayerWithCar
 
     for (std::size_t i = 1; i < sortedSurvivors.size(); ++i)
     {
-        if (th::CardComparison::compareCardCombo(sortedSurvivors[i - 1].cards,
-                                                 sortedSurvivors[i].cards)
-            != th::CardComboCmpResult::Draw)
+        if (th::HandComparison::compareHand(sortedSurvivors[i - 1].cards,
+                                            sortedSurvivors[i].cards)
+            != th::HandCmpResult::Draw)
         {
             break;
         }
