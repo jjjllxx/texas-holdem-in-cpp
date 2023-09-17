@@ -20,10 +20,10 @@ namespace GameSettlement
     std::vector<std::shared_ptr<th::BasePlayer>> decideWinners(const std::vector<th::PokerCard>&                   publicCards,
                                                                const std::vector<std::shared_ptr<th::BasePlayer>>& players);
     std::vector<std::shared_ptr<th::BasePlayer>> extractSurvivors(const std::vector<std::shared_ptr<th::BasePlayer>>& players);
-    std::vector<th::PlayerWithCards>             calcHighestCardCombo(const std::vector<th::PokerCard>&                   publicCards,
-                                                                      const std::vector<std::shared_ptr<th::BasePlayer>>& survivors);
+    std::vector<th::PlayerWithCards>             calcHighestHand(const std::vector<th::PokerCard>&                   publicCards,
+                                                                 const std::vector<std::shared_ptr<th::BasePlayer>>& survivors);
 
-    void        sortByCardCombo(std::vector<th::PlayerWithCards>& survivorsWithCards);
+    void        sortByHand(std::vector<th::PlayerWithCards>& survivorsWithCards);
     void        logRank(const std::size_t                       winnersCnt,
                         const std::vector<th::PlayerWithCards>& sortedSurvivors);
     std::size_t countWinners(const std::vector<th::PlayerWithCards>& sortedSurvivors);

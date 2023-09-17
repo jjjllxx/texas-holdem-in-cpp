@@ -7,7 +7,7 @@ namespace th
 {
 struct PokerCard;
 
-enum class CardComboType
+enum class PokerHandType
 {
     INVALID,
 
@@ -22,13 +22,13 @@ enum class CardComboType
     StraightFlush
 };
 
-namespace CardType
+namespace HandType
 {
-    th::CardComboType deduceCardComboType(const std::vector<th::PokerCard>& fiveCards);
+    th::PokerHandType deduceHandType(const std::vector<th::PokerCard>& fiveCards);
 
     bool isFlush(const std::vector<th::PokerCard>& fiveCards);
     bool isStraight(const std::vector<th::PokerCard>& fiveCards);
     bool isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointCount);
     bool isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointCount);
-} // namespace CardType
+} // namespace HandType
 } // namespace th

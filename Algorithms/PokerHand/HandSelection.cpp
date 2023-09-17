@@ -1,13 +1,13 @@
-#include "CardSelection.h"
+#include "HandSelection.h"
 
 #include "Entity/Card/PokerCard.h"
 
-#include "CardComparison.h"
+#include "HandComparison.h"
 #include "Utilities/Constants.h"
 
 #include <algorithm>
 
-std::vector<th::PokerCard> th::CardSelection::selectHighestCardCombo(const std::vector<th::PokerCard>& fromCards)
+std::vector<th::PokerCard> th::HandSelection::selectHighestHand(const std::vector<th::PokerCard>& fromCards)
 {
     if (fromCards.size() <= th::STANDARD_CARD_COMBO_SIZE)
     {
@@ -29,8 +29,8 @@ std::vector<th::PokerCard> th::CardSelection::selectHighestCardCombo(const std::
             }
         }
 
-        if (th::CardComparison::compareCardCombo(curCombo, highest)
-            == th::CardComboCmpResult::Win)
+        if (th::HandComparison::compareHand(curCombo, highest)
+            == th::HandCmpResult::Win)
         {
             highest = curCombo;
         }
