@@ -7,11 +7,11 @@
 
 #include <algorithm>
 
-th::HandCmpResult th::HandComparison::compareHand(const std::vector<th::PokerCard>& firstCards,
-                                                  const std::vector<th::PokerCard>& secondCards)
+th::HandCmpResult th::HandComparison::compareHand(const std::vector<th::PokerCard>& firstHand,
+                                                  const std::vector<th::PokerCard>& secondHand)
 {
-    const th::PokerHandType firstType  = th::HandType::deduceHandType(firstCards);
-    const th::PokerHandType secondType = th::HandType::deduceHandType(secondCards);
+    const th::PokerHandType firstType  = th::HandType::deduceHandType(firstHand);
+    const th::PokerHandType secondType = th::HandType::deduceHandType(secondHand);
 
     if (firstType == th::PokerHandType::INVALID || secondType == th::PokerHandType::INVALID)
     {
@@ -28,10 +28,10 @@ th::HandCmpResult th::HandComparison::compareHand(const std::vector<th::PokerCar
         return th::HandCmpResult::Lose;
     }
 
-    const std::vector<th::PokerCard> firstCmpOrder  = th::HandComparison::deduceCardCmpOrder(firstType, firstCards);
-    const std::vector<th::PokerCard> secondCmpOrder = th::HandComparison::deduceCardCmpOrder(secondType, secondCards);
+    const std::vector<th::PokerCard> firstCmpOrder  = th::HandComparison::deduceHandCmpOrder(firstType, firstHand);
+    const std::vector<th::PokerCard> secondCmpOrder = th::HandComparison::deduceHandCmpOrder(secondType, secondHand);
 
-    for (std::size_t i = 0; i < th::STANDARD_CARD_COMBO_SIZE; ++i)
+    for (std::size_t i = 0; i < th::STANDARD_HAND_SIZE; ++i)
     {
         if (firstCmpOrder[i].point > secondCmpOrder[i].point)
         {
@@ -47,53 +47,53 @@ th::HandCmpResult th::HandComparison::compareHand(const std::vector<th::PokerCar
     return th::HandCmpResult::Draw;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceCardCmpOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceHandCmpOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    const th::PokerHandType comboType = th::HandType::deduceHandType(fiveCards);
+    const th::PokerHandType handType = th::HandType::deduceHandType(oneHand);
 
-    return th::HandComparison::deduceCardCmpOrder(comboType, fiveCards);
+    return th::HandComparison::deduceHandCmpOrder(handType, oneHand);
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceCardCmpOrder(const th::PokerHandType           comboType,
-                                                                  const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceHandCmpOrder(const th::PokerHandType           handType,
+                                                                  const std::vector<th::PokerCard>& oneHand)
 {
-    switch (comboType)
+    switch (handType)
     {
     case th::PokerHandType::Flush:
     case th::PokerHandType::HighCard:
-        return th::HandComparison::sortCardsByPoint(fiveCards);
+        return th::HandComparison::sortHandByPoint(oneHand);
 
     case th::PokerHandType::OnePair:
-        return th::HandComparison::deduceOnePairOrder(fiveCards);
+        return th::HandComparison::deduceOnePairOrder(oneHand);
 
     case th::PokerHandType::TwoPairs:
-        return th::HandComparison::deduceTwoPairsOrder(fiveCards);
+        return th::HandComparison::deduceTwoPairsOrder(oneHand);
 
     case th::PokerHandType::ThreeOfAKind:
-        return th::HandComparison::deduceThreeOfAKindOrder(fiveCards);
+        return th::HandComparison::deduceThreeOfAKindOrder(oneHand);
 
     case th::PokerHandType::Straight:
     case th::PokerHandType::StraightFlush:
-        return th::HandComparison::deduceStraightOrder(fiveCards);
+        return th::HandComparison::deduceStraightOrder(oneHand);
 
     case th::PokerHandType::FullOfHouse:
-        return th::HandComparison::deduceFullOfHouseOrder(fiveCards);
+        return th::HandComparison::deduceFullOfHouseOrder(oneHand);
 
     case th::PokerHandType::FourOfAKind:
-        return th::HandComparison::deduceFourOfAKindOrder(fiveCards);
+        return th::HandComparison::deduceFourOfAKindOrder(oneHand);
 
     case th::PokerHandType::INVALID:
     default:
-        return fiveCards;
+        return oneHand;
     }
 }
 
-std::vector<th::PokerCard> th::HandComparison::sortCardsByPoint(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::sortHandByPoint(const std::vector<th::PokerCard>& oneHand)
 {
     std::vector<th::PokerCard> cmpOrder;
-    cmpOrder.reserve(th::STANDARD_CARD_COMBO_SIZE);
+    cmpOrder.reserve(th::STANDARD_HAND_SIZE);
 
-    for (const th::PokerCard& card : fiveCards)
+    for (const th::PokerCard& card : oneHand)
     {
         cmpOrder.push_back(card);
     }
@@ -106,9 +106,9 @@ std::vector<th::PokerCard> th::HandComparison::sortCardsByPoint(const std::vecto
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceOnePairOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceOnePairOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortCardsByPoint(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortHandByPoint(oneHand);
 
     if (cmpOrder[3].point == cmpOrder[4].point) // 5, 4, 3, 2, 2
     {
@@ -132,9 +132,9 @@ std::vector<th::PokerCard> th::HandComparison::deduceOnePairOrder(const std::vec
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceTwoPairsOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceTwoPairsOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortCardsByPoint(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortHandByPoint(oneHand);
 
     if (cmpOrder[0].point != cmpOrder[1].point) // 5, 3, 3, 2, 2
     {
@@ -151,9 +151,9 @@ std::vector<th::PokerCard> th::HandComparison::deduceTwoPairsOrder(const std::ve
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceThreeOfAKindOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceThreeOfAKindOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortCardsByPoint(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortHandByPoint(oneHand);
 
     if (cmpOrder[0].point != cmpOrder[1].point) // 5, 3, 3, 3, 2
     {
@@ -169,9 +169,9 @@ std::vector<th::PokerCard> th::HandComparison::deduceThreeOfAKindOrder(const std
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceStraightOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceStraightOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortCardsByPoint(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortHandByPoint(oneHand);
 
     // For A, 2, 3, 4, 5 staright, it will be sorted as A, 5, 4, 3, 2. Move A to the back.
     if (cmpOrder.front().point == 14 && cmpOrder[1].point != 13)
@@ -183,9 +183,9 @@ std::vector<th::PokerCard> th::HandComparison::deduceStraightOrder(const std::ve
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceFullOfHouseOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceFullOfHouseOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortCardsByPoint(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortHandByPoint(oneHand);
 
     if (cmpOrder[2].point != cmpOrder[1].point) // 2, 2, 3, 3, 3
     {
@@ -196,9 +196,9 @@ std::vector<th::PokerCard> th::HandComparison::deduceFullOfHouseOrder(const std:
     return cmpOrder;
 }
 
-std::vector<th::PokerCard> th::HandComparison::deduceFourOfAKindOrder(const std::vector<th::PokerCard>& fiveCards)
+std::vector<th::PokerCard> th::HandComparison::deduceFourOfAKindOrder(const std::vector<th::PokerCard>& oneHand)
 {
-    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortCardsByPoint(fiveCards);
+    std::vector<th::PokerCard> cmpOrder = th::HandComparison::sortHandByPoint(oneHand);
 
     if (cmpOrder[0].point != cmpOrder[1].point) // 3, 2, 2, 2, 2
     {

@@ -22,7 +22,7 @@ bool th::Game::initGame(const std::size_t playersCnt,
     this->smallBlindPos     = smallBlindPos;
     this->smallBlindChip    = smallBlindChip;
     this->survivedPlayerNum = playersCnt;
-    this->communityCards.reserve(th::STANDARD_CARD_COMBO_SIZE);
+    this->communityCards.reserve(th::STANDARD_COMMUNITY_CARDS_SIZE);
 
     return true;
 }

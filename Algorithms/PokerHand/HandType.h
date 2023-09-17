@@ -24,11 +24,11 @@ enum class PokerHandType
 
 namespace HandType
 {
-    th::PokerHandType deduceHandType(const std::vector<th::PokerCard>& fiveCards);
+    th::PokerHandType deduceHandType(const std::vector<th::PokerCard>& oneHand);
 
-    bool isFlush(const std::vector<th::PokerCard>& fiveCards);
-    bool isStraight(const std::vector<th::PokerCard>& fiveCards);
-    bool isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointCount);
-    bool isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointCount);
+    bool isFlush(const std::vector<th::PokerCard>& oneHand);
+    bool isStraight(const std::vector<th::PokerCard>& oneHand);
+    bool isFourOfAKind(const std::unordered_map<int32_t, int32_t>& pointMap);
+    bool isThreeOfKind(const std::unordered_map<int32_t, int32_t>& pointMap);
 } // namespace HandType
 } // namespace th

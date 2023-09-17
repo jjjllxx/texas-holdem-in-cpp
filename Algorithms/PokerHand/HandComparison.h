@@ -18,20 +18,20 @@ enum class HandCmpResult
 
 namespace HandComparison
 {
-    th::HandCmpResult compareHand(const std::vector<th::PokerCard>& firstCards,
-                                  const std::vector<th::PokerCard>& secondCards);
+    th::HandCmpResult compareHand(const std::vector<th::PokerCard>& firstHand,
+                                  const std::vector<th::PokerCard>& secondHand);
 
-    std::vector<th::PokerCard> deduceCardCmpOrder(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceCardCmpOrder(const th::PokerHandType           comboType,
-                                                  const std::vector<th::PokerCard>& fiveCards);
+    std::vector<th::PokerCard> deduceHandCmpOrder(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceHandCmpOrder(const th::PokerHandType           handType,
+                                                  const std::vector<th::PokerCard>& oneHand);
 
-    std::vector<th::PokerCard> sortCardsByPoint(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceOnePairOrder(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceTwoPairsOrder(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceThreeOfAKindOrder(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceStraightOrder(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceFullOfHouseOrder(const std::vector<th::PokerCard>& fiveCards);
-    std::vector<th::PokerCard> deduceFourOfAKindOrder(const std::vector<th::PokerCard>& fiveCards);
+    std::vector<th::PokerCard> sortHandByPoint(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceOnePairOrder(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceTwoPairsOrder(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceThreeOfAKindOrder(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceStraightOrder(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceFullOfHouseOrder(const std::vector<th::PokerCard>& oneHand);
+    std::vector<th::PokerCard> deduceFourOfAKindOrder(const std::vector<th::PokerCard>& oneHand);
 
 } // namespace HandComparison
 } // namespace th
