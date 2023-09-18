@@ -1,8 +1,8 @@
 #include "BasePlayer.h"
 
 #include "Entity/Card/PokerCard.h"
+#include "Entity/Constants.h"
 #include "PlayerUtilities.h"
-#include "Utilities/Constants.h"
 
 #include <iostream>
 

@@ -1,7 +1,7 @@
 #include "CardDeck.h"
 
 #include "Algorithms/Random/Random.h"
-#include "Utilities/Constants.h"
+#include "Entity/Constants.h"
 
 th::CardDeck::CardDeck() :
     curTopCard(0)

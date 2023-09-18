@@ -3,7 +3,7 @@
 #include "Entity/Card/PokerCard.h"
 
 #include "HandComparison.h"
-#include "Utilities/Constants.h"
+#include "Entity/Constants.h"
 
 #include <algorithm>
 
