@@ -1,11 +1,11 @@
 #include "GameTable.h"
 
 #include "Common/Logger/Logger.h"
-#include "Game.h"
-#include "Player/AutoPlayer.h"
-#include "Player/BasePlayer.h"
-#include "Player/HumanPlayer.h"
+#include "Core/Player/AutoPlayer.h"
+#include "Core/Player/BasePlayer.h"
+#include "Core/Player/HumanPlayer.h"
 #include "Entity/Constants.h"
+#include "Game.h"
 
 #include <iostream>
 
@@ -32,8 +32,8 @@ bool th::GameTable::initTable(const std::size_t playersCnt,
     }
 
     this->cardDeck.init();
-    this->gameNum          = 0;
-    this->smallBlindPos    = 0;
+    this->gameNum       = 0;
+    this->smallBlindPos = 0;
 
     lgi("Game table initialised successfully!");
 

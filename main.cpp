@@ -1,4 +1,4 @@
-#include "Game/GameTable.h"
+#include "Core/Game/GameTable.h"
 
 int main()
 {

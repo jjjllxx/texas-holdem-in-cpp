@@ -1,7 +1,7 @@
 #include "ChipAllocation.h"
 
+#include "Core/Player/BasePlayer.h"
 #include "Entity/Chip/Chip.h"
-#include "Player/BasePlayer.h"
 
 #include <algorithm>
 #include <iostream>
