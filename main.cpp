@@ -3,10 +3,10 @@
 int main()
 {
     th::GameTable gameTable;
-    if (gameTable.initTable(8, 1000, 5) == true)
+    if (gameTable.init() == true)
     {
         gameTable.startANewGame();
-        gameTable.clearTable();
+        gameTable.clear();
     }
 
     return 0;
