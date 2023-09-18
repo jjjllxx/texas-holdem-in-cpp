@@ -25,7 +25,7 @@ target_include_directories(${TARGET} PRIVATE
 target_link_libraries(${TARGET} ${LIBS})
 
 set_target_properties(${TARGET} PROPERTIES 
-    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # To enable ui_*.h file of Qt
 set_property(TARGET texas_gui PROPERTY AUTOMOC ON)
