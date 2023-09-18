@@ -5,7 +5,7 @@
 #include "Player/AutoPlayer.h"
 #include "Player/BasePlayer.h"
 #include "Player/HumanPlayer.h"
-#include "Utilities/Constants.h"
+#include "Entity/Constants.h"
 
 #include <iostream>
 

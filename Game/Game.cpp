@@ -6,7 +6,7 @@
 #include "Entity/Card/PokerCard.h"
 #include "Entity/Chip/Chip.h"
 #include "Player/BasePlayer.h"
-#include "Utilities/Constants.h"
+#include "Entity/Constants.h"
 
 #include <iostream>
 

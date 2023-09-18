@@ -1,7 +1,7 @@
 #include "HandType.h"
 
 #include "Entity/Card/PokerCard.h"
-#include "Utilities/Constants.h"
+#include "Entity/Constants.h"
 
 #include <algorithm>
 
