@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(TH)
 
 find_package(spdlog REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,10 +13,8 @@ set(TARGET texas)
 
 include(Algorithms/CMakeLists.txt)
 include(Common/CMakeLists.txt)
+include(Core/CMakeLists.txt)
 include(Entity/CMakeLists.txt)
-include(Game/CMakeLists.txt)
-include(Player/CMakeLists.txt)
-include(Strategy/CMakeLists.txt)
 
 set(SOURCES
     ${TH_CORE_CPPS}
@@ -23,6 +22,7 @@ set(SOURCES
 )
 
 set(LIBS
+    nlohmann_json::nlohmann_json
     spdlog::spdlog)
 
 add_executable(${TARGET} ${SOURCES})

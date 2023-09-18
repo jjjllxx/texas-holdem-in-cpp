@@ -9,8 +9,6 @@ set(SOURCES
 
 include(${PROJECT_SOURCE_DIR}/Algorithms/CMakeLists.txt)
 include(${PROJECT_SOURCE_DIR}/Entity/CMakeLists.txt)
-include(${PROJECT_SOURCE_DIR}/Game/CMakeLists.txt)
-include(${PROJECT_SOURCE_DIR}/Player/CMakeLists.txt)
 
 add_executable(${TARGET}
      ${SOURCES})

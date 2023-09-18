@@ -1,11 +1,11 @@
 #include "Game.h"
-#include "Game/ChipAllocation.h"
+#include "ChipAllocation.h"
 #include "GameSettlement.h"
 
+#include "Core/Player/BasePlayer.h"
 #include "Entity/Card/CardDeck.h"
 #include "Entity/Card/PokerCard.h"
 #include "Entity/Chip/Chip.h"
-#include "Player/BasePlayer.h"
 #include "Entity/Constants.h"
 
 #include <iostream>

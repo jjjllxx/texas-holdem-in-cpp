@@ -2,8 +2,8 @@
 
 #include "Algorithms/PokerHand/HandComparison.h"
 #include "Algorithms/PokerHand/HandSelection.h"
+#include "Core/Player/BasePlayer.h"
 #include "Entity/Card/PokerCard.h"
-#include "Player/BasePlayer.h"
 
 #include <algorithm>
 #include <iostream>
