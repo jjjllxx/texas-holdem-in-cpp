@@ -4,7 +4,7 @@ dock()
 {
   if [ "$#" -eq 0 ]; then
     echo "Usage: dock [container name or container ID]"
-    echo "Example Usage: dock rc"
+    echo "Example Usage: dock thd"
   elif [ "$#" -eq 1 ]; then
     docker exec -it $1 /bin/bash 
   else

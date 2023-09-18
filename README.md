@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # texas-holdem-in-cpp
 
 ## 1. Download Repo

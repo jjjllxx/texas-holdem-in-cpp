@@ -16,6 +16,10 @@ RUN echo 'Etc/UTC' > /etc/timezone && \
     nano \
     # pretty backtrace printing on segfault
     libdw-dev \
+    # logger library
+    libspdlog-dev \
+    # json library
+    nlohmann-json3-dev \
     # to enable git clone
     ca-certificates \
     # install Google Test
