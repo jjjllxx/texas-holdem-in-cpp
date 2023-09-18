@@ -16,9 +16,9 @@ th::score th::StartingHand::calcScore(const th::PokerCard& firstCard,
                                            ? th::StartingHand::calcHighestCardScore(firstCard)
                                            : th::StartingHand::calcHighestCardScore(secondCard);
 
-    if (th::StartingHand::isPairs(firstCard, secondCard))
+    if (th::StartingHand::isPair(firstCard, secondCard))
     {
-        return highestCardScore * 2;
+        return th::StartingHand::calcPairScore(highestCardScore);
     }
 
     const th::score gappersDeduction = th::StartingHand::calcGappersDeduction(firstCard, secondCard);
@@ -42,6 +42,21 @@ th::score th::StartingHand::calcHighestCardScore(const th::PokerCard& highestCar
     default:
         return highestCard.point;
     }
+}
+
+th::score th::StartingHand::calcPairScore(const th::score& highestCardScore)
+{
+    if (highestCardScore == 5)
+    {
+        return 12;
+    }
+
+    if (highestCardScore < 5)
+    {
+        return 10;
+    }
+
+    return highestCardScore * 2;
 }
 
 th::score th::StartingHand::calcGappersDeduction(const th::PokerCard& firstCard,
@@ -72,8 +87,8 @@ bool th::StartingHand::isSuited(const th::PokerCard& firstCard,
     return firstCard.suit == secondCard.suit;
 }
 
-bool th::StartingHand::isPairs(const th::PokerCard& firstCard,
-                               const th::PokerCard& secondCard)
+bool th::StartingHand::isPair(const th::PokerCard& firstCard,
+                              const th::PokerCard& secondCard)
 {
     return firstCard.point == secondCard.point;
 }
