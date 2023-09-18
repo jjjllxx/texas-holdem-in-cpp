@@ -21,13 +21,13 @@ sudo systemctl enable docker
 docker --version
 ```
 
-Before doing the following steps, it is recommanded to go trhough all the files in `Docker` folder, focusing on file paths, in case of unintended errors.
+Before doing the following steps, it is recommanded to go through all the files in `docker` folder, focusing on file paths, in case of unintended errors.
 ## Setup environment
 
 *This is a 1 time step*
 
-1. In your home directory, open `.bashrc` and add `source /proj/texas-holdem-in-cpp/Docker/dock-setup.sh` to the bottom.
-2. You may need to add execute permissions to the script (`chmod +x /proj/texas-holdem-in-cpp/Docker/dock-setup.sh`)
+1. In your home directory, open `.bashrc` and add `source /proj/texas-holdem-in-cpp/docker/dock-setup.sh` to the bottom.
+2. You may need to add execute permissions to the script (`chmod +x /proj/texas-holdem-in-cpp/docker/dock-setup.sh`)
 3. Run `dock thd` in terminal to enter the docker container. (thd means texas hold'em develop)
 
 There are more convenient functions in the script you can refer to.
@@ -39,7 +39,7 @@ There are more convenient functions in the script you can refer to.
 **WARNING! If you set a container name that already exists, its container will be overwritten! You can run `dockc` to check existing container names.**
 
 ```bash
-cd /proj/texas-holdem-in-cpp/Docker
+cd /proj/texas-holdem-in-cpp/docker
 sudo apt-get install docker-compose-plugin
 dockb thd
 ```
