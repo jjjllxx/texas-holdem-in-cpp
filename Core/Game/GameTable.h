@@ -13,10 +13,8 @@ class BasePlayer;
 class GameTable
 {
 public:
-    bool initTable(const std::size_t playersCnt,
-                   const th::chip&   initChip,
-                   const th::chip&   smallBlindChip);
-    void clearTable();
+    bool init();
+    void clear();
 
     bool        startANewGame();
     std::size_t getGameNum() const;

@@ -2,24 +2,28 @@
 
 #include "Common/Logger/Logger.h"
 #include "Core/Player/AutoPlayer.h"
-#include "Core/Player/BasePlayer.h"
 #include "Core/Player/HumanPlayer.h"
 #include "Entity/Constants.h"
 #include "Game.h"
 
+#include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
 
-bool th::GameTable::initTable(const std::size_t playersCnt,
-                              const th::chip&   initChip,
-                              const th::chip&   smallBlindChip)
+bool th::GameTable::init()
 {
-    if (playersCnt < th::MINIMUM_PLAYER_NUM || playersCnt >= th::MAXIMUM_PLAYER_NUM)
+    std::ifstream        gameConfig("../config/Game.json");
+    const nlohmann::json json = nlohmann::json::parse(gameConfig);
+
+    const std::size_t playersCnt = json["player_num"];
+    const th::chip    initChip   = json["initial_chip"].get<int>();
+    this->smallBlindChip         = json["initial_small_blind_chip"].get<int>();
+
+    if (playersCnt < th::MINIMUM_PLAYER_NUM || playersCnt > th::MAXIMUM_PLAYER_NUM)
     {
-        lgw("INVALID number of players!");
+        lge("INVALID number of players!");
         return false;
     }
-
-    this->smallBlindChip = smallBlindChip;
 
     this->players.reserve(playersCnt);
     this->players.push_back(std::make_shared<th::HumanPlayer>(0));
@@ -40,7 +44,7 @@ bool th::GameTable::initTable(const std::size_t playersCnt,
     return true;
 }
 
-void th::GameTable::clearTable()
+void th::GameTable::clear()
 {
     this->players.clear();
 }
