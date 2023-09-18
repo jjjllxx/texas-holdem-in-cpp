@@ -33,7 +33,7 @@ target_include_directories(${TARGET} PRIVATE
 target_link_libraries(${TARGET} ${LIBS})
 
 set_target_properties(${TARGET} PROPERTIES 
-    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 if (TH_TEST)
     add_subdirectory("Test")
