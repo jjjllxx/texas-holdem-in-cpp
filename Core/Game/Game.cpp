@@ -2,6 +2,7 @@
 #include "ChipAllocation.h"
 #include "GameSettlement.h"
 
+#include "Common/Logger/Logger.h"
 #include "Core/Player/BasePlayer.h"
 #include "Entity/Card/CardDeck.h"
 #include "Entity/Card/PokerCard.h"
@@ -19,9 +20,10 @@ bool th::Game::initGame(const std::size_t playersCnt,
         return false;
     }
 
-    this->smallBlindPos     = smallBlindPos;
-    this->smallBlindChip    = smallBlindChip;
-    this->survivedPlayerNum = playersCnt;
+    this->smallBlindPos    = smallBlindPos;
+    this->smallBlindChip   = smallBlindChip;
+    this->allInPlayersCnt  = 0;
+    this->unfoldPlayersCnt = playersCnt;
     this->communityCards.reserve(th::STANDARD_COMMUNITY_CARDS_SIZE);
 
     return true;
@@ -77,16 +79,29 @@ void th::Game::oneRound(const std::size_t                             cardNumToR
                         th::CardDeck&                                 cardDeck,
                         std::vector<std::shared_ptr<th::BasePlayer>>& players)
 {
-    th::Game::logGameStatus(roundName);
+    if (this->unfoldPlayersCnt == 1)
+    {
+        lgi("Only 1 player left, skip {} ..", roundName);
+        return;
+    }
+
+    
     th::Game::revealPublicCards(cardNumToReveal, cardDeck);
     th::Game::showCurrPublicCards();
+
+    if (this->unfoldPlayersCnt == this->allInPlayersCnt)
+    {
+        lgi("All left players all-in, skip player action part");
+        return;
+    }
+
     th::Game::playersTakeAction(players);
     th::Game::collectChips(players);
 }
 
 void th::Game::logGameStatus(const std::string& status) const
 {
-    std::cout << status << " starts. Now pool is " << this->curPool.val << std::endl;
+    lgi("{} starts. Now pool is {}", status, this->curPool.val);
 }
 
 void th::Game::revealPublicCards(const std::size_t cardNumToReveal,
@@ -129,24 +144,34 @@ void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& p
 
     while (true)
     {
-        const th::PlayerAction prevAct = players[curAt]->checkLastAction();
+        std::shared_ptr<th::BasePlayer>& curPlayer = players[curAt];
+        const th::PlayerAction           prevAct   = curPlayer->checkLastAction();
 
-        players[curAt]->takeAction(curBet);
+        curPlayer->takeAction(curBet);
 
-        if (const th::chip curChipInFront = players[curAt]->checkChipInFront();
+        if (const th::chip curChipInFront = curPlayer->checkChipInFront();
             curChipInFront > curBet)
         {
             shouldEndAt = curAt;
             curBet      = curChipInFront;
         }
 
-        if (const th::PlayerAction curAct = players[curAt]->checkLastAction();
-            curAct == th::PlayerAction::Fold && curAct != prevAct)
+        if (const th::PlayerAction curAct = curPlayer->checkLastAction();
+            curAct != prevAct)
         {
-            this->survivedPlayerNum--;
-            if (this->survivedPlayerNum == 1)
+            if (curAct == th::PlayerAction::Fold)
             {
-                break;
+                this->unfoldPlayersCnt--;
+            }
+
+            if (curAct == th::PlayerAction::AllIn)
+            {
+                this->allInPlayersCnt++;
+            }
+
+            if (this->unfoldPlayersCnt == 1)
+            {
+                return;
             }
         }
 
@@ -155,7 +180,7 @@ void th::Game::playersTakeAction(std::vector<std::shared_ptr<th::BasePlayer>>& p
 
         if (curAt == shouldEndAt)
         {
-            break;
+            return;
         }
     }
 }
