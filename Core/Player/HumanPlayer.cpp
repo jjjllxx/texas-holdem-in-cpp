@@ -38,7 +38,7 @@ void th::HumanPlayer::takeAction(const th::chip& curBet)
     switch (action)
     {
     case (0):
-        th::BasePlayer::setAction(th::PlayerAction::Fold);
+        th::HumanPlayer::setAction(th::PlayerAction::Fold);
         break;
     case (1):
         th::HumanPlayer::call(curBet);
@@ -86,7 +86,7 @@ void th::HumanPlayer::raise(const th::chip& curBet)
 
 void th::HumanPlayer::showStatus() const
 {
-    std::cout << this->name << " now has " << th::BasePlayer::checkChip().val
+    std::cout << this->name << " now has " << th::HumanPlayer::checkChip().val
               << " chip." << std::endl;
 }
 

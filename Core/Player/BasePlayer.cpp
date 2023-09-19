@@ -1,5 +1,6 @@
 #include "BasePlayer.h"
 
+#include "Common/Logger/Logger.h"
 #include "Entity/Card/PokerCard.h"
 #include "Entity/Constants.h"
 #include "PlayerUtilities.h"
@@ -61,11 +62,19 @@ void th::BasePlayer::putChipInFront(const th::chip& chipNum)
     this->chipForCurGame += chipNum;
 }
 
-void th::BasePlayer::prepareForNextGame()
+bool th::BasePlayer::prepareForNextGame()
 {
+    if (th::BasePlayer::checkChip() == 0)
+    {
+        lgw("{} has no chip, will leave the game table ...", th::BasePlayer::getName());
+        return false;
+    }
+
     this->lastAct        = th::PlayerAction::ReadyToStart;
     this->chipInFront    = 0;
     this->chipForCurGame = 0;
+
+    return true;
 }
 
 th::chip th::BasePlayer::pushChipToPool()

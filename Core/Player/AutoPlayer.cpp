@@ -28,7 +28,7 @@ void th::AutoPlayer::takeAction(const th::chip& curBet)
     switch (action)
     {
     case (0):
-        th::BasePlayer::setAction(th::PlayerAction::Fold);
+        th::AutoPlayer::setAction(th::PlayerAction::Fold);
         break;
     case (1):
         th::AutoPlayer::call(curBet);

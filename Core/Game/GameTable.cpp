@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <vector>
 
 bool th::GameTable::init()
 {
@@ -41,10 +42,10 @@ void th::GameTable::start()
 {
     while (this->curGameNum < this->totalGameNum)
     {
-        lgi("Game {} starts...", this->curGameNum);
+        lgi("Game {} starts...", this->curGameNum + 1);
         if (th::GameTable::startANewGame() == false)
         {
-            lgi("Failed to start game {}, exit...", this->curGameNum);
+            lgi("Failed to start game {}, exit...", this->curGameNum + 1);
             return;
         }
     }
@@ -57,10 +58,23 @@ void th::GameTable::clear()
 
 bool th::GameTable::startANewGame()
 {
+    std::vector<std::shared_ptr<th::BasePlayer>> newPlayers;
+
     for (std::shared_ptr<th::BasePlayer>& player : this->players)
     {
-        player->prepareForNextGame();
+        if (player->prepareForNextGame() == true)
+        {
+            newPlayers.push_back(player);
+        }
     }
+
+    if (newPlayers.size() == 1)
+    {
+        lgi("Only one player left, ends before game {}", this->curGameNum + 1);
+        return false;
+    }
+
+    this->players = newPlayers;
 
     if (th::Game newGame;
         newGame.initGame(this->players.size(),
