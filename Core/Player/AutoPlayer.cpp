@@ -1,6 +1,6 @@
 #include "AutoPlayer.h"
 
-#include "Algorithms/Random/Random.h"
+#include "Algorithms/Random.h"
 
 #include "PlayerUtilities.h"
 
@@ -11,7 +11,7 @@ th::AutoPlayer::AutoPlayer(const int32_t id) :
 
 void th::AutoPlayer::init(const th::chip& chipNum)
 {
-    this->name = "Player " + std::to_string(th::BasePlayer::getId());
+    this->name = "Player " + std::to_string(th::AutoPlayer::getId());
     th::AutoPlayer::receiveChip(chipNum);
 }
 
@@ -23,8 +23,8 @@ void th::AutoPlayer::takeAction(const th::chip& curBet)
     }
 
     const int32_t action = curBet * 5 < th::AutoPlayer::checkChip()
-                               ? th::Random::generateWithin(0, 2)
-                               : th::Random::generateWithin(0, 3);
+                               ? th::Random::generateWithin<int32_t>(0, 2)
+                               : th::Random::generateWithin<int32_t>(0, 3);
     switch (action)
     {
     case (0):

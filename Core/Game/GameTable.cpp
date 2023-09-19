@@ -1,5 +1,6 @@
 #include "GameTable.h"
 
+#include "Algorithms/Random.h"
 #include "Common/Logger/Logger.h"
 #include "Core/Player/AutoPlayer.h"
 #include "Core/Player/HumanPlayer.h"
@@ -18,21 +19,11 @@ bool th::GameTable::init()
     const std::size_t playersCnt = json["player_num"];
     const th::chip    initChip   = json["initial_chip"].get<int>();
     this->smallBlindChip         = json["initial_small_blind_chip"].get<int>();
+    gameConfig.close();
 
-    if (playersCnt < th::MINIMUM_PLAYER_NUM || playersCnt > th::MAXIMUM_PLAYER_NUM)
+    if (th::GameTable::initPlayers(playersCnt, initChip) == false)
     {
-        lge("INVALID number of players!");
         return false;
-    }
-
-    this->players.reserve(playersCnt);
-    this->players.push_back(std::make_shared<th::HumanPlayer>(0));
-    this->players.back()->init(initChip);
-
-    for (std::size_t i = 1; i < playersCnt; ++i)
-    {
-        this->players.push_back(std::make_shared<th::AutoPlayer>(i));
-        this->players.back()->init(initChip);
     }
 
     this->cardDeck.init();
@@ -75,4 +66,27 @@ bool th::GameTable::startANewGame()
 std::size_t th::GameTable::getGameNum() const
 {
     return this->gameNum;
+}
+
+bool th::GameTable::initPlayers(const std::size_t playersCnt,
+                                const th::chip&   initChip)
+{
+    if (playersCnt < th::MINIMUM_PLAYER_NUM || playersCnt > th::MAXIMUM_PLAYER_NUM)
+    {
+        lge("INVALID number of players!");
+        return false;
+    }
+
+    this->players.reserve(playersCnt);
+    const std::size_t humanPos = th::Random::generateWithin<std::size_t>(0, playersCnt);
+
+    for (std::size_t i = 0; i < playersCnt; ++i)
+    {
+        i == humanPos
+            ? this->players.push_back(std::make_shared<th::HumanPlayer>(i))
+            : this->players.push_back(std::make_shared<th::AutoPlayer>(i));
+        this->players.back()->init(initChip);
+    }
+
+    return true;
 }

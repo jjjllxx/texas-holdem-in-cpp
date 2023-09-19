@@ -26,5 +26,8 @@ private:
     th::CardDeck cardDeck;
 
     std::vector<std::shared_ptr<th::BasePlayer>> players;
+
+    bool initPlayers(const std::size_t playersCnt,
+                     const th::chip&   initChip);
 };
 } // namespace th

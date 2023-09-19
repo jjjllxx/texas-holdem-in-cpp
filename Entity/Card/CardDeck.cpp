@@ -1,6 +1,6 @@
 #include "CardDeck.h"
 
-#include "Algorithms/Random/Random.h"
+#include "Algorithms/Random.h"
 #include "Entity/Constants.h"
 
 th::CardDeck::CardDeck() :
