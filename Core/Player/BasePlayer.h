@@ -36,7 +36,7 @@ public:
     void receiveFirstCard(const th::PokerCard& firstCard);
     void receiveSecondCard(const th::PokerCard& secondCard);
     void receiveChip(const th::chip& chipNum);
-    void prepareForNextGame();
+    bool prepareForNextGame();
 
     th::chip pushChipToPool();
 

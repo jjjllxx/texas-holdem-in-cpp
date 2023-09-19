@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <vector>
 
 bool th::GameTable::init()
 {
@@ -19,6 +20,8 @@ bool th::GameTable::init()
     const std::size_t playersCnt = json["player_num"];
     const th::chip    initChip   = json["initial_chip"].get<int>();
     this->smallBlindChip         = json["initial_small_blind_chip"].get<int>();
+    this->totalGameNum           = json["game_num_to_play"];
+
     gameConfig.close();
 
     if (th::GameTable::initPlayers(playersCnt, initChip) == false)
@@ -27,12 +30,25 @@ bool th::GameTable::init()
     }
 
     this->cardDeck.init();
-    this->gameNum       = 0;
+    this->curGameNum    = 0;
     this->smallBlindPos = 0;
 
     lgi("Game table initialised successfully!");
 
     return true;
+}
+
+void th::GameTable::start()
+{
+    while (this->curGameNum < this->totalGameNum)
+    {
+        lgi("Game {} starts...", this->curGameNum + 1);
+        if (th::GameTable::startANewGame() == false)
+        {
+            lgi("Failed to start game {}, exit...", this->curGameNum + 1);
+            return;
+        }
+    }
 }
 
 void th::GameTable::clear()
@@ -42,10 +58,23 @@ void th::GameTable::clear()
 
 bool th::GameTable::startANewGame()
 {
+    std::vector<std::shared_ptr<th::BasePlayer>> newPlayers;
+
     for (std::shared_ptr<th::BasePlayer>& player : this->players)
     {
-        player->prepareForNextGame();
+        if (player->prepareForNextGame() == true)
+        {
+            newPlayers.push_back(player);
+        }
     }
+
+    if (newPlayers.size() == 1)
+    {
+        lgi("Only one player left, ends before game {}", this->curGameNum + 1);
+        return false;
+    }
+
+    this->players = newPlayers;
 
     if (th::Game newGame;
         newGame.initGame(this->players.size(),
@@ -53,7 +82,7 @@ bool th::GameTable::startANewGame()
                          this->smallBlindChip)
         == true)
     {
-        this->gameNum++;
+        this->curGameNum++;
         newGame.startGame(this->cardDeck, this->players);
         this->smallBlindPos++;
 
@@ -61,11 +90,6 @@ bool th::GameTable::startANewGame()
     }
 
     return false;
-}
-
-std::size_t th::GameTable::getGameNum() const
-{
-    return this->gameNum;
 }
 
 bool th::GameTable::initPlayers(const std::size_t playersCnt,
