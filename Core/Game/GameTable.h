@@ -14,13 +14,12 @@ class GameTable
 {
 public:
     bool init();
+    void start();
     void clear();
 
-    bool        startANewGame();
-    std::size_t getGameNum() const;
-
 private:
-    std::size_t  gameNum;
+    std::size_t  curGameNum;
+    std::size_t  totalGameNum;
     std::size_t  smallBlindPos;
     th::chip     smallBlindChip;
     th::CardDeck cardDeck;
@@ -29,5 +28,6 @@ private:
 
     bool initPlayers(const std::size_t playersCnt,
                      const th::chip&   initChip);
+    bool startANewGame();
 };
 } // namespace th

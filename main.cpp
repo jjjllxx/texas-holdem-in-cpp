@@ -5,7 +5,7 @@ int main()
     th::GameTable gameTable;
     if (gameTable.init() == true)
     {
-        gameTable.startANewGame();
+        gameTable.start();
         gameTable.clear();
     }
 

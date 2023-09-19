@@ -19,6 +19,8 @@ bool th::GameTable::init()
     const std::size_t playersCnt = json["player_num"];
     const th::chip    initChip   = json["initial_chip"].get<int>();
     this->smallBlindChip         = json["initial_small_blind_chip"].get<int>();
+    this->totalGameNum           = json["game_num_to_play"];
+
     gameConfig.close();
 
     if (th::GameTable::initPlayers(playersCnt, initChip) == false)
@@ -27,12 +29,25 @@ bool th::GameTable::init()
     }
 
     this->cardDeck.init();
-    this->gameNum       = 0;
+    this->curGameNum    = 0;
     this->smallBlindPos = 0;
 
     lgi("Game table initialised successfully!");
 
     return true;
+}
+
+void th::GameTable::start()
+{
+    while (this->curGameNum < this->totalGameNum)
+    {
+        lgi("Game {} starts...", this->curGameNum);
+        if (th::GameTable::startANewGame() == false)
+        {
+            lgi("Failed to start game {}, exit...", this->curGameNum);
+            return;
+        }
+    }
 }
 
 void th::GameTable::clear()
@@ -53,7 +68,7 @@ bool th::GameTable::startANewGame()
                          this->smallBlindChip)
         == true)
     {
-        this->gameNum++;
+        this->curGameNum++;
         newGame.startGame(this->cardDeck, this->players);
         this->smallBlindPos++;
 
@@ -61,11 +76,6 @@ bool th::GameTable::startANewGame()
     }
 
     return false;
-}
-
-std::size_t th::GameTable::getGameNum() const
-{
-    return this->gameNum;
 }
 
 bool th::GameTable::initPlayers(const std::size_t playersCnt,
