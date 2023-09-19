@@ -23,10 +23,11 @@ public:
                    std::vector<std::shared_ptr<th::BasePlayer>>& players);
 
 private:
-    std::size_t survivedPlayerNum;
-    std::size_t smallBlindPos;
-    th::chip    smallBlindChip;
     th::chip    curPool;
+    th::chip    smallBlindChip;
+    std::size_t smallBlindPos;
+    std::size_t allInPlayersCnt;
+    std::size_t unfoldPlayersCnt;
 
     std::vector<th::PokerCard> communityCards;
 

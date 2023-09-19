@@ -12,7 +12,7 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
 }
 void th::HumanPlayer::init(const th::chip& chipNum)
 {
-    this->name = "(You)Player " + std::to_string(th::HumanPlayer::getId());
+    this->name = "(You) P" + std::to_string(th::HumanPlayer::getId());
     th::HumanPlayer::receiveChip(chipNum);
 }
 
