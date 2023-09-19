@@ -4,6 +4,7 @@
 #include "PlayerUtilities.h"
 
 #include <iostream>
+#include <string>
 
 th::HumanPlayer::HumanPlayer(const int32_t id) :
     th::BasePlayer(id)
@@ -11,7 +12,7 @@ th::HumanPlayer::HumanPlayer(const int32_t id) :
 }
 void th::HumanPlayer::init(const th::chip& chipNum)
 {
-    this->name = "Player 0 (You)";
+    this->name = "(You)Player " + std::to_string(th::HumanPlayer::getId());
     th::HumanPlayer::receiveChip(chipNum);
 }
 
