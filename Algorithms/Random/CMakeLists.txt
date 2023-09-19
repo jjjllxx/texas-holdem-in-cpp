@@ -1,3 +1,0 @@
-list(APPEND TH_CORE_CPPS
-${CMAKE_CURRENT_LIST_DIR}/Random.cpp
-)
