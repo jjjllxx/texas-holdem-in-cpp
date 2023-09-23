@@ -2,8 +2,8 @@
 
 int main()
 {
-    th::GameTable gameTable;
-    if (gameTable.init() == true)
+    if (th::GameTable gameTable;
+        gameTable.init() == true)
     {
         gameTable.start();
         gameTable.clear();

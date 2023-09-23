@@ -2,14 +2,11 @@
 
 #include <algorithm>
 #include <chrono>
-#include <cstdint>
 #include <random>
 #include <vector>
 
 namespace th
 {
-struct PokerCard;
-
 namespace Random
 {
     template<typename T>
