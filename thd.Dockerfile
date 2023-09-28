@@ -29,6 +29,7 @@ RUN echo 'Etc/UTC' > /etc/timezone && \
     && cmake .. \
     && make -j$(nproc) \
     && make install \
+    # clean up
     && rm -rf /tmp/googletest \
-    # remove unused folders
+    && apt-get clean \
     && rm -rf /var/cache/apt/archives /var/lib/apt/lists
