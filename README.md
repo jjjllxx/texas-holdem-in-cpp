@@ -3,7 +3,7 @@
 ## 1. Download Repo
 ``` shell
 cd /proj
-git clone https://github.com/JinLexuan/texas-holdem-in-cpp.git
+git clone https://github.com/jjjllxx/texas-holdem-in-cpp.git
 ```
 
 ## 2. Create New Build Folder (Only at First Time)
